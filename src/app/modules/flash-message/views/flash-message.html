@@ -1,0 +1,44 @@
+<div
+    *ngIf="messages.length > 0"
+    class="flash-message-container control-icon more has-items"
+>
+    <div class="more-dropdown more-with-triangle triangle-top-center" style="visibility: visible; opacity: unset;">
+        <div class="mCustomScrollbar" data-mcs-theme="dark">
+            <ul class="notification-list">
+                <li
+                    *ngFor="let message of messages"
+                    [ngClass]="uiService.getClassByLevel(message.message.messageLevel)"
+                >
+                    <div class="author-thumb">
+                        <app-png-view
+                            [class]="uiService.getIconClassByLevel(message.message.messageLevel)"
+                            [squareSize]="25"
+                        ></app-png-view>
+                    </div>
+                    <div class="notification-event">
+                        <div>{{message.message.message}}</div>
+                        <span
+                            *ngIf="message.message.errorCode"
+                            class="notification-date"
+                        >
+                            <span class="entry-date updated">
+                                Error code: {{message.message.errorCode}}
+                            </span>
+                        </span>
+                    </div>
+                    <div class="more">
+                        <svg class="olymp-three-dots-icon">
+                            <use xlink:href="#olymp-three-dots-icon"></use>
+                        </svg>
+                        <svg
+                            (click)="hide(message.id)"
+                            class="olymp-little-delete"
+                        >
+                            <use xlink:href="#olymp-little-delete"></use>
+                        </svg>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

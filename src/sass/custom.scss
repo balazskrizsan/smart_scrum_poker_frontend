@@ -1,0 +1,447 @@
+$warning-color: #ff5e3a !default;
+$error-color: #ff2300 !default;
+
+a.highlighted-link {
+  color: $primary-color;
+  cursor: pointer;
+  display: inline;
+  font-weight: bold;
+}
+
+a.link {
+  color: $grey;
+  cursor: pointer;
+  display: inline;
+  font-weight: bold;
+}
+
+.warning {
+  color: $secondary-color;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  padding: 10px 15px;
+  border: 4px solid $warning-color;
+}
+
+.emphatic {
+  color: $secondary-color;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  padding: 10px 15px;
+}
+
+.notification-icon-primary-color svg {
+  fill: $primary-color;
+}
+
+.modal-close {
+  cursor: pointer;
+}
+
+.modal-close svg {
+  fill: $primary-color;
+}
+
+.form-group.has-error input,
+.form-group.has-error textarea {
+  border-color: #b94a48;
+}
+
+.form-group.has-error label {
+  color: #b94a48;
+}
+
+/* Flash message */
+.flash-message-container {
+  .more-dropdown {
+    padding: 0 !important;
+  }
+  .error {
+    color: $error-color;
+  }
+  .notice {
+    color: $orange;
+  }
+  .ok {
+    color: $green;
+  }
+}
+/* / Flash message */
+
+.sj-svg-thunder-icon {
+  background-color: $orange;
+  -webkit-mask-image: url("/assets/SVG/thunder-icon.svg");
+  mask-image: url("/assets/SVG/thunder-icon.svg");
+}
+
+.sj-svg-check-icon {
+  background-color: $green;
+  -webkit-mask-image: url("/assets/SVG/check-icon.svg");
+  mask-image: url("/assets/SVG/check-icon.svg");
+}
+
+.sj-svg-little-delete {
+  background-color: $error-color;
+  -webkit-mask-image: url("/assets/SVG/little-delete.svg");
+  mask-image: url("/assets/SVG/little-delete.svg");
+}
+
+.sj-icon-adobe {
+  background-color: $primary-color;
+  -webkit-mask-image: url("/assets/group-icons/adobe.svg");
+  mask-image: url("/assets/group-icons/adobe.svg");
+}
+
+.sj-icon-adobe-dreamweaver {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/adobe-dreamweaver.svg);
+  mask-image: url(/assets/group-icons/adobe-dreamweaver.svg);
+}
+
+.sj-icon-adobe-photoshop {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/adobe-photoshop.svg);
+  mask-image: url(/assets/group-icons/adobe-photoshop.svg);
+}
+
+.sj-icon-amazon-aws {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/amazon-aws.svg);
+  mask-image: url(/assets/group-icons/amazon-aws.svg);
+}
+
+.sj-icon-cisco {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/cisco.svg);
+  mask-image: url(/assets/group-icons/cisco.svg);
+}
+
+.sj-icon-citrix {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/citrix.svg);
+  mask-image: url(/assets/group-icons/citrix.svg);
+}
+
+.sj-icon-codeigniter {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/codeigniter.svg);
+  mask-image: url(/assets/group-icons/codeigniter.svg);
+}
+
+.sj-icon-c-plusplus {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/c-plusplus.svg);
+  mask-image: url(/assets/group-icons/c-plusplus.svg);
+}
+
+.sj-icon-craftcms {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/craftcms.svg);
+  mask-image: url(/assets/group-icons/craftcms.svg);
+}
+
+.sj-icon-c-sharp {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/c-sharp.svg);
+  mask-image: url(/assets/group-icons/c-sharp.svg);
+}
+
+.sj-icon-css3 {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/css3.svg);
+  mask-image: url(/assets/group-icons/css3.svg);
+}
+
+.sj-icon-css {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/css.svg);
+  mask-image: url(/assets/group-icons/css.svg);
+}
+
+.sj-icon-disqus {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/disqus.svg);
+  mask-image: url(/assets/group-icons/disqus.svg);
+}
+
+.sj-icon-docker {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/docker.svg);
+  mask-image: url(/assets/group-icons/docker.svg);
+}
+
+.sj-icon-dropbox {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/dropbox.svg);
+  mask-image: url(/assets/group-icons/dropbox.svg);
+}
+
+.sj-icon-drupal {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/drupal.svg);
+  mask-image: url(/assets/group-icons/drupal.svg);
+}
+
+.sj-icon-facebook {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/facebook.svg);
+  mask-image: url(/assets/group-icons/facebook.svg);
+}
+
+.sj-icon-git {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/git.svg);
+  mask-image: url(/assets/group-icons/git.svg);
+}
+
+.sj-icon-github {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/github.svg);
+  mask-image: url(/assets/group-icons/github.svg);
+}
+
+.sj-icon-gitlab {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/gitlab.svg);
+  mask-image: url(/assets/group-icons/gitlab.svg);
+}
+
+.sj-icon-gnome {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/gnome.svg);
+  mask-image: url(/assets/group-icons/gnome.svg);
+}
+
+.sj-icon-gnubash {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/gnubash.svg);
+  mask-image: url(/assets/group-icons/gnubash.svg);
+}
+
+.sj-icon-google-chrome {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/google-chrome.svg);
+  mask-image: url(/assets/group-icons/google-chrome.svg);
+}
+
+.sj-icon-html5 {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/html5.svg);
+  mask-image: url(/assets/group-icons/html5.svg);
+}
+
+.sj-icon-npm {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/npm.svg);
+  mask-image: url(/assets/group-icons/npm.svg);
+}
+
+.sj-icon-opengl {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/opengl.svg);
+  mask-image: url(/assets/group-icons/opengl.svg);
+}
+
+.sj-icon-opensuse {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/opensuse.svg);
+  mask-image: url(/assets/group-icons/opensuse.svg);
+}
+
+.sj-icon-plesk {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/plesk.svg);
+  mask-image: url(/assets/group-icons/plesk.svg);
+}
+
+.sj-icon-php {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/php.svg);
+  mask-image: url(/assets/group-icons/php.svg);
+}
+
+.sj-icon-postgresql {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/postgresql.svg);
+  mask-image: url(/assets/group-icons/postgresql.svg);
+}
+
+.sj-icon-python {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/python.svg);
+  mask-image: url(/assets/group-icons/python.svg);
+}
+
+.sj-icon-pytorch {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/pytorch.svg);
+  mask-image: url(/assets/group-icons/pytorch.svg);
+}
+
+.sj-icon-pyup {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/pyup.svg);
+  mask-image: url(/assets/group-icons/pyup.svg);
+}
+
+.sj-icon-qt {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/qt.svg);
+  mask-image: url(/assets/group-icons/qt.svg);
+}
+
+.sj-icon-rancher {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/rancher.svg);
+  mask-image: url(/assets/group-icons/rancher.svg);
+}
+
+.sj-icon-raspberry-pi {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/raspberry-pi.svg);
+  mask-image: url(/assets/group-icons/raspberry-pi.svg);
+}
+
+.sj-icon-react {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/react.svg);
+  mask-image: url(/assets/group-icons/react.svg);
+}
+
+.sj-icon-redhat {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/redhat.svg);
+  mask-image: url(/assets/group-icons/redhat.svg);
+}
+
+.sj-icon-redux {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/redux.svg);
+  mask-image: url(/assets/group-icons/redux.svg);
+}
+
+.sj-icon-ruby-gems {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/ruby-gems.svg);
+  mask-image: url(/assets/group-icons/ruby-gems.svg);
+}
+
+.sj-icon-rubyonrails {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/rubyonrails.svg);
+  mask-image: url(/assets/group-icons/rubyonrails.svg);
+}
+
+.sj-icon-sap {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/sap.svg);
+  mask-image: url(/assets/group-icons/sap.svg);
+}
+
+.sj-icon-splunk {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/splunk.svg);
+  mask-image: url(/assets/group-icons/splunk.svg);
+}
+
+.sj-icon-superuser {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/superuser.svg);
+  mask-image: url(/assets/group-icons/superuser.svg);
+}
+
+.sj-icon-swagger {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/swagger.svg);
+  mask-image: url(/assets/group-icons/swagger.svg);
+}
+
+.sj-icon-swarm {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/swarm.svg);
+  mask-image: url(/assets/group-icons/swarm.svg);
+}
+
+.sj-icon-symfony {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/symfony.svg);
+  mask-image: url(/assets/group-icons/symfony.svg);
+}
+
+.sj-icon-typescript {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/typescript.svg);
+  mask-image: url(/assets/group-icons/typescript.svg);
+}
+
+.sj-icon-unity {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/unity.svg);
+  mask-image: url(/assets/group-icons/unity.svg);
+}
+
+.sj-icon-unreal-engine {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/unreal-engine.svg);
+  mask-image: url(/assets/group-icons/unreal-engine.svg);
+}
+
+.sj-icon-vim {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/vim.svg);
+  mask-image: url(/assets/group-icons/vim.svg);
+}
+
+.sj-icon-visual-studio {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/visual-studio.svg);
+  mask-image: url(/assets/group-icons/visual-studio.svg);
+}
+
+.sj-icon-visual-studio-code {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/visual-studio-code.svg);
+  mask-image: url(/assets/group-icons/visual-studio-code.svg);
+}
+
+.sj-icon-vmware {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/vmware.svg);
+  mask-image: url(/assets/group-icons/vmware.svg);
+}
+
+.sj-icon-w3c {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/w3c.svg);
+  mask-image: url(/assets/group-icons/w3c.svg);
+}
+
+.sj-icon-webgl {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/webgl.svg);
+  mask-image: url(/assets/group-icons/webgl.svg);
+}
+
+.sj-icon-webstorm {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/webstorm.svg);
+  mask-image: url(/assets/group-icons/webstorm.svg);
+}
+
+.sj-icon-windows {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/windows.svg);
+  mask-image: url(/assets/group-icons/windows.svg);
+}
+
+.sj-icon-wordpress {
+  background-color: $primary-color;
+  -webkit-mask-image: url(/assets/group-icons/wordpress.svg);
+  mask-image: url(/assets/group-icons/wordpress.svg);
+}

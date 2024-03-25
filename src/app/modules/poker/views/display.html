@@ -1,0 +1,12 @@
+<br><br>
+https://localhost:4200/poker/display/{{ pokerIdSecure }}
+<br><br>
+isInitDone: {{ isInitDone }}
+<br><br>
+poker: {{ poker | json }}
+<br><br>
+tickets {{ tickets | json }}
+<br><br>
+<button (click)="pokerRoomPush()">Push to room</button>
+<br><br>
+<button (click)="init()">Init</button>

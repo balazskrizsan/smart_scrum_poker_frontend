@@ -1,0 +1,83 @@
+<code_scheme name="Project" version="173">
+  <HTMLCodeStyleSettings>
+    <option name="HTML_ATTRIBUTE_WRAP" value="4" />
+    <option name="HTML_NEWLINE_BEFORE_FIRST_ATTRIBUTE" value="When multiline" />
+    <option name="HTML_NEWLINE_AFTER_LAST_ATTRIBUTE" value="When multiline" />
+  </HTMLCodeStyleSettings>
+  <JSCodeStyleSettings version="0">
+    <option name="ALIGN_OBJECT_PROPERTIES" value="1" />
+    <option name="ALIGN_VAR_STATEMENTS" value="2" />
+    <option name="REFORMAT_C_STYLE_COMMENTS" value="true" />
+    <option name="VAR_DECLARATION_WRAP" value="5" />
+    <option name="IMPORTS_WRAP" value="0" />
+    <option name="ALIGN_IMPORTS" value="true" />
+    <option name="FUNCTION_EXPRESSION_BRACE_STYLE" value="2" />
+  </JSCodeStyleSettings>
+  <JSON>
+    <option name="KEEP_TRAILING_COMMA" value="true" />
+    <option name="PROPERTY_ALIGNMENT" value="1" />
+    <option name="ARRAY_WRAPPING" value="5" />
+  </JSON>
+  <TypeScriptCodeStyleSettings version="0">
+    <option name="ALIGN_OBJECT_PROPERTIES" value="1" />
+    <option name="ALIGN_VAR_STATEMENTS" value="2" />
+    <option name="REFORMAT_C_STYLE_COMMENTS" value="true" />
+    <option name="VAR_DECLARATION_WRAP" value="5" />
+    <option name="IMPORTS_WRAP" value="0" />
+    <option name="ALIGN_IMPORTS" value="true" />
+    <option name="FUNCTION_EXPRESSION_BRACE_STYLE" value="2" />
+    <option name="BLACKLIST_IMPORTS" value="rxjs/Rx" />
+  </TypeScriptCodeStyleSettings>
+  <editorconfig>
+    <option name="ENABLED" value="false" />
+  </editorconfig>
+  <codeStyleSettings language="HTML">
+    <indentOptions>
+      <option name="CONTINUATION_INDENT_SIZE" value="4" />
+    </indentOptions>
+  </codeStyleSettings>
+  <codeStyleSettings language="JavaScript">
+    <option name="BRACE_STYLE" value="2" />
+    <option name="CLASS_BRACE_STYLE" value="2" />
+    <option name="METHOD_BRACE_STYLE" value="2" />
+    <option name="SPACE_AROUND_EQUALITY_OPERATORS" value="false" />
+    <option name="SPACE_BEFORE_COLON" value="false" />
+    <option name="SPACE_AFTER_COLON" value="false" />
+    <option name="CALL_PARAMETERS_WRAP" value="5" />
+    <option name="PREFER_PARAMETERS_WRAP" value="true" />
+    <option name="CALL_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
+    <option name="CALL_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
+    <option name="METHOD_PARAMETERS_WRAP" value="5" />
+    <option name="METHOD_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
+    <option name="METHOD_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
+    <option name="TERNARY_OPERATION_WRAP" value="5" />
+    <option name="TERNARY_OPERATION_SIGNS_ON_NEXT_LINE" value="true" />
+    <option name="ARRAY_INITIALIZER_WRAP" value="5" />
+    <option name="ASSIGNMENT_WRAP" value="5" />
+    <option name="PLACE_ASSIGNMENT_SIGN_ON_NEXT_LINE" value="true" />
+    <indentOptions>
+      <option name="CONTINUATION_INDENT_SIZE" value="8" />
+    </indentOptions>
+  </codeStyleSettings>
+  <codeStyleSettings language="TypeScript">
+    <option name="BRACE_STYLE" value="2" />
+    <option name="CLASS_BRACE_STYLE" value="2" />
+    <option name="METHOD_BRACE_STYLE" value="2" />
+    <option name="SPACE_AROUND_EQUALITY_OPERATORS" value="false" />
+    <option name="CALL_PARAMETERS_WRAP" value="5" />
+    <option name="PREFER_PARAMETERS_WRAP" value="true" />
+    <option name="CALL_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
+    <option name="CALL_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
+    <option name="METHOD_PARAMETERS_WRAP" value="5" />
+    <option name="METHOD_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
+    <option name="METHOD_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
+    <option name="TERNARY_OPERATION_WRAP" value="5" />
+    <option name="TERNARY_OPERATION_SIGNS_ON_NEXT_LINE" value="true" />
+    <option name="ARRAY_INITIALIZER_WRAP" value="5" />
+    <option name="ASSIGNMENT_WRAP" value="5" />
+    <option name="PLACE_ASSIGNMENT_SIGN_ON_NEXT_LINE" value="true" />
+    <indentOptions>
+      <option name="CONTINUATION_INDENT_SIZE" value="8" />
+    </indentOptions>
+  </codeStyleSettings>
+</code_scheme>

@@ -1,0 +1,132 @@
+<div class="container">
+  <div class="row">
+
+    <!-- LEFT MENU -->
+    <div class="col col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12"
+         style="min-height: 500px"
+    ><!-- @todo: fix later -->
+      <div class="friend-item friend-groups create-group h-75 mb-3">
+        <a routerLink="/company/create" class="full-block" data-toggle="modal" data-target="#create-friend-group-1"></a>
+        <div class="content">
+          <a
+            routerLink="/company/create"
+            class="btn btn-control bg-blue"
+            data-toggle="modal"
+            data-target="#create-friend-group-1"
+          >
+            <svg class="olymp-plus-icon">
+              <use xlink:href="#olymp-plus-icon"></use>
+            </svg>
+          </a>
+          <div class="author-content">
+            <a routerLink="/company/create" class="h5 author-name">Add a company</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /LEFT MENU -->
+
+    <!-- COMPANY LIST -->
+    <div
+      *ngFor="let company of companies"
+      class="col col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3"
+      style="min-height: 500px"
+    ><!-- @todo: fix later -->
+      <div class="ui-block h-100 mb-0">
+        <div class="friend-item friend-groups">
+          <div class="friend-item-content">
+
+<!--            <div class="more">-->
+<!--              <svg class="olymp-three-dots-icon">-->
+<!--                <use xlink:href="#olymp-three-dots-icon"></use>-->
+<!--              </svg>-->
+<!--              <ul class="more-dropdown">-->
+<!--                <li>-->
+<!--                  <a href="#">Report Profile</a>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                  <a href="#">Block Profile</a>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                  <a href="#">Turn Off Notifications</a>-->
+<!--                </li>-->
+<!--              </ul>-->
+<!--            </div>-->
+            <div class="friend-avatar">
+              <a routerLink="{{urlGeneratorService.getCompanyHomeViewUri(company, true)}}" class="h5 author-name">
+              <div class="author-thumb">
+                  <img
+                    loading="lazy"
+                    src="{{urlGeneratorService.getCompanyLogoUrl(company)}}"
+                    alt=""
+                  >
+              </div>
+              </a>
+              <div class="author-content">
+                <a
+                  routerLink="{{urlGeneratorService.getCompanyHomeViewUri(company, true)}}"
+                  class="h5 author-name"
+                >{{company.name}}</a>
+                <div class="country">{{companyStatistics[company.id]?.stackCount}} stacks</div>
+                <div class="country">{{companyStatistics[company.id]?.teamsCount}} teams</div>
+                <div class="country">{{companyStatistics[company.id]?.reviewCount}} reviews</div>
+                <div class="country">{{companyStatistics[company.id]?.teamsCount}} technologies</div>
+              </div>
+            </div>
+
+            <ul class="friends-harmonic">
+              <li>
+                <a href="#">
+                  <img loading="lazy" src="img/friend-harmonic5.jpg" alt="friend">
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <img loading="lazy" src="img/friend-harmonic10.jpg" alt="friend">
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <img loading="lazy" src="img/friend-harmonic7.jpg" alt="friend">
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <img loading="lazy" src="img/friend-harmonic8.jpg" alt="friend">
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <img loading="lazy" src="img/friend-harmonic2.jpg" alt="friend">
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <img loading="lazy" src="img/avatar30-sm.jpg" alt="author">
+                </a>
+              </li>
+            </ul>
+
+            <!--            <div class="control-block-button">-->
+            <!--              <a href="#" class="  btn btn-control bg-blue" data-toggle="modal"-->
+            <!--                 data-target="#create-friend-group-add-friends">-->
+            <!--                <svg class="olymp-happy-faces-icon">-->
+            <!--                  <use xlink:href="#olymp-happy-faces-icon"></use>-->
+            <!--                </svg>-->
+            <!--              </a>-->
+            <!--              <a href="#" class="btn btn-control btn-grey-lighter">-->
+            <!--                <svg class="olymp-settings-icon">-->
+            <!--                  <use xlink:href="#olymp-settings-icon"></use>-->
+            <!--                </svg>-->
+            <!--              </a>-->
+            <!--            </div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /COMPANY LIST -->
+
+  </div>
+
+  <app-paginator [paginatorItems]="paginator" (changePage)="onChangePage($event)"></app-paginator>
+</div>
