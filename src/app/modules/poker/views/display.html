@@ -5,8 +5,49 @@ isInitDone: {{ isInitDone }}
 <br><br>
 poker: {{ poker | json }}
 <br><br>
-tickets {{ tickets | json }}
+activeRoundTicketId: {{ activeRoundTicketId }}
+<br><br>
+voteUncertainty: {{ voteUncertainty }}
+voteComplexity: {{ voteComplexity }}
+voteEffort: {{ voteEffort }}
+<ul>
+    <li *ngFor="let ticket of tickets">
+        {{ ticket.id }} / {{ ticket.name }}
+        <br>
+        <button
+            *ngIf="activeRoundTicketId == 0"
+            (click)="startRound(ticket.id)" type="button"
+        >
+            start
+        </button>
+        <button
+            *ngIf="activeRoundTicketId == ticket.id"
+            (click)="endRound()"
+            type="button"
+        >
+            end
+        </button>
+        <br>
+        <div *ngIf="activeRoundTicketId == ticket.id">
+            <div>
+                <button (click)="setVoteUncertainty(1)">small</button>
+                <button (click)="setVoteUncertainty(2)">medium</button>
+                <button (click)="setVoteUncertainty(3)">large</button>
+            </div>
+            <div>
+                <button (click)="setVoteComplexity(1)">small</button>
+                <button (click)="setVoteComplexity(2)">medium</button>
+                <button (click)="setVoteComplexity(3)">large</button>
+            </div>
+            <div>
+                <button (click)="setVoteEffort(1)">small</button>
+                <button (click)="setVoteEffort(2)">medium</button>
+                <button (click)="setVoteEffort(3)">large</button>
+            </div>
+            <button (click)="send()">send</button>
+        </div>
+    </li>
+</ul>
 <br><br>
 <button (click)="pokerRoomPush()">Push to room</button>
-<br><br>
 <button (click)="init()">Init</button>

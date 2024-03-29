@@ -1,13 +1,14 @@
-import {Injectable}        from "@angular/core";
-import {RxStomp}           from "@stomp/rx-stomp";
-import {SocketDestination} from "../enums/socket-destination";
-import {map}             from "rxjs/operators";
-import {IStdApiResponse} from "../../../interfaces/i-std-api-response";
+import {Injectable}           from "@angular/core";
+import {RxStomp}              from "@stomp/rx-stomp";
+import {SocketDestination}    from "../enums/socket-destination";
+import {map}                  from "rxjs/operators";
+import {IStdApiResponse}      from "../../../interfaces/i-std-api-response";
 import {
     filter,
     Observable,
     Subscription
-} from "rxjs";
+}                              from "rxjs";
+import {ISubscriptionListener} from "../../poker/interfaces/i-subscription-listener";
 
 @Injectable()
 export class RxStompService
@@ -29,19 +30,20 @@ export class RxStompService
         this.rxStomp.activate();
     }
 
-    public getSubscription<T>(destination: string, socketDestinationFilter: SocketDestination):
-      Observable<IStdApiResponse<T>>
+    public getSubscription<T>(destination: string, socketDestinationFilter: SocketDestination): ISubscriptionListener<T>
     {
         console.log("> New subscription: ", {'destination': destination, 'filter': socketDestinationFilter});
 
         try
         {
-            return this.get()
+            var observable = this.get()
               .watch({destination: destination})
               .pipe(
                 map((message): IStdApiResponse<T> => JSON.parse(message.body).body),
                 filter(body => body.socketResponseDestination == socketDestinationFilter),
               );
+
+            return {observable, destination, socketDestinationFilter, $subscription: null}
         } catch (e)
         {
             console.log(e);
@@ -50,10 +52,13 @@ export class RxStompService
         }
     }
 
-    public unsubscribe(destination: string, $subscription: Subscription): void
+    public unsubscribe<T>(handler: ISubscriptionListener<T>): void
     {
-        console.log("> Unsubscription: ", {'destination': destination});
-        $subscription.unsubscribe();
+        console.log("> Unsubscription: ", {
+            destination: handler.destination,
+            socketDestinationFilter: handler.socketDestinationFilter
+        });
+        handler.$subscription.unsubscribe();
     }
 
     public publish(destination: string, rawBody)

@@ -1,14 +1,14 @@
 import {
     Component,
     OnDestroy
-}              from '@angular/core';
-import {Forms} from '../forms';
-import {FormGroup}          from "@angular/forms";
-import {RxStompService}     from "../../commons/services/rx-stomp-service";
-import {SocketDestination}  from "../../commons/enums/socket-destination";
-import {IStart}             from "../interfaces/i-start";
-import {Router}             from "@angular/router";
-import {Subscription}       from "rxjs";
+}                              from '@angular/core';
+import {Forms}                 from '../forms';
+import {FormGroup}             from "@angular/forms";
+import {RxStompService}        from "../../commons/services/rx-stomp-service";
+import {SocketDestination}     from "../../commons/enums/socket-destination";
+import {IStart}                from "../interfaces/i-start";
+import {Router}                from "@angular/router";
+import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
 
 @Component(
   {
@@ -20,7 +20,7 @@ import {Subscription}       from "rxjs";
 export class CreateActionComponent implements OnDestroy
 {
     protected form: FormGroup;
-    private $subscription: Subscription;
+    private createPokerListener: ISubscriptionListener<IStart>;
 
     public constructor(
       protected forms: Forms,
@@ -30,15 +30,17 @@ export class CreateActionComponent implements OnDestroy
     {
         this.form = this.forms.createCruForm();
 
-        this.$subscription = this.rxStompService
-          .getSubscription<IStart>('/user/queue/reply', SocketDestination.RECEIVE_POKER_START)
-          .subscribe((body) =>
+        this.createPokerListener               = this.rxStompService
+          .getSubscription<IStart>('/user/queue/reply', SocketDestination.RECEIVE_POKER_START);
+        this.createPokerListener.$subscription = this.createPokerListener.observable.subscribe(
+          (body) =>
             this.router.navigate(['/poker/display/' + body.data.poker.idSecure])
-          );
+        );
     }
 
-    ngOnDestroy(): void {
-        this.rxStompService.unsubscribe('/user/queue/reply', this.$subscription);
+    ngOnDestroy(): void
+    {
+        this.rxStompService.unsubscribe(this.createPokerListener);
     }
 
     onSubmit()
