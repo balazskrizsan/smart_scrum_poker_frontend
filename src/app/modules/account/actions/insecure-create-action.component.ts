@@ -8,6 +8,7 @@ import {IStateResponse} from "../../poker/interfaces/i-state-response";
 import {SocketDestination} from "../../commons/enums/socket-destination";
 import {ISubscriptionListener} from "../../poker/interfaces/i-subscription-listener";
 import {RxStompService} from "../../commons/services/rx-stomp-service";
+import {LocalStorageService} from "../../../services/local-storage-service";
 
 @Component(
   {
@@ -24,6 +25,7 @@ export class InsecureCreateActionComponent implements OnDestroy
     constructor(
       private forms: Forms,
       private rxStompService: RxStompService,
+      private localStorageService: LocalStorageService,
     )
     {
         this.form = this.forms.createCruForm();
@@ -35,7 +37,8 @@ export class InsecureCreateActionComponent implements OnDestroy
         this.roomStateListener.$subscription = this.roomStateListener.observable.subscribe(
           (body) =>
           {
-              console.log('roomStateListener', body);
+              console.log('New insecure user', body);
+              this.localStorageService.set('current_user', body.data)
           });
     }
 

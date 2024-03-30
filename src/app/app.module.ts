@@ -14,9 +14,9 @@ import {
     HTTP_INTERCEPTORS,
     HttpClientModule
 } from '@angular/common/http';
-import {HttpService}                from './services/http-service';
-import {LocalStorageService}        from './services/local-storage-services';
-import {LeftMenuModule}             from './modules/left-menu/left-menu.module';
+import {HttpService}         from './services/http-service';
+import {LocalStorageService} from './services/local-storage-service';
+import {LeftMenuModule}      from './modules/left-menu/left-menu.module';
 import {ModalsModule}               from './modules/modals/modals.module';
 import {CommonsModule}             from './modules/commons/commons.module';
 import {LayoutModule}              from './modules/layout/layout-module';
