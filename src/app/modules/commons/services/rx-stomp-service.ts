@@ -1,8 +1,11 @@
 import {Injectable}           from "@angular/core";
 import {RxStomp}              from "@stomp/rx-stomp";
-import {SocketDestination}    from "../enums/socket-destination";
-import {map}                  from "rxjs/operators";
-import {IStdApiResponse}      from "../../../interfaces/i-std-api-response";
+import {SocketDestination} from "../enums/socket-destination";
+import {
+    map,
+    tap
+}                          from "rxjs/operators";
+import {IStdApiResponse}   from "../../../interfaces/i-std-api-response";
 import {
     filter,
     Observable,
@@ -32,7 +35,7 @@ export class RxStompService
 
     public getSubscription<T>(destination: string, socketDestinationFilter: SocketDestination): ISubscriptionListener<T>
     {
-        console.log("> New subscription: ", {'destination': destination, 'filter': socketDestinationFilter});
+        console.log(">>>> New socket subscription: ", {'destination': destination, 'filter': socketDestinationFilter});
 
         try
         {
@@ -40,6 +43,7 @@ export class RxStompService
               .watch({destination: destination})
               .pipe(
                 map((message): IStdApiResponse<T> => JSON.parse(message.body).body),
+                tap(body => console.log(">>>> Socket response:", {destination, socketDestinationFilter, body})),
                 filter(body => body.socketResponseDestination == socketDestinationFilter),
               );
 
@@ -54,7 +58,7 @@ export class RxStompService
 
     public unsubscribe<T>(handler: ISubscriptionListener<T>): void
     {
-        console.log("> Unsubscription: ", {
+        console.log(">>>> Unsubscription: ", {
             destination: handler.destination,
             socketDestinationFilter: handler.socketDestinationFilter
         });
@@ -73,7 +77,7 @@ export class RxStompService
             body:        JSON.stringify(rawBody)
         };
 
-        console.log("> STOMP publication: ", publication);
+        console.log(">>>> Socket publication: ", publication);
 
         this.rxStomp.publish(publication);
     }
