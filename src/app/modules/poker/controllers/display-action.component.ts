@@ -12,8 +12,12 @@ import {IPoker}                from "../interfaces/i-poker";
 import {ITicket}               from "../interfaces/i-ticket";
 import {IStartRound}           from "../interfaces/i-start-round";
 import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
-import {IVote}                 from "../interfaces/i-vote";
 import {IStart}                from "../interfaces/i-start";
+import {LocalStorageService}   from "../../../services/local-storage-service";
+import {IInsecureUser}         from "../../account/interfaces/i-insecure-user";
+import {IVoteResponse}         from "../interfaces/i-vote-response";
+import {FlashMessageService}   from "../../flash-message/services/flash-message-service";
+import {FlashMessageLevelEnum} from "../../flash-message/enums/flash-message-level-enum";
 
 
 @Component(
@@ -26,22 +30,25 @@ import {IStart}                from "../interfaces/i-start";
 export class DisplayActionComponent implements OnInit, OnDestroy
 {
     protected pokerIdSecure: string;
-    protected isInitDone          = false;
+    protected isInitDone                            = false;
     protected poker: IPoker;
     protected tickets: Array<ITicket>;
-    protected activeRoundTicketId = 0;
-    protected voteUncertainty     = 0;
-    protected voteComplexity      = 0;
-    protected voteEffort          = 0;
+    protected activeRoundTicketId                   = 0;
+    protected voteUncertainty                       = 0;
+    protected voteComplexity                        = 0;
+    protected voteEffort                            = 0;
+    protected voters: Record<string, IInsecureUser> = {};
     private pokerStartListener: ISubscriptionListener<IStart>;
     private roomStateListener: ISubscriptionListener<IStateResponse>;
     private roundStartListener: ISubscriptionListener<IStartRound>;
     private roundStopListener: ISubscriptionListener<IStartRound>;
-    private voteListener: ISubscriptionListener<IVote>;
+    private voteListener: ISubscriptionListener<IVoteResponse>;
 
     public constructor(
       private rxStompService: RxStompService,
       private activatedRoute: ActivatedRoute,
+      private localStorageService: LocalStorageService,
+      private flashMessageService: FlashMessageService
     )
     {
         this.pokerIdSecure                    = this.activatedRoute.snapshot.paramMap.get('secureId');
@@ -60,10 +67,18 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         this.roomStateListener.$subscription = this.roomStateListener.observable.subscribe(
           (body) =>
           {
-              console.log('roomStateListener', body);
-              this.poker      = body.data.poker;
-              this.tickets    = body.data.tickets;
-              this.isInitDone = true;
+              this.poker                 = body.data.poker;
+              this.tickets               = body.data.tickets;
+              this.isInitDone            = true;
+              let possibleStartedTickets = this.tickets.filter(t => t.isActive);
+              if (possibleStartedTickets.length > 1)
+              {
+                  throw new Error('More than 1 voting started');
+              }
+              if (possibleStartedTickets.length == 1)
+              {
+                  this.activeRoundTicketId = possibleStartedTickets.pop().id;
+              }
           });
 
         this.roundStartListener               = this.rxStompService
@@ -88,14 +103,20 @@ export class DisplayActionComponent implements OnInit, OnDestroy
               this.activeRoundTicketId = 0;
           });
 
-
-        this.voteListener               = this.rxStompService.getSubscription<IStartRound>(
+        this.voteListener               = this.rxStompService.getSubscription<IVoteResponse>(
           `/queue/reply-${this.pokerIdSecure}`,
           SocketDestination.RECEIVE_POKER_VOTE
         );
         this.voteListener.$subscription = this.voteListener.observable.subscribe((body) =>
         {
-            console.log("Vote happened");
+            let insecureUser: IInsecureUser = body.data.voterInsecureUser;
+
+            this.voters[insecureUser.idSecure] = insecureUser;
+
+            this.flashMessageService.push({
+                messageLevel: FlashMessageLevelEnum.OK,
+                message:      `Vote from: ${insecureUser.userName}`
+            })
         });
     }
 
@@ -136,7 +157,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         );
     }
 
-    endRound()
+    endRound(): void
     {
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_ROUND_STOP
@@ -144,31 +165,70 @@ export class DisplayActionComponent implements OnInit, OnDestroy
             .replace("{ticketId}", this.activeRoundTicketId.toString(10)),
           ''
         );
-        this.activeRoundTicketId = 0;
+        this.resetVoteValues();
     }
 
-    setVoteUncertainty(vote: number)
+    setVoteUncertainty(vote: number): void
     {
+        if (this.voteUncertainty == vote)
+        {
+            this.voteUncertainty = 0;
+
+            return
+        }
         this.voteUncertainty = vote;
     }
 
-    setVoteComplexity(vote: number)
+    setVoteComplexity(vote: number): void
     {
+        if (this.voteComplexity == vote)
+        {
+            this.voteComplexity = 0;
+
+            return
+        }
         this.voteComplexity = vote;
     }
 
-    setVoteEffort(vote: number)
+    setVoteEffort(vote: number): void
     {
+        if (this.voteEffort == vote)
+        {
+            this.voteEffort = 0;
+
+            return
+        }
         this.voteEffort = vote;
     }
 
-    send()
+    private resetVoteValues()
     {
+        this.activeRoundTicketId = 0;
+        this.voteEffort = 0;
+        this.voteComplexity = 0;
+        this.voteUncertainty = 0;
+    }
+
+    isVoteSendable(): boolean
+    {
+        return this.voteUncertainty > 0 && this.voteComplexity > 0 && this.voteEffort > 0;
+    }
+
+    send(): void
+    {
+        var rawInsecureUser = this.localStorageService.get('current_user');
+        if (null == rawInsecureUser)
+        {
+            throw new Error("Not logged in");
+        }
+        var insecureUser: IInsecureUser = JSON.parse(rawInsecureUser);
+
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_VOTE
             .replace("{pokerSecureId}", this.pokerIdSecure)
             .replace("{ticketId}", this.activeRoundTicketId.toString(10)),
           {
+              userIdSecure:    insecureUser.idSecure,
               voteUncertainty: this.voteUncertainty,
               voteComplexity:  this.voteComplexity,
               voteEffort:      this.voteEffort,

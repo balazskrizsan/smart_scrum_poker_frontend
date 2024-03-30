@@ -11,6 +11,11 @@ voteUncertainty: {{ voteUncertainty }}
 voteComplexity: {{ voteComplexity }}
 voteEffort: {{ voteEffort }}
 <ul>
+    <li *ngFor="let voter of voters | keyvalue">
+        {{voter | json}}
+    </li>
+</ul>
+<ul>
     <li *ngFor="let ticket of tickets">
         {{ ticket.id }} / {{ ticket.name }}
         <br>
@@ -44,7 +49,10 @@ voteEffort: {{ voteEffort }}
                 <button (click)="setVoteEffort(2)">medium</button>
                 <button (click)="setVoteEffort(3)">large</button>
             </div>
-            <button (click)="send()">send</button>
+            <button
+                *ngIf="isVoteSendable()"
+                (click)="send()"
+            >send</button>
         </div>
     </li>
 </ul>
