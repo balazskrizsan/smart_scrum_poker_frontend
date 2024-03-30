@@ -1,0 +1,28 @@
+<form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+>
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-12">
+            <!--                                *ngIf="formType === formTypeEnum.EDIT || formType === formTypeEnum.VIEW"-->
+            <!--                                [ngClass]="{'has-error': hasValidationError('name')}"-->
+            <div
+                class="form-group"
+            >
+                <label for="userName" class="control-label">Enter an insecure username</label>
+                <input
+                    formControlName="userName"
+                    type="text"
+                    class="form-control"
+                    id="userName"
+                    placeholder="userName"
+                >
+                <div class="row">
+                    <div class="col col-lg-12 col-md-12 col-sm-12 col-12">
+                        <button type="submit" class="btn btn-primary btn-lg full-width">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

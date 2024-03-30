@@ -14,7 +14,6 @@ import {IStartRound}           from "../interfaces/i-start-round";
 import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
 import {IVote}                 from "../interfaces/i-vote";
 import {IStart}                from "../interfaces/i-start";
-import {PokerSubscriptionService} from "../service/poker-subscription-service";
 
 
 @Component(
@@ -43,7 +42,6 @@ export class DisplayActionComponent implements OnInit, OnDestroy
     public constructor(
       private rxStompService: RxStompService,
       private activatedRoute: ActivatedRoute,
-      private pokerSubscriptionService: PokerSubscriptionService
     )
     {
         this.pokerIdSecure                    = this.activatedRoute.snapshot.paramMap.get('secureId');

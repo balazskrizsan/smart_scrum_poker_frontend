@@ -46,6 +46,10 @@ import {RxStompService}            from "./modules/commons/services/rx-stomp-ser
                 {
                     path:         'poker',
                     loadChildren: () => import('./modules/poker/poker.module').then(m => m.PokerModule)
+                },
+                {
+                    path:         'account',
+                    loadChildren: () => import('./modules/account/account.module').then(m => m.AccountModule)
                 }
             ],
             {preloadingStrategy: PreloadAllModules}
