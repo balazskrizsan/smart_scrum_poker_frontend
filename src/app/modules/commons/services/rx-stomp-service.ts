@@ -43,8 +43,8 @@ export class RxStompService
               .watch({destination: destination})
               .pipe(
                 map((message): IStdApiResponse<T> => JSON.parse(message.body).body),
-                tap(body => console.log(">>>> Socket response:", {destination, socketDestinationFilter, body})),
                 filter(body => body.socketResponseDestination == socketDestinationFilter),
+                tap(body => console.log(">>>> Socket response:", {destination, socketDestinationFilter, body})),
               );
 
             return {observable, destination, socketDestinationFilter, $subscription: null}
