@@ -204,9 +204,9 @@ export class DisplayActionComponent implements OnInit, OnDestroy
     private resetVoteValues()
     {
         this.activeRoundTicketId = 0;
-        this.voteEffort = 0;
-        this.voteComplexity = 0;
-        this.voteUncertainty = 0;
+        this.voteEffort          = 0;
+        this.voteComplexity      = 0;
+        this.voteUncertainty     = 0;
     }
 
     isVoteSendable(): boolean
@@ -229,6 +229,8 @@ export class DisplayActionComponent implements OnInit, OnDestroy
             .replace("{ticketId}", this.activeRoundTicketId.toString(10)),
           {
               userIdSecure:    insecureUser.idSecure,
+              pokerIdSecure:   this.pokerIdSecure,
+              ticketId:        this.activeRoundTicketId,
               voteUncertainty: this.voteUncertainty,
               voteComplexity:  this.voteComplexity,
               voteEffort:      this.voteEffort,
