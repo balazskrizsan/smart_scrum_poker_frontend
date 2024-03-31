@@ -19,7 +19,6 @@ import {IVoteResponse}         from "../interfaces/i-vote-response";
 import {FlashMessageService}   from "../../flash-message/services/flash-message-service";
 import {FlashMessageLevelEnum} from "../../flash-message/enums/flash-message-level-enum";
 
-
 @Component(
   {
       templateUrl: './../views/display.html',
@@ -30,14 +29,14 @@ import {FlashMessageLevelEnum} from "../../flash-message/enums/flash-message-lev
 export class DisplayActionComponent implements OnInit, OnDestroy
 {
     protected pokerIdSecure: string;
-    protected isInitDone                            = false;
+    protected isInitDone                                            = false;
     protected poker: IPoker;
     protected tickets: Array<ITicket>;
-    protected activeRoundTicketId                   = 0;
-    protected voteUncertainty                       = 0;
-    protected voteComplexity                        = 0;
-    protected voteEffort                            = 0;
-    protected voters: Record<string, IInsecureUser> = {};
+    protected activeRoundTicketId                                   = 0;
+    protected voteUncertainty                                       = 0;
+    protected voteComplexity                                        = 0;
+    protected voteEffort                                            = 0;
+    protected voters: Record<number, Record<string, IInsecureUser>> = {};
     private pokerStartListener: ISubscriptionListener<IStart>;
     private roomStateListener: ISubscriptionListener<IStateResponse>;
     private roundStartListener: ISubscriptionListener<IStartRound>;
@@ -56,9 +55,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
           `/queue/reply-${this.pokerIdSecure}`,
           SocketDestination.RECEIVE_POKER_START
         );
-        this.pokerStartListener.$subscription = this.pokerStartListener.observable.subscribe(
-          (data) => console.log(data)
-        );
+        this.pokerStartListener.$subscription = this.pokerStartListener.observable.subscribe();
 
         this.roomStateListener               = this.rxStompService.getSubscription<IStateResponse>(
           '/user/queue/reply',
@@ -111,7 +108,9 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         {
             let insecureUser: IInsecureUser = body.data.voterInsecureUser;
 
-            this.voters[insecureUser.idSecure] = insecureUser;
+            if (!this.voters[this.activeRoundTicketId])
+                this.voters[this.activeRoundTicketId] = {};
+            this.voters[this.activeRoundTicketId][insecureUser.idSecure] = insecureUser;
 
             this.flashMessageService.push({
                 messageLevel: FlashMessageLevelEnum.OK,
