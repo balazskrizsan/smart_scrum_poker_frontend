@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col col-lg-3 col-md-6 col-sm-12 col-12">
+        <h3 style="text-align: center">Uncertainty</h3>
+        <button
+            *ngFor="let option of voteOptions; index as i"
+            (click)="setVoteUncertainty(i + 1)"
+            [ngClass]="getUncertaintyClass(i + 1)"
+            style="width: 100%"
+            class="btn btn-lg"
+        >
+            {{ option }}
+        </button>
+    </div>
+    <div class="col col-lg-3 col-md-6 col-sm-12 col-12">
+        <h3 style="text-align: center">Complexity</h3>
+        <button
+            *ngFor="let option of voteOptions; index as i"
+            (click)="setVoteComplexity(i + 1)"
+            [ngClass]="getComplexityClass(i + 1)"
+            style="width: 100%"
+            class="btn btn-lg"
+        >
+            {{ option }}
+        </button>
+    </div>
+    <div class="col col-lg-3 col-md-6 col-sm-12 col-12">
+        <h3 style="text-align: center">Effort</h3>
+        <button
+            *ngFor="let option of voteOptions; index as i"
+            (click)="setVoteEffort(i + 1)"
+            [ngClass]="getEffortClass(i + 1)"
+            style="width: 100%"
+            class="btn btn-lg"
+        >
+            {{ option }}
+        </button>
+    </div>
+</div>
+<button class="btn btn-primary btn-lg" style="width: 100%" *ngIf="isVoteSendable()" (click)="send()">VOTE</button>
