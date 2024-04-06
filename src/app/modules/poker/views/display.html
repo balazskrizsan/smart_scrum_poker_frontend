@@ -44,25 +44,23 @@ Users entered: <span *ngFor="let user of inGameInsecureUsers">{{ user.userName }
 
         <!--    <div *ngIf="activeRoundTicketId == ticket.id">-->
         <div *ngIf="activeRoundTicketId == ticket.id">
-            <div *ngFor="let i of [1, 2, 3, 4, 5]">
-                <div
-                    *ngFor="let user of inGameInsecureUsers"
-                    style="float: left"
-                    class="col col-xl-2 col-lg-3 col-md-6 col-sm-6 col-6"
-                >
-                    <div class="ui-block">
-                        <div class="birthday-item inline-items">
-                            <!--                <div class="author-thumb">-->
-                            <!--                    <img loading="lazy" src="img/avatar21-sm.jpg" alt="author">-->
-                            <!--                </div>-->
-                            <div class="birthday-author-name">
-                                <span class="h6 author-name">{{ user.userName }}</span>
-                                <div class="birthday-date">{{ getVoteState(user.idSecure, ticket.id) }}</div>
-                            </div>
-                            <a href="#" class="btn btn-sm bg-blue">
-                                ?
-                            </a>
+            <div
+                *ngFor="let user of inGameInsecureUsers"
+                style="float: left"
+                class="col col-xl-2 col-lg-3 col-md-6 col-sm-6 col-6"
+            >
+                <div class="ui-block">
+                    <div class="birthday-item inline-items">
+                        <!--                <div class="author-thumb">-->
+                        <!--                    <img loading="lazy" src="img/avatar21-sm.jpg" alt="author">-->
+                        <!--                </div>-->
+                        <div class="birthday-author-name">
+                            <span class="h6 author-name">{{ user.userName }}</span>
+                            <div class="birthday-date">{{ getVoteState(user.idSecure, ticket.id) }}</div>
                         </div>
+                        <a href="#" class="btn btn-sm bg-blue">
+                            ?
+                        </a>
                     </div>
                 </div>
             </div>
