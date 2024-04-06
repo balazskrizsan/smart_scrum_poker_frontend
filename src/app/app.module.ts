@@ -31,6 +31,7 @@ import {
 import {environment}               from "../environments/environment";
 import {TokenInterceptorService}   from "./services/token-interceptor-service";
 import {RxStompService}            from "./modules/commons/services/rx-stomp-service";
+import {AccountService}            from "./modules/account/service/account-service";
 
 @NgModule(
   {
@@ -80,6 +81,7 @@ import {RxStompService}            from "./modules/commons/services/rx-stomp-ser
           LocalStorageService,
           FlashMessageState,
           FlashMessageService,
+          AccountService,
           LayoutRightBlockComponent,
           {
               provide:  HTTP_INTERCEPTORS,

@@ -1,5 +1,10 @@
 import {Injectable} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {
+  FormArray,
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import {IPoker}                             from './interfaces/i-poker';
 
 @Injectable()
@@ -7,7 +12,14 @@ export class Forms {
   private CruFields: any = {
     id: new FormControl(null, []),
     name: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    ticketNames: new FormArray([]),
   };
+
+  newTicketName(): FormGroup {
+    return new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.minLength(5)])
+    })
+  }
 
   getFields(): any {
     return this.CruFields;
@@ -18,6 +30,7 @@ export class Forms {
       {
         id: this.CruFields.id,
         name: this.CruFields.name,
+        ticketNames: this.CruFields.ticketNames,
       }
     );
   }
@@ -30,11 +43,7 @@ export class Forms {
     return this.CruFields[field];
   }
 
-  createPatchMap(poker: IPoker): IPoker {
-    return {
-      id: poker.id,
-      idSecure: poker.idSecure,
-      name: poker.name,
-    };
+  getArrayField(field: string): FormArray {
+    return this.CruFields[field];
   }
 }
