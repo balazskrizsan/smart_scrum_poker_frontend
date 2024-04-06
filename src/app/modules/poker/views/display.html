@@ -1,64 +1,82 @@
 <br><br>
-https://localhost:4200/poker/display/{{ pokerIdSecure }}
 <br><br>
-isInitDone: {{ isInitDone }}
+{{ poker.name }} / SHARE: https://localhost:4200/poker/display/{{ pokerIdSecure }}
 <br><br>
-poker: {{ poker | json }}
-<br><br>
-activeRoundTicketId: {{ activeRoundTicketId }}
-<br><br>
-voteUncertainty: {{ voteUncertainty }}
-voteComplexity: {{ voteComplexity }}
-voteEffort: {{ voteEffort }}
-<ul>
-    <li *ngFor="let ticket of tickets">
-        {{ ticket.id }} / {{ ticket.name }}
-        <br>
-        voters:
-        <ul>
-            <li *ngFor="let voter of voters[ticket.id] | keyvalue">
-                {{ voter.value.userName }}
-            </li>
-        </ul>
-        <br>
-        <button
-            *ngIf="activeRoundTicketId == 0"
-            (click)="startRound(ticket.id)" type="button"
-        >
-            start
-        </button>
-        <button
-            *ngIf="activeRoundTicketId == ticket.id"
-            (click)="endRound()"
-            type="button"
-        >
-            end
-        </button>
-        <br>
-        <div *ngIf="activeRoundTicketId == ticket.id">
-            <div>
-                <button (click)="setVoteUncertainty(1)">small</button>
-                <button (click)="setVoteUncertainty(2)">medium</button>
-                <button (click)="setVoteUncertainty(3)">large</button>
+Users entered: <span *ngFor="let user of inGameInsecureUsers">{{ user.userName }} | </span>
+<div
+    *ngFor="let ticket of tickets"
+    class="row"
+>
+    <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="ui-block">
+            <div class="ui-block-title">
+                <h6 class="title">
+                    <button
+                        style="float: right"
+                        class="btn btn-primary"
+                        *ngIf="isAdmin() && activeRoundTicketId == 0"
+                        (click)="startRound(ticket.id)" type="button"
+                    >Start
+                    </button>
+                    <button
+                        style="float: right"
+                        class="btn btn-primary"
+                        *ngIf="isAdmin() && activeRoundTicketId == ticket.id"
+                        (click)="endRound()"
+                        type="button"
+                    >End
+                    </button>
+                    ID: {{ ticket.id }}: {{ ticket.name }} /
+                    Votes: <span *ngIf="null != votes[ticket.id]">{{ Object.keys(votes[ticket.id]).length }}</span> /
+                    AVG: waiting /
+                    Min: waiting /
+                    Max: waiting
+                </h6>
             </div>
-            <div>
-                <button (click)="setVoteComplexity(1)">small</button>
-                <button (click)="setVoteComplexity(2)">medium</button>
-                <button (click)="setVoteComplexity(3)">large</button>
-            </div>
-            <div>
-                <button (click)="setVoteEffort(1)">small</button>
-                <button (click)="setVoteEffort(2)">medium</button>
-                <button (click)="setVoteEffort(3)">large</button>
-            </div>
-            <button
-                *ngIf="isVoteSendable()"
-                (click)="send()"
-            >send
-            </button>
         </div>
-    </li>
-</ul>
+    </div>
+    <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <!--    <ul>-->
+        <!--        <li *ngFor="let voter of votes[ticket.id] | keyvalue">{{ voter.value.userName }}</li>-->
+
+        <!--        <b>Voters: </b> <span *ngFor="let user of inGameInsecureUsers">{{ user.userName }}-->
+        <!--        : {{ getVoteState(user.idSecure, ticket.id) }}| </span>-->
+
+        <!--    <div *ngIf="activeRoundTicketId == ticket.id">-->
+        <div *ngIf="activeRoundTicketId == ticket.id">
+            <div *ngFor="let i of [1, 2, 3, 4, 5]">
+                <div
+                    *ngFor="let user of inGameInsecureUsers"
+                    style="float: left"
+                    class="col col-xl-2 col-lg-3 col-md-6 col-sm-6 col-6"
+                >
+                    <div class="ui-block">
+                        <div class="birthday-item inline-items">
+                            <!--                <div class="author-thumb">-->
+                            <!--                    <img loading="lazy" src="img/avatar21-sm.jpg" alt="author">-->
+                            <!--                </div>-->
+                            <div class="birthday-author-name">
+                                <span class="h6 author-name">{{ user.userName }}</span>
+                                <div class="birthday-date">{{ getVoteState(user.idSecure, ticket.id) }}</div>
+                            </div>
+                            <a href="#" class="btn btn-sm bg-blue">
+                                ?
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <app-voter-table
+            *ngIf="activeRoundTicketId == ticket.id"
+            [gameEvents]="gameEvents"
+            [pokerIdSecure]="pokerIdSecure"
+            [ticketId]="activeRoundTicketId"
+        ></app-voter-table>
+    </div>
+</div>
 <br><br>
 <button (click)="pokerRoomPush()">Push to room</button>
 <button (click)="init()">Init</button>
