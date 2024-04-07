@@ -1,8 +1,19 @@
-<br><br>
-<br><br>
-{{ poker.name }} / SHARE: https://localhost:4200/poker/display/{{ pokerIdSecure }}
-<br><br>
+<div class="ui-block" style="margin-top: 50px">
+    <div class="birthday-item inline-items badges table-dark">
+        <div class="birthday-author-name">
+            <div class="h6 author-name" style="color: #ff5e3a">{{ poker.name }}</div>
+            <div class="birthday-date">Share link: https://localhost:4200/poker/display/{{ pokerIdSecure }}</div>
+        </div>
+        <div class="skills-item">
+            <div class="skills-item-meter">
+                <span class="skills-item-meter-active skills-animate" style="width: 76%; opacity: 1;"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
 Users entered: <span *ngFor="let user of inGameInsecureUsers">{{ user.userName }} | </span>
+
 <div
     *ngFor="let ticket of tickets"
     class="row"
