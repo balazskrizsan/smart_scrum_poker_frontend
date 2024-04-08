@@ -25,17 +25,25 @@ Users entered: <span *ngFor="let user of inGameInsecureUsers">{{ user.userName }
                     <button
                         style="float: right"
                         class="btn btn-primary"
-                        *ngIf="isAdmin() && activeRoundTicketId == 0"
-                        (click)="startRound(ticket.id)" type="button"
+                        *ngIf="isAdmin() && activeTicketId == 0 && openedTicketId == 0"
+                        (click)="startTicket(ticket.id)" type="button"
                     >Start
                     </button>
                     <button
                         style="float: right"
                         class="btn btn-primary"
-                        *ngIf="isAdmin() && activeRoundTicketId == ticket.id"
-                        (click)="endRound()"
+                        *ngIf="isAdmin() && activeTicketId == ticket.id"
+                        (click)="endTicket()"
                         type="button"
                     >End
+                    </button>
+                    <button
+                        style="float: right"
+                        class="btn btn-primary"
+                        *ngIf="isAdmin() && activeTicketId == 0 && openedTicketId == ticket.id"
+                        (click)="closeTicket()"
+                        type="button"
+                    >Close
                     </button>
                     ID: {{ ticket.id }}: {{ ticket.name }} /
                     Votes: <span *ngIf="null != votes[ticket.id]">{{ Object.keys(votes[ticket.id]).length }}</span> /
@@ -46,6 +54,7 @@ Users entered: <span *ngFor="let user of inGameInsecureUsers">{{ user.userName }
             </div>
         </div>
     </div>
+
     <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <!--    <ul>-->
         <!--        <li *ngFor="let voter of votes[ticket.id] | keyvalue">{{ voter.value.userName }}</li>-->
@@ -54,7 +63,7 @@ Users entered: <span *ngFor="let user of inGameInsecureUsers">{{ user.userName }
         <!--        : {{ getVoteState(user.idSecure, ticket.id) }}| </span>-->
 
         <!--    <div *ngIf="activeRoundTicketId == ticket.id">-->
-        <div *ngIf="activeRoundTicketId == ticket.id">
+        <div *ngIf="openedTicketId == ticket.id">
             <div
                 *ngFor="let user of inGameInsecureUsers"
                 style="float: left"
@@ -70,7 +79,7 @@ Users entered: <span *ngFor="let user of inGameInsecureUsers">{{ user.userName }
                             <div class="birthday-date">{{ getVoteState(user.idSecure, ticket.id) }}</div>
                         </div>
                         <a href="#" class="btn btn-sm bg-blue">
-                            ?
+                            {{ getCalculatedPoint(ticket.id, user.idSecure) }}
                         </a>
                     </div>
                 </div>
@@ -79,10 +88,10 @@ Users entered: <span *ngFor="let user of inGameInsecureUsers">{{ user.userName }
     </div>
     <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <app-voter-table
-            *ngIf="activeRoundTicketId == ticket.id"
+            *ngIf="activeTicketId == ticket.id"
             [gameEvents]="gameEvents"
             [pokerIdSecure]="pokerIdSecure"
-            [ticketId]="activeRoundTicketId"
+            [ticketId]="activeTicketId"
         ></app-voter-table>
     </div>
 </div>

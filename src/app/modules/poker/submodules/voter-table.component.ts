@@ -91,7 +91,7 @@ export class VoterTableComponent
     {
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_VOTE
-            .replace("{pokerSecureId}", this.pokerIdSecure)
+            .replace("{pokerIdSecure}", this.pokerIdSecure)
             .replace("{ticketId}", this.ticketId.toString(10)),
           {
               userIdSecure:    this.accountService.getCurrentUser().idSecure,

@@ -20,6 +20,8 @@ import {FlashMessageService}   from "../../flash-message/services/flash-message-
 import {FlashMessageLevelEnum} from "../../flash-message/enums/flash-message-level-enum";
 import {AccountService}        from "../../account/service/account-service";
 import {EventEnum}             from "../enums/event-enum";
+import {IVoteStopResponse}     from "../interfaces/i-vote-stop-response";
+import {IVote}                 from "../interfaces/i-vote";
 
 @Component(
   {
@@ -31,19 +33,22 @@ import {EventEnum}             from "../enums/event-enum";
 export class DisplayActionComponent implements OnInit, OnDestroy
 {
     protected pokerIdSecure: string;
-    protected isInitDone                                           = false;
     protected poker: IPoker;
     protected owner: IInsecureUser;
     protected inGameInsecureUsers: Array<IInsecureUser>;
     protected tickets: Array<ITicket>;
-    protected activeRoundTicketId                                  = 0;
+    protected activeTicketId                                       = 0;
+    protected openedTicketId                                       = 0;
+    protected finishedTicketIds: Array<number>                     = [];
     protected votes: Record<number, Record<string, IInsecureUser>> = {};
+    protected userVotes: Record<number, Record<string, IVote>>     = {};
     protected readonly Object                                      = Object;
     protected gameEvents: EventEmitter<EventEnum>                  = new EventEmitter<EventEnum>()
     private readonly pokerStartListener: ISubscriptionListener<IStart>;
     private readonly roomStateListener: ISubscriptionListener<IStateResponse>;
     private readonly roundStartListener: ISubscriptionListener<IStartRound>;
-    private readonly roundStopListener: ISubscriptionListener<IStartRound>;
+    private readonly voteStopListener: ISubscriptionListener<IVoteStopResponse>;
+    private readonly ticketCloseListener: ISubscriptionListener<IVoteStopResponse>;
     private readonly voteListener: ISubscriptionListener<IVoteResponse>;
 
     public constructor(
@@ -72,7 +77,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
               this.inGameInsecureUsers   = body.data.inGameInsecureUsers;
               this.votes                 = body.data.votes;
               this.owner                 = body.data.owner;
-              this.isInitDone            = true;
+              // @todo: finishedVoteIds
               let possibleStartedTickets = this.tickets.filter(t => t.isActive);
               if (possibleStartedTickets.length > 1)
               {
@@ -80,7 +85,12 @@ export class DisplayActionComponent implements OnInit, OnDestroy
               }
               if (possibleStartedTickets.length == 1)
               {
-                  this.activeRoundTicketId = possibleStartedTickets.pop().id;
+                  this.activeTicketId = possibleStartedTickets.pop().id;
+                  this.openedTicketId = this.activeTicketId;
+                  console.log(
+                    this.activeTicketId,
+                    this.openedTicketId
+                  )
               }
           });
 
@@ -92,18 +102,33 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         this.roundStartListener.$subscription = this.roundStartListener.observable.subscribe(
           (body) =>
           {
-              this.activeRoundTicketId = body.data.startedTicketId;
+              this.activeTicketId = body.data.startedTicketId;
+              this.openedTicketId = body.data.startedTicketId;
+              console.log(this)
           });
 
-        this.roundStopListener               = this.rxStompService
-          .getSubscription<IStartRound>(
+        this.voteStopListener               = this.rxStompService
+          .getSubscription<IVoteStopResponse>(
             `/queue/reply-${this.pokerIdSecure}`,
             SocketDestination.RECEIVE_POKER_ROUND_STOP
           );
-        this.roundStopListener.$subscription = this.roundStopListener.observable.subscribe(
+        this.voteStopListener.$subscription = this.voteStopListener.observable.subscribe(
           (body) =>
           {
-              this.activeRoundTicketId = 0;
+              this.finishedTicketIds.push(Number(body.data.finishedTicketId));
+              this.userVotes[body.data.finishedTicketId] = body.data.votes;
+              this.activeTicketId                        = 0;
+          });
+
+        this.ticketCloseListener               = this.rxStompService
+          .getSubscription<IVoteStopResponse>(
+            `/queue/reply-${this.pokerIdSecure}`,
+            SocketDestination.RECEIVE_POKER_TICKET_CLOSE
+          );
+        this.ticketCloseListener.$subscription = this.ticketCloseListener.observable.subscribe(
+          (body) =>
+          {
+              this.openedTicketId = 0;
           });
 
         this.voteListener               = this.rxStompService.getSubscription<IVoteResponse>(
@@ -114,11 +139,11 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         {
             let insecureUser: IInsecureUser = body.data.voterInsecureUser;
 
-            if (!this.votes[this.activeRoundTicketId])
+            if (!this.votes[this.activeTicketId])
             {
-                this.votes[this.activeRoundTicketId] = {};
+                this.votes[this.activeTicketId] = {};
             }
-            this.votes[this.activeRoundTicketId][insecureUser.idSecure] = insecureUser;
+            this.votes[this.activeTicketId][insecureUser.idSecure] = insecureUser;
 
             this.flashMessageService.push({
                 messageLevel: FlashMessageLevelEnum.OK,
@@ -132,7 +157,8 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         this.rxStompService.unsubscribe(this.pokerStartListener);
         this.rxStompService.unsubscribe(this.roomStateListener);
         this.rxStompService.unsubscribe(this.roundStartListener);
-        this.rxStompService.unsubscribe(this.roundStopListener);
+        this.rxStompService.unsubscribe(this.voteStopListener);
+        this.rxStompService.unsubscribe(this.ticketCloseListener);
         this.rxStompService.unsubscribe(this.voteListener);
     }
 
@@ -145,7 +171,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
     {
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_ROOM_STATE
-            .replace("{pokerSecureId}", this.pokerIdSecure)
+            .replace("{pokerIdSecure}", this.pokerIdSecure)
             .replace("{insecureUserId}", this.accountService.getCurrentUser().idSecure),
           ''
         );
@@ -156,27 +182,37 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         this.rxStompService.publish(SocketDestination.POKER_ROOM + this.pokerIdSecure, 'hello')
     }
 
-    protected startRound(ticketId: number)
+    protected startTicket(ticketId: number)
     {
         this.gameEvents.emit(EventEnum.START_ROUND);
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_ROUND_START
-            .replace("{pokerSecureId}", this.pokerIdSecure)
+            .replace("{pokerIdSecure}", this.pokerIdSecure)
             .replace("{ticketId}", ticketId.toString(10)),
           ''
         );
     }
 
-    protected endRound(): void
+    protected endTicket(): void
     {
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_ROUND_STOP
-            .replace("{pokerSecureId}", this.pokerIdSecure)
-            .replace("{ticketId}", this.activeRoundTicketId.toString(10)),
+            .replace("{pokerIdSecure}", this.pokerIdSecure)
+            .replace("{ticketId}", this.activeTicketId.toString(10)),
           ''
         );
         this.gameEvents.emit(EventEnum.END_ROUND);
-        this.activeRoundTicketId = 0;
+        this.activeTicketId = 0;
+    }
+
+    protected closeTicket()
+    {
+        this.rxStompService.publish(
+          SocketDestination.SEND_POKER_TICKET_CLOSE
+            .replace("{pokerIdSecure}", this.pokerIdSecure)
+            .replace("{ticketId}", this.activeTicketId.toString(10)),
+          ''
+        );
     }
 
     protected getVoteState(userIdSecure: string, ticketId: number): "done" | "waiting"
@@ -187,5 +223,18 @@ export class DisplayActionComponent implements OnInit, OnDestroy
     protected isAdmin(): boolean
     {
         return this.accountService.getCurrentUser().idSecure == this.owner.idSecure;
+    }
+
+    getCalculatedPoint(ticketId: number, userIdSecure: string)
+    {
+        if (this.finishedTicketIds.includes(ticketId))
+        {
+            if (this.userVotes[ticketId] && this.userVotes[ticketId][userIdSecure])
+            {
+                return this.userVotes[ticketId][userIdSecure].calculatedPoint;
+            }
+        }
+
+        return "?";
     }
 }
