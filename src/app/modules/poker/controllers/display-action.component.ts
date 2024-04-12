@@ -3,25 +3,27 @@ import {
     EventEmitter,
     OnDestroy,
     OnInit
-}                              from '@angular/core';
-import {Forms}                 from '../forms';
-import {RxStompService}        from "../../commons/services/rx-stomp-service";
-import {SocketDestination}     from "../../commons/enums/socket-destination";
-import {ActivatedRoute}        from "@angular/router";
-import {IStateResponse}        from "../interfaces/i-state-response";
-import {IPoker}                from "../interfaces/i-poker";
-import {ITicket}               from "../interfaces/i-ticket";
-import {IStartRound}           from "../interfaces/i-start-round";
-import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
-import {IStartResponse}        from "../interfaces/i-start-response";
-import {IInsecureUser}         from "../../account/interfaces/i-insecure-user";
-import {IVoteResponse}         from "../interfaces/i-vote-response";
-import {FlashMessageService}   from "../../flash-message/services/flash-message-service";
-import {FlashMessageLevelEnum} from "../../flash-message/enums/flash-message-level-enum";
-import {AccountService}        from "../../account/service/account-service";
-import {EventEnum}             from "../enums/event-enum";
-import {IVoteStopResponse}     from "../interfaces/i-vote-stop-response";
-import {IVote}                 from "../interfaces/i-vote";
+}                               from '@angular/core';
+import {Forms}                  from '../forms';
+import {RxStompService}         from "../../commons/services/rx-stomp-service";
+import {SocketDestination}      from "../../commons/enums/socket-destination";
+import {ActivatedRoute}         from "@angular/router";
+import {IStateResponse}         from "../interfaces/i-state-response";
+import {IPoker}                 from "../interfaces/i-poker";
+import {ITicket}                from "../interfaces/i-ticket";
+import {IStartRound}            from "../interfaces/i-start-round";
+import {ISubscriptionListener}  from "../interfaces/i-subscription-listener";
+import {IStartResponse}         from "../interfaces/i-start-response";
+import {IInsecureUser}          from "../../account/interfaces/i-insecure-user";
+import {IVoteResponse}          from "../interfaces/i-vote-response";
+import {FlashMessageService}    from "../../flash-message/services/flash-message-service";
+import {FlashMessageLevelEnum}  from "../../flash-message/enums/flash-message-level-enum";
+import {AccountService}         from "../../account/service/account-service";
+import {EventEnum}              from "../enums/event-enum";
+import {IVoteStopResponse}      from "../interfaces/i-vote-stop-response";
+import {IVote}                  from "../interfaces/i-vote";
+import {IVoteNewJoinerResponse} from "../interfaces/i-vote-new-joiner-response";
+import _                        from 'lodash';
 
 @Component(
   {
@@ -50,6 +52,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
     private readonly voteStopListener: ISubscriptionListener<IVoteStopResponse>;
     private readonly ticketCloseListener: ISubscriptionListener<IVoteStopResponse>;
     private readonly voteListener: ISubscriptionListener<IVoteResponse>;
+    private readonly voteNewJoinerListener: ISubscriptionListener<IVoteNewJoinerResponse>;
 
     public constructor(
       private rxStompService: RxStompService,
@@ -92,7 +95,8 @@ export class DisplayActionComponent implements OnInit, OnDestroy
                     this.openedTicketId
                   )
               }
-          });
+          }
+        );
 
         this.roundStartListener               = this.rxStompService
           .getSubscription<IStartRound>(
@@ -104,8 +108,24 @@ export class DisplayActionComponent implements OnInit, OnDestroy
           {
               this.activeTicketId = body.data.startedTicketId;
               this.openedTicketId = body.data.startedTicketId;
-              console.log(this)
-          });
+          }
+        );
+
+        this.voteNewJoinerListener               = this.rxStompService
+          .getSubscription<IVoteNewJoinerResponse>(
+            `/queue/reply-${this.pokerIdSecure}`,
+            SocketDestination.RECEIVE_POKER_VOTE_NEW_JOINER
+          );
+        this.voteNewJoinerListener.$subscription = this.voteNewJoinerListener.observable.subscribe(
+          (body) =>
+          {
+              const insecureUser = body.data.insecureUser;
+              if (!_.find(this.inGameInsecureUsers, insecureUser))
+              {
+                  this.inGameInsecureUsers.push(insecureUser);
+              }
+          }
+        );
 
         this.voteStopListener               = this.rxStompService
           .getSubscription<IVoteStopResponse>(
@@ -118,7 +138,8 @@ export class DisplayActionComponent implements OnInit, OnDestroy
               this.finishedTicketIds.push(Number(body.data.finishedTicketId));
               this.userVotes[body.data.finishedTicketId] = body.data.votes;
               this.activeTicketId                        = 0;
-          });
+          }
+        );
 
         this.ticketCloseListener               = this.rxStompService
           .getSubscription<IVoteStopResponse>(
@@ -129,27 +150,29 @@ export class DisplayActionComponent implements OnInit, OnDestroy
           (body) =>
           {
               this.openedTicketId = 0;
-          });
+          }
+        );
 
         this.voteListener               = this.rxStompService.getSubscription<IVoteResponse>(
           `/queue/reply-${this.pokerIdSecure}`,
           SocketDestination.RECEIVE_POKER_VOTE
         );
         this.voteListener.$subscription = this.voteListener.observable.subscribe((body) =>
-        {
-            let insecureUser: IInsecureUser = body.data.voterInsecureUser;
+          {
+              let insecureUser: IInsecureUser = body.data.voterInsecureUser;
 
-            if (!this.votes[this.activeTicketId])
-            {
-                this.votes[this.activeTicketId] = {};
-            }
-            this.votes[this.activeTicketId][insecureUser.idSecure] = insecureUser;
+              if (!this.votes[this.activeTicketId])
+              {
+                  this.votes[this.activeTicketId] = {};
+              }
+              this.votes[this.activeTicketId][insecureUser.idSecure] = insecureUser;
 
-            this.flashMessageService.push({
-                messageLevel: FlashMessageLevelEnum.OK,
-                message:      `Vote from: ${insecureUser.userName}`
-            })
-        });
+              this.flashMessageService.push({
+                  messageLevel: FlashMessageLevelEnum.OK,
+                  message:      `Vote from: ${insecureUser.userName}`
+              })
+          }
+        );
     }
 
     ngOnDestroy(): void

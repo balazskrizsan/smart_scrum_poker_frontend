@@ -32,7 +32,7 @@ export class InsecureCreateActionComponent implements OnDestroy
 
         this.roomStateListener               = this.rxStompService.getSubscription<IStateResponse>(
           '/user/queue/reply',
-          SocketDestination.RECIEVE_INSECURE_USER_CREATE
+          SocketDestination.RECEIVE_INSECURE_USER_CREATE
         );
         this.roomStateListener.$subscription = this.roomStateListener.observable.subscribe(
           (body) =>
