@@ -10,7 +10,7 @@ import {
 }                              from "@angular/forms";
 import {RxStompService}        from "../../commons/services/rx-stomp-service";
 import {SocketDestination}     from "../../commons/enums/socket-destination";
-import {IStart}                from "../interfaces/i-start";
+import {IStartResponse}        from "../interfaces/i-start-response";
 import {Router}                from "@angular/router";
 import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
 import {AccountService}        from "../../account/service/account-service";
@@ -25,7 +25,7 @@ import {AccountService}        from "../../account/service/account-service";
 export class CreateActionComponent implements OnDestroy, OnInit
 {
     protected form: FormGroup;
-    private createPokerListener: ISubscriptionListener<IStart>;
+    private createPokerListener: ISubscriptionListener<IStartResponse>;
     private hasSubmit = false;
 
     public constructor(
@@ -38,7 +38,7 @@ export class CreateActionComponent implements OnDestroy, OnInit
         this.form = this.forms.createCruForm();
 
         this.createPokerListener               = this.rxStompService
-          .getSubscription<IStart>('/user/queue/reply', SocketDestination.RECEIVE_POKER_START);
+          .getSubscription<IStartResponse>('/user/queue/reply', SocketDestination.RECEIVE_POKER_START);
         this.createPokerListener.$subscription = this.createPokerListener.observable.subscribe(
           (body) =>
             this.router.navigate(['/poker/display/' + body.data.poker.idSecure])
@@ -84,13 +84,13 @@ export class CreateActionComponent implements OnDestroy, OnInit
         this.hasSubmit = true;
         if (this.form.valid)
         {
-            console.log("> Create poker", this.form.getRawValue());
+            console.log(">>>> Create poker", this.form.getRawValue());
 
             this.rxStompService.publish(
               SocketDestination.RECEIVE_POKER_START,
               {
-                  sprintTitle: this.forms.getField("name").getRawValue(),
-                  ticketNames: this.form.getRawValue().ticketNames.flatMap(tn => tn.name),
+                  sprintTitle:           this.forms.getField("name").getRawValue(),
+                  ticketNames:           this.form.getRawValue().ticketNames.flatMap(tn => tn.name),
                   starterInsecureUserId: this.accountService.getCurrentUser().idSecure,
               }
             );

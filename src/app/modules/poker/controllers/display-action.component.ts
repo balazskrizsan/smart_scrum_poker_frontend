@@ -13,7 +13,7 @@ import {IPoker}                from "../interfaces/i-poker";
 import {ITicket}               from "../interfaces/i-ticket";
 import {IStartRound}           from "../interfaces/i-start-round";
 import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
-import {IStart}                from "../interfaces/i-start";
+import {IStartResponse}        from "../interfaces/i-start-response";
 import {IInsecureUser}         from "../../account/interfaces/i-insecure-user";
 import {IVoteResponse}         from "../interfaces/i-vote-response";
 import {FlashMessageService}   from "../../flash-message/services/flash-message-service";
@@ -44,7 +44,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
     protected userVotes: Record<number, Record<string, IVote>>     = {};
     protected readonly Object                                      = Object;
     protected gameEvents: EventEmitter<EventEnum>                  = new EventEmitter<EventEnum>()
-    private readonly pokerStartListener: ISubscriptionListener<IStart>;
+    private readonly pokerStartListener: ISubscriptionListener<IStartResponse>;
     private readonly roomStateListener: ISubscriptionListener<IStateResponse>;
     private readonly roundStartListener: ISubscriptionListener<IStartRound>;
     private readonly voteStopListener: ISubscriptionListener<IVoteStopResponse>;
