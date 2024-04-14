@@ -12,12 +12,17 @@ import {
     Subscription
 }                              from "rxjs";
 import {ISubscriptionListener} from "../../poker/interfaces/i-subscription-listener";
+import {AccountService} from "../../account/service/account-service";
 
 @Injectable()
 export class RxStompService
 {
     private rxStomp: RxStomp = null;
     private static serverUrl = 'wss://localhost:9999/ws';
+
+    constructor(private accountService: AccountService)
+    {
+    }
 
     public get(): RxStomp
     {
@@ -29,6 +34,9 @@ export class RxStompService
         this.rxStomp = new RxStomp();
         this.rxStomp.configure({
             brokerURL: RxStompService.serverUrl,
+            connectHeaders: {
+                "insecureUserIdSecure": this.accountService.getCurrentUser().idSecure
+            }
         });
         this.rxStomp.activate();
     }
