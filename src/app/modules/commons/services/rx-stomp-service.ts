@@ -1,18 +1,15 @@
-import {Injectable}           from "@angular/core";
-import {RxStomp}              from "@stomp/rx-stomp";
-import {SocketDestination} from "../enums/socket-destination";
+import {Injectable}            from "@angular/core";
+import {RxStomp}               from "@stomp/rx-stomp";
+import {SocketDestination}     from "../enums/socket-destination";
 import {
     map,
     tap
-}                          from "rxjs/operators";
-import {IStdApiResponse}   from "../../../interfaces/i-std-api-response";
-import {
-    filter,
-    Observable,
-    Subscription
-}                              from "rxjs";
+}                              from "rxjs/operators";
+import {IStdApiResponse}       from "../../../interfaces/i-std-api-response";
+import {filter}                from "rxjs";
 import {ISubscriptionListener} from "../../poker/interfaces/i-subscription-listener";
-import {AccountService} from "../../account/service/account-service";
+import {AccountService}        from "../../account/service/account-service";
+import {IInsecureUser}         from "../../account/interfaces/i-insecure-user";
 
 @Injectable()
 export class RxStompService
@@ -33,12 +30,26 @@ export class RxStompService
 
         this.rxStomp = new RxStomp();
         this.rxStomp.configure({
-            brokerURL: RxStompService.serverUrl,
-            connectHeaders: {
-                "insecureUserIdSecure": this.accountService.getCurrentUser().idSecure
-            }
+            brokerURL:      RxStompService.serverUrl,
+            connectHeaders: this.getConnectHeaders()
         });
         this.rxStomp.activate();
+    }
+
+    private getConnectHeaders(): {}
+    {
+        let user: IInsecureUser;
+        try
+        {
+            user = this.accountService.getCurrentUser()
+        } catch (e)
+        {
+            return {}
+        }
+
+        return {
+            "insecureUserIdSecure": user.idSecure
+        };
     }
 
     public getSubscription<T>(destination: string, socketDestinationFilter: SocketDestination): ISubscriptionListener<T>
@@ -67,7 +78,7 @@ export class RxStompService
     public unsubscribe<T>(handler: ISubscriptionListener<T>): void
     {
         console.log(">>>> Unsubscription: ", {
-            destination: handler.destination,
+            destination:             handler.destination,
             socketDestinationFilter: handler.socketDestinationFilter
         });
         handler.$subscription.unsubscribe();

@@ -24,6 +24,7 @@ import {IVoteStopResponse}      from "../interfaces/i-vote-stop-response";
 import {IVote}                  from "../interfaces/i-vote";
 import {IVoteNewJoinerResponse} from "../interfaces/i-vote-new-joiner-response";
 import _                        from 'lodash';
+import {ISessionResponse}       from "../interfaces/i-session-response";
 
 @Component(
   {
@@ -38,15 +39,18 @@ export class DisplayActionComponent implements OnInit, OnDestroy
     protected poker: IPoker;
     protected owner: IInsecureUser;
     protected inGameInsecureUsers: Array<IInsecureUser>;
+    protected inGameInsecureUsersWithSessions: Record<string, boolean> = {};
     protected tickets: Array<ITicket>;
-    protected activeTicketId                                       = 0;
-    protected openedTicketId                                       = 0;
-    protected finishedTicketIds: Array<number>                     = [];
-    protected votes: Record<number, Record<string, IInsecureUser>> = {};
-    protected userVotes: Record<number, Record<string, IVote>>     = {};
-    protected readonly Object                                      = Object;
-    protected gameEvents: EventEmitter<EventEnum>                  = new EventEmitter<EventEnum>()
+    protected activeTicketId                                           = 0;
+    protected openedTicketId                                           = 0;
+    protected finishedTicketIds: Array<number>                         = [];
+    protected votes: Record<number, Record<string, IInsecureUser>>     = {};
+    protected userVotes: Record<number, Record<string, IVote>>         = {};
+    protected readonly Object                                          = Object;
+    protected gameEvents: EventEmitter<EventEnum>                      = new EventEmitter<EventEnum>()
     private readonly pokerStartListener: ISubscriptionListener<IStartResponse>;
+    private readonly sessionCreatedOrUpdatedListener: ISubscriptionListener<ISessionResponse>;
+    private readonly sessionClosedListener: ISubscriptionListener<ISessionResponse>;
     private readonly roomStateListener: ISubscriptionListener<IStateResponse>;
     private readonly roundStartListener: ISubscriptionListener<IStartRound>;
     private readonly voteStopListener: ISubscriptionListener<IVoteStopResponse>;
@@ -67,6 +71,26 @@ export class DisplayActionComponent implements OnInit, OnDestroy
           SocketDestination.RECEIVE_POKER_START
         );
         this.pokerStartListener.$subscription = this.pokerStartListener.observable.subscribe();
+
+        this.sessionCreatedOrUpdatedListener               = this.rxStompService.getSubscription<ISessionResponse>(
+          `/queue/reply-${this.pokerIdSecure}`,
+          SocketDestination.RECEIVE_SESSION_CREATED_OR_UPDATED
+        );
+        this.sessionCreatedOrUpdatedListener.$subscription = this.sessionCreatedOrUpdatedListener.observable.subscribe(
+          (body) =>
+          {
+              this.inGameInsecureUsersWithSessions[body.data.insecureUser.idSecure] = true;
+          });
+
+        this.sessionClosedListener               = this.rxStompService.getSubscription<ISessionResponse>(
+          `/queue/reply-${this.pokerIdSecure}`,
+          SocketDestination.RECEIVE_SESSION_CLOSED
+        );
+        this.sessionClosedListener.$subscription = this.sessionClosedListener.observable.subscribe(
+          (body) =>
+          {
+              this.inGameInsecureUsersWithSessions[body.data.insecureUser.idSecure] = undefined;
+          });
 
         this.roomStateListener               = this.rxStompService.getSubscription<IStateResponse>(
           '/user/queue/reply',

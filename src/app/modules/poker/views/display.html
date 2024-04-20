@@ -12,7 +12,12 @@
     </div>
 </div>
 
-Users entered: <span *ngFor="let user of inGameInsecureUsers">{{ user.userName }} | </span>
+Users entered:
+<br>
+<span *ngFor="let user of inGameInsecureUsers">
+    <span *ngIf="inGameInsecureUsersWithSessions[user.idSecure]">O</span>
+    {{ user.userName }} &nbsp; &nbsp; | &nbsp; &nbsp;
+</span>
 
 <div
     *ngFor="let ticket of tickets"
@@ -55,37 +60,55 @@ Users entered: <span *ngFor="let user of inGameInsecureUsers">{{ user.userName }
         </div>
     </div>
 
-    <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <!--    <ul>-->
-        <!--        <li *ngFor="let voter of votes[ticket.id] | keyvalue">{{ voter.value.userName }}</li>-->
-
-        <!--        <b>Voters: </b> <span *ngFor="let user of inGameInsecureUsers">{{ user.userName }}-->
-        <!--        : {{ getVoteState(user.idSecure, ticket.id) }}| </span>-->
-
-        <!--    <div *ngIf="activeRoundTicketId == ticket.id">-->
-        <div *ngIf="openedTicketId == ticket.id">
+    <div class="container" *ngIf="openedTicketId == ticket.id">
+        <div class="row gx-1">
             <div
                 *ngFor="let user of inGameInsecureUsers"
-                style="float: left"
-                class="col col-xl-2 col-lg-3 col-md-6 col-sm-6 col-6"
+                class="col-lg-3 col-md-6"
             >
                 <div class="ui-block">
-                    <div class="birthday-item inline-items">
-                        <!--                <div class="author-thumb">-->
-                        <!--                    <img loading="lazy" src="img/avatar21-sm.jpg" alt="author">-->
-                        <!--                </div>-->
+                    <div class="birthday-item inline-items" style="overflow: hidden">
                         <div class="birthday-author-name">
                             <span class="h6 author-name">{{ user.userName }}</span>
                             <div class="birthday-date">{{ getVoteState(user.idSecure, ticket.id) }}</div>
                         </div>
-                        <a href="#" class="btn btn-sm bg-blue">
+                        <span class="btn btn-sm bg-blue" style="position: absolute;right: 20px;top: 5px;">
                             {{ getCalculatedPoint(ticket.id, user.idSecure) }}
-                        </a>
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+<!--    <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">-->
+<!--        &lt;!&ndash;    <ul>&ndash;&gt;-->
+<!--        &lt;!&ndash;        <li *ngFor="let voter of votes[ticket.id] | keyvalue">{{ voter.value.userName }}</li>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;        <b>Voters: </b> <span *ngFor="let user of inGameInsecureUsers">{{ user.userName }}&ndash;&gt;-->
+<!--        &lt;!&ndash;        : {{ getVoteState(user.idSecure, ticket.id) }}| </span>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;    <div *ngIf="activeRoundTicketId == ticket.id">&ndash;&gt;-->
+<!--        <div *ngIf="openedTicketId == ticket.id">-->
+<!--            <div-->
+<!--                *ngFor="let user of inGameInsecureUsers"-->
+<!--                style="float: left"-->
+<!--                class="col-lg-3 col-md-"-->
+<!--            >-->
+<!--                <div class="row ui-block">-->
+<!--                    <div class="birthday-item inline-items">-->
+<!--                        <div class="birthday-author-name">-->
+<!--                            <span class="h6 author-name">{{ user.userName }}</span>-->
+<!--                            <div class="birthday-date">{{ getVoteState(user.idSecure, ticket.id) }}</div>-->
+<!--                        </div>-->
+<!--                        <span class="btn btn-sm bg-blue" style="float: right">-->
+<!--                            {{ getCalculatedPoint(ticket.id, user.idSecure) }}-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <app-voter-table
             *ngIf="activeTicketId == ticket.id"
