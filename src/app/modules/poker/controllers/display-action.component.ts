@@ -41,13 +41,13 @@ export class DisplayActionComponent implements OnInit, OnDestroy
     protected inGameInsecureUsers: Array<IInsecureUser>;
     protected inGameInsecureUsersWithSessions: Record<string, boolean> = {};
     protected tickets: Array<ITicket>;
-    protected activeTicketId                                           = 0;
-    protected openedTicketId                                           = 0;
-    protected finishedTicketIds: Array<number>                         = [];
-    protected votes: Record<number, Record<string, IInsecureUser>>     = {};
-    protected userVotes: Record<number, Record<string, IVote>>         = {};
-    protected readonly Object                                          = Object;
-    protected gameEvents: EventEmitter<EventEnum>                      = new EventEmitter<EventEnum>()
+    protected activeTicketId = 0;
+    protected openedTicketId = 0;
+    protected finishedTicketIds: Array<number> = [];
+    protected votes: Record<number, Record<string, IInsecureUser>> = {};
+    protected userVotes: Record<number, Record<string, IVote>> = {};
+    protected readonly Object = Object;
+    protected gameEvents: EventEmitter<EventEnum> = new EventEmitter<EventEnum>()
     private readonly pokerStartListener: ISubscriptionListener<IStartResponse>;
     private readonly sessionCreatedOrUpdatedListener: ISubscriptionListener<ISessionResponse>;
     private readonly sessionClosedListener: ISubscriptionListener<ISessionResponse>;
@@ -65,14 +65,14 @@ export class DisplayActionComponent implements OnInit, OnDestroy
       private accountService: AccountService,
     )
     {
-        this.pokerIdSecure                    = this.activatedRoute.snapshot.paramMap.get('secureId');
-        this.pokerStartListener               = this.rxStompService.getSubscription(
+        this.pokerIdSecure = this.activatedRoute.snapshot.paramMap.get('secureId');
+        this.pokerStartListener = this.rxStompService.getSubscription(
           `/queue/reply-${this.pokerIdSecure}`,
           SocketDestination.RECEIVE_POKER_START
         );
         this.pokerStartListener.$subscription = this.pokerStartListener.observable.subscribe();
 
-        this.sessionCreatedOrUpdatedListener               = this.rxStompService.getSubscription<ISessionResponse>(
+        this.sessionCreatedOrUpdatedListener = this.rxStompService.getSubscription<ISessionResponse>(
           `/queue/reply-${this.pokerIdSecure}`,
           SocketDestination.RECEIVE_SESSION_CREATED_OR_UPDATED
         );
@@ -82,7 +82,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
               this.inGameInsecureUsersWithSessions[body.data.insecureUser.idSecure] = true;
           });
 
-        this.sessionClosedListener               = this.rxStompService.getSubscription<ISessionResponse>(
+        this.sessionClosedListener = this.rxStompService.getSubscription<ISessionResponse>(
           `/queue/reply-${this.pokerIdSecure}`,
           SocketDestination.RECEIVE_SESSION_CLOSED
         );
@@ -92,18 +92,18 @@ export class DisplayActionComponent implements OnInit, OnDestroy
               this.inGameInsecureUsersWithSessions[body.data.insecureUser.idSecure] = undefined;
           });
 
-        this.roomStateListener               = this.rxStompService.getSubscription<IStateResponse>(
+        this.roomStateListener = this.rxStompService.getSubscription<IStateResponse>(
           '/user/queue/reply',
           SocketDestination.RECEIVE_POKER_ROOM_STATE
         );
         this.roomStateListener.$subscription = this.roomStateListener.observable.subscribe(
           (body) =>
           {
-              this.poker               = body.data.poker;
-              this.tickets             = body.data.tickets;
+              this.poker = body.data.poker;
+              this.tickets = body.data.tickets;
               this.inGameInsecureUsers = body.data.inGameInsecureUsers;
-              this.votes               = body.data.votes;
-              this.owner               = body.data.owner;
+              this.votes = body.data.votes;
+              this.owner = body.data.owner;
               body.data.inGameInsecureUsersWithSession.forEach(i =>
               {
                   this.inGameInsecureUsersWithSessions[i.idSecure] = true;
@@ -126,7 +126,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
           }
         );
 
-        this.roundStartListener               = this.rxStompService.getSubscription<IStartRound>(
+        this.roundStartListener = this.rxStompService.getSubscription<IStartRound>(
           `/queue/reply-${this.pokerIdSecure}`,
           SocketDestination.RECEIVE_POKER_ROUND_START
         );
@@ -138,7 +138,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
           }
         );
 
-        this.voteNewJoinerListener               = this.rxStompService.getSubscription<IVoteNewJoinerResponse>(
+        this.voteNewJoinerListener = this.rxStompService.getSubscription<IVoteNewJoinerResponse>(
           `/queue/reply-${this.pokerIdSecure}`,
           SocketDestination.RECEIVE_POKER_VOTE_NEW_JOINER
         );
@@ -153,7 +153,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
           }
         );
 
-        this.voteStopListener               = this.rxStompService.getSubscription<IVoteStopResponse>(
+        this.voteStopListener = this.rxStompService.getSubscription<IVoteStopResponse>(
           `/queue/reply-${this.pokerIdSecure}`,
           SocketDestination.RECEIVE_POKER_ROUND_STOP
         );
@@ -162,11 +162,11 @@ export class DisplayActionComponent implements OnInit, OnDestroy
           {
               this.finishedTicketIds.push(Number(body.data.finishedTicketId));
               this.userVotes[body.data.finishedTicketId] = body.data.votes;
-              this.activeTicketId                        = 0;
+              this.activeTicketId = 0;
           }
         );
 
-        this.ticketCloseListener               = this.rxStompService.getSubscription<IVoteStopResponse>(
+        this.ticketCloseListener = this.rxStompService.getSubscription<IVoteStopResponse>(
           `/queue/reply-${this.pokerIdSecure}`,
           SocketDestination.RECEIVE_POKER_TICKET_CLOSE
         );
@@ -177,7 +177,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
           }
         );
 
-        this.voteListener               = this.rxStompService.getSubscription<IVoteResponse>(
+        this.voteListener = this.rxStompService.getSubscription<IVoteResponse>(
           `/queue/reply-${this.pokerIdSecure}`,
           SocketDestination.RECEIVE_POKER_VOTE
         );
