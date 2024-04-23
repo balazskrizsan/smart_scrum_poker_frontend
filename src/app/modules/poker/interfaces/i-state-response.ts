@@ -7,6 +7,7 @@ export interface IStateResponse
     poker: IPoker;
     tickets: Array<ITicket>;
     inGameInsecureUsers: Array<IInsecureUser>;
+    inGameInsecureUsersWithSession: Array<IInsecureUser>;
     votes: Record<number, Record<string, IInsecureUser>>;
     owner: IInsecureUser;
 }

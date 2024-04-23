@@ -99,11 +99,15 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         this.roomStateListener.$subscription = this.roomStateListener.observable.subscribe(
           (body) =>
           {
-              this.poker                 = body.data.poker;
-              this.tickets               = body.data.tickets;
-              this.inGameInsecureUsers   = body.data.inGameInsecureUsers;
-              this.votes                 = body.data.votes;
-              this.owner                 = body.data.owner;
+              this.poker               = body.data.poker;
+              this.tickets             = body.data.tickets;
+              this.inGameInsecureUsers = body.data.inGameInsecureUsers;
+              this.votes               = body.data.votes;
+              this.owner               = body.data.owner;
+              body.data.inGameInsecureUsersWithSession.forEach(i =>
+              {
+                  this.inGameInsecureUsersWithSessions[i.idSecure] = true;
+              });
               // @todo: finishedVoteIds
               let possibleStartedTickets = this.tickets.filter(t => t.isActive);
               if (possibleStartedTickets.length > 1)
@@ -122,11 +126,10 @@ export class DisplayActionComponent implements OnInit, OnDestroy
           }
         );
 
-        this.roundStartListener               = this.rxStompService
-          .getSubscription<IStartRound>(
-            `/queue/reply-${this.pokerIdSecure}`,
-            SocketDestination.RECEIVE_POKER_ROUND_START
-          );
+        this.roundStartListener               = this.rxStompService.getSubscription<IStartRound>(
+          `/queue/reply-${this.pokerIdSecure}`,
+          SocketDestination.RECEIVE_POKER_ROUND_START
+        );
         this.roundStartListener.$subscription = this.roundStartListener.observable.subscribe(
           (body) =>
           {
@@ -135,11 +138,10 @@ export class DisplayActionComponent implements OnInit, OnDestroy
           }
         );
 
-        this.voteNewJoinerListener               = this.rxStompService
-          .getSubscription<IVoteNewJoinerResponse>(
-            `/queue/reply-${this.pokerIdSecure}`,
-            SocketDestination.RECEIVE_POKER_VOTE_NEW_JOINER
-          );
+        this.voteNewJoinerListener               = this.rxStompService.getSubscription<IVoteNewJoinerResponse>(
+          `/queue/reply-${this.pokerIdSecure}`,
+          SocketDestination.RECEIVE_POKER_VOTE_NEW_JOINER
+        );
         this.voteNewJoinerListener.$subscription = this.voteNewJoinerListener.observable.subscribe(
           (body) =>
           {
@@ -151,11 +153,10 @@ export class DisplayActionComponent implements OnInit, OnDestroy
           }
         );
 
-        this.voteStopListener               = this.rxStompService
-          .getSubscription<IVoteStopResponse>(
-            `/queue/reply-${this.pokerIdSecure}`,
-            SocketDestination.RECEIVE_POKER_ROUND_STOP
-          );
+        this.voteStopListener               = this.rxStompService.getSubscription<IVoteStopResponse>(
+          `/queue/reply-${this.pokerIdSecure}`,
+          SocketDestination.RECEIVE_POKER_ROUND_STOP
+        );
         this.voteStopListener.$subscription = this.voteStopListener.observable.subscribe(
           (body) =>
           {
@@ -165,11 +166,10 @@ export class DisplayActionComponent implements OnInit, OnDestroy
           }
         );
 
-        this.ticketCloseListener               = this.rxStompService
-          .getSubscription<IVoteStopResponse>(
-            `/queue/reply-${this.pokerIdSecure}`,
-            SocketDestination.RECEIVE_POKER_TICKET_CLOSE
-          );
+        this.ticketCloseListener               = this.rxStompService.getSubscription<IVoteStopResponse>(
+          `/queue/reply-${this.pokerIdSecure}`,
+          SocketDestination.RECEIVE_POKER_TICKET_CLOSE
+        );
         this.ticketCloseListener.$subscription = this.ticketCloseListener.observable.subscribe(
           (body) =>
           {
