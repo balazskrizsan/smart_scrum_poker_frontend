@@ -13,9 +13,18 @@ export class UrlService
         return '/poker';
     }
 
-
     public static getPokerCreate(): string
     {
         return '/poker/create';
+    }
+
+    public static getAccountCreate(): string
+    {
+        return '/account';
+    }
+
+    public static getAccountLogout(): string
+    {
+        return '/account/logout';
     }
 }

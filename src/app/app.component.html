@@ -81,8 +81,6 @@
     <h6>
       <a routerLink="{{urlService.getHome()}}">Home</a>
       |
-      <a routerLink="{{urlService.getPoker()}}">Poker</a>
-      |
       <a routerLink="{{urlService.getPokerCreate()}}">Poker create</a>
     </h6>
   </div>
@@ -91,6 +89,23 @@
 
     <div class="control-block">
       <app-flash-message></app-flash-message>
+    </div>
+    <div class="author-page author vcard inline-items more" style="float: right;">
+      <div class="page-title">
+        <h6>
+          <span *ngIf="currentUser">
+            ( {{ currentUser.userName }} ) &nbsp; &nbsp; &nbsp;
+          </span>
+          <a
+              *ngIf="currentUser == null"
+              routerLink="{{urlService.getAccountCreate()}}"
+          >Create user</a>
+          <a
+              *ngIf="currentUser != null"
+              routerLink="{{urlService.getAccountLogout()}}"
+          >Logout</a>
+        </h6>
+      </div>
     </div>
   </div>
 
