@@ -47,6 +47,7 @@ export class CreateActionComponent implements OnDestroy, OnInit
 
     ngOnInit(): void
     {
+        this.accountService.getCurrentUserOrRedirect();
         this.addTicketNameField();
     }
 

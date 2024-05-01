@@ -7,7 +7,10 @@ import {
 import {Forms}                  from '../forms';
 import {RxStompService}         from "../../commons/services/rx-stomp-service";
 import {SocketDestination}      from "../../commons/enums/socket-destination";
-import {ActivatedRoute}         from "@angular/router";
+import {
+    ActivatedRoute,
+    Router
+}                               from "@angular/router";
 import {IStateResponse}         from "../interfaces/i-state-response";
 import {IPoker}                 from "../interfaces/i-poker";
 import {ITicket}                from "../interfaces/i-ticket";
@@ -47,7 +50,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
     protected votes: Record<number, Record<string, IInsecureUser>> = {};
     protected userVotes: Record<number, Record<string, IVote>> = {};
     protected readonly Object = Object;
-    protected gameEvents: EventEmitter<EventEnum> = new EventEmitter<EventEnum>()
+    protected gameEvents: EventEmitter<EventEnum> = new EventEmitter<EventEnum>();
     private readonly pokerStartListener: ISubscriptionListener<IStartResponse>;
     private readonly sessionCreatedOrUpdatedListener: ISubscriptionListener<ISessionResponse>;
     private readonly sessionClosedListener: ISubscriptionListener<ISessionResponse>;
@@ -211,6 +214,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
 
     async ngOnInit(): Promise<void>
     {
+        this.accountService.getCurrentUserOrRedirect();
         this.init();
     }
 
