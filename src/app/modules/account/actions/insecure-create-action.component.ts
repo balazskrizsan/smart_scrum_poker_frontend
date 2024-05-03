@@ -1,14 +1,14 @@
 import {
     Component,
     OnDestroy
-}              from "@angular/core";
-import {Forms} from "../forms";
-import {FormGroup} from "@angular/forms";
-import {IStateResponse} from "../../poker/interfaces/i-state-response";
-import {SocketDestination} from "../../commons/enums/socket-destination";
+}                              from "@angular/core";
+import {Forms}                 from "../forms";
+import {FormGroup}             from "@angular/forms";
+import {IStateResponse}        from "../../poker/interfaces/i-state-response";
+import {SocketDestination}     from "../../commons/enums/socket-destination";
 import {ISubscriptionListener} from "../../poker/interfaces/i-subscription-listener";
-import {RxStompService} from "../../commons/services/rx-stomp-service";
-import {LocalStorageService} from "../../../services/local-storage-service";
+import {RxStompService}        from "../../commons/services/rx-stomp-service";
+import {AccountService}        from "../service/account-service";
 
 @Component(
   {
@@ -20,35 +20,36 @@ import {LocalStorageService} from "../../../services/local-storage-service";
 export class InsecureCreateActionComponent implements OnDestroy
 {
     protected form: FormGroup;
-    private roomStateListener: ISubscriptionListener<IStateResponse>;
+    private userCreationListener: ISubscriptionListener<IStateResponse>;
 
     constructor(
       private forms: Forms,
       private rxStompService: RxStompService,
-      private localStorageService: LocalStorageService,
+      private accountService: AccountService
     )
     {
         this.form = this.forms.createCruForm();
 
-        this.roomStateListener               = this.rxStompService.getSubscription<IStateResponse>(
+        this.userCreationListener = this.rxStompService.getSubscription<IStateResponse>(
           '/user/queue/reply',
           SocketDestination.RECEIVE_INSECURE_USER_CREATE
         );
-        this.roomStateListener.$subscription = this.roomStateListener.observable.subscribe(
+        this.userCreationListener.$subscription = this.userCreationListener.observable.subscribe(
           (body) =>
           {
-              console.log('New insecure user', body);
-              this.localStorageService.set('current_user', body.data)
+              this.accountService.login(body.data)
           });
     }
 
-    ngOnDestroy(): void {
-        this.rxStompService.unsubscribe(this.roomStateListener);
+    ngOnDestroy(): void
+    {
+        this.rxStompService.unsubscribe(this.userCreationListener);
     }
 
     onSubmit()
     {
-        this.rxStompService.publish(SocketDestination.SEND_INSECURE_USER_CREATE,
+        this.rxStompService.publish(
+          SocketDestination.SEND_INSECURE_USER_CREATE,
           {
               userName: this.form.getRawValue().userName
           }
