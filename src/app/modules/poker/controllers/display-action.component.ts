@@ -276,7 +276,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         return this.accountService.getCurrentUser().idSecure == this.owner.idSecure;
     }
 
-    getCalculatedPoint(ticketId: number, userIdSecure: string)
+     protected getCalculatedPoint(ticketId: number, userIdSecure: string)
     {
         if (this.finishedTicketIds.includes(ticketId))
         {
@@ -287,5 +287,15 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         }
 
         return "?";
+    }
+
+    protected getVoteCount(ticketId: number)
+    {
+        if (!this.votes[ticketId])
+        {
+            return "waiting";
+        }
+
+        return Object.keys(this.votes[ticketId]).length;
     }
 }

@@ -56,42 +56,46 @@
     *ngFor="let ticket of tickets"
     class="row"
 >
-    <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="ui-block">
-            <div class="ui-block-title">
-                <h6 class="title">
-                    <button
-                        style="float: right"
-                        class="btn btn-primary"
-                        *ngIf="isAdmin() && activeTicketId == 0 && openedTicketId == 0"
-                        (click)="startTicket(ticket.id)" type="button"
-                    >Start
-                    </button>
-                    <button
-                        style="float: right"
-                        class="btn btn-primary"
-                        *ngIf="isAdmin() && activeTicketId == ticket.id"
-                        (click)="endTicket()"
-                        type="button"
-                    >End
-                    </button>
-                    <button
-                        style="float: right"
-                        class="btn btn-primary"
-                        *ngIf="isAdmin() && activeTicketId == 0 && openedTicketId == ticket.id"
-                        (click)="closeTicket()"
-                        type="button"
-                    >Close
-                    </button>
-                    ID: {{ ticket.id }}: {{ ticket.name }} /
-                    Votes: <span *ngIf="null != votes[ticket.id]">{{ Object.keys(votes[ticket.id]).length }}</span> /
-                    AVG: waiting /
-                    Min: waiting /
-                    Max: waiting
-                </h6>
-            </div>
-        </div>
+  <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+    <div class="ui-block">
+      <div class="ui-block-title">
+        <h6 class="title">
+          <button
+              style="float: right"
+              class="btn btn-primary"
+              *ngIf="isAdmin() && activeTicketId == 0 && openedTicketId == 0"
+              (click)="startTicket(ticket.id)" type="button"
+          >Start
+          </button>
+          <button
+              style="float: right"
+              class="btn btn-primary"
+              *ngIf="isAdmin() && activeTicketId == ticket.id"
+              (click)="endTicket()"
+              type="button"
+          >End
+          </button>
+          <button
+              style="float: right"
+              class="btn btn-primary"
+              *ngIf="isAdmin() && activeTicketId == 0 && openedTicketId == ticket.id"
+              (click)="closeTicket()"
+              type="button"
+          >Close
+          </button>
+
+          {{ ticket.name }}
+          <br/>
+          <div class="font-weight-normal">
+            Votes: {{ getVoteCount(ticket.id) }} /
+            AVG: waiting /
+            Min: waiting /
+            Max: waiting
+          </div>
+        </h6>
+      </div>
     </div>
+  </div>
 
     <div class="container" *ngIf="openedTicketId == ticket.id">
         <div class="row gx-1">
@@ -114,34 +118,6 @@
         </div>
     </div>
 
-<!--    <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">-->
-<!--        &lt;!&ndash;    <ul>&ndash;&gt;-->
-<!--        &lt;!&ndash;        <li *ngFor="let voter of votes[ticket.id] | keyvalue">{{ voter.value.userName }}</li>&ndash;&gt;-->
-
-<!--        &lt;!&ndash;        <b>Voters: </b> <span *ngFor="let user of inGameInsecureUsers">{{ user.userName }}&ndash;&gt;-->
-<!--        &lt;!&ndash;        : {{ getVoteState(user.idSecure, ticket.id) }}| </span>&ndash;&gt;-->
-
-<!--        &lt;!&ndash;    <div *ngIf="activeRoundTicketId == ticket.id">&ndash;&gt;-->
-<!--        <div *ngIf="openedTicketId == ticket.id">-->
-<!--            <div-->
-<!--                *ngFor="let user of inGameInsecureUsers"-->
-<!--                style="float: left"-->
-<!--                class="col-lg-3 col-md-"-->
-<!--            >-->
-<!--                <div class="row ui-block">-->
-<!--                    <div class="birthday-item inline-items">-->
-<!--                        <div class="birthday-author-name">-->
-<!--                            <span class="h6 author-name">{{ user.userName }}</span>-->
-<!--                            <div class="birthday-date">{{ getVoteState(user.idSecure, ticket.id) }}</div>-->
-<!--                        </div>-->
-<!--                        <span class="btn btn-sm bg-blue" style="float: right">-->
-<!--                            {{ getCalculatedPoint(ticket.id, user.idSecure) }}-->
-<!--                        </span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
     <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <app-voter-table
             *ngIf="activeTicketId == ticket.id"
