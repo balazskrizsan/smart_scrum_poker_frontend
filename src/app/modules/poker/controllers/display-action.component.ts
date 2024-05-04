@@ -23,13 +23,11 @@ import _                        from 'lodash';
 import {ISessionResponse}       from "../interfaces/i-session-response";
 import {IPokerState}            from "../interfaces/i-poker-state";
 
-@Component(
-  {
-      templateUrl: './../views/display.html',
-      styleUrls:   [],
-      providers:   [Forms],
-  }
-)
+@Component({
+    templateUrl: './../views/display.html',
+    styleUrls:   [],
+    providers:   [Forms],
+})
 export class DisplayActionComponent implements OnInit, OnDestroy
 {
     protected state: IPokerState = {
@@ -46,9 +44,9 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         votes:                           {},
         userVotes:                       {},
         initDone:                        false,
+        finishedTicketIds:               [],
     }
     protected tickets: Array<ITicket>;
-    protected finishedTicketIds: Array<number> = [];
     private readonly pokerStartListener: ISubscriptionListener<IStartResponse>;
     private readonly sessionCreatedOrUpdatedListener: ISubscriptionListener<ISessionResponse>;
     private readonly sessionClosedListener: ISubscriptionListener<ISessionResponse>;
@@ -158,7 +156,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         this.voteStopListener.$subscription = this.voteStopListener.observable.subscribe(
           (body) =>
           {
-              this.finishedTicketIds.push(Number(body.data.finishedTicketId));
+              this.state.finishedTicketIds.push(Number(body.data.finishedTicketId));
               this.state.userVotes[body.data.finishedTicketId] = body.data.voteResult.votes;
               this.state.userVoteAvgs[body.data.finishedTicketId] = body.data.voteResult.avg;
               this.state.userVoteMins[body.data.finishedTicketId] = body.data.voteResult.min;
@@ -217,21 +215,5 @@ export class DisplayActionComponent implements OnInit, OnDestroy
             .replace("{insecureUserId}", this.accountService.getCurrentUser().idSecure),
           ''
         );
-    }
-
-    protected getVoteState(userIdSecure: string, ticketId: number): "done" | "waiting"
-    {
-        return this.state.votes[ticketId] && this.state.votes[ticketId][userIdSecure] ? "done" : "waiting";
-    }
-
-    protected getCalculatedPoint(ticketId: number, userIdSecure: string)
-    {
-        return (
-          this.finishedTicketIds.includes(ticketId)
-          && this.state.userVotes[ticketId]
-          && this.state.userVotes[ticketId][userIdSecure]
-        )
-          ? this.state.userVotes[ticketId][userIdSecure].calculatedPoint.toString(10)
-          : "?";
     }
 }

@@ -9,6 +9,7 @@ import {ModalsModule}           from '../modals/modals.module';
 import {VoterTableComponent}    from "./submodules/voter-table.component";
 import {OnlineVotersComponent} from "./submodules/online-voters.component";
 import {TicketHeaderComponent} from "./submodules/ticket-header.component";
+import {VoterListComponent}     from "./submodules/voter-list.component";
 
 @NgModule(
   {
@@ -25,6 +26,7 @@ import {TicketHeaderComponent} from "./submodules/ticket-header.component";
           VoterTableComponent,
           OnlineVotersComponent,
           TicketHeaderComponent,
+          VoterListComponent,
       ],
   }
 )

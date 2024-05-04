@@ -17,4 +17,5 @@ export interface IPokerState
     votes: Record<number, Record<string, IInsecureUser>>;
     userVotes: Record<number, Record<string, IVote>>;
     initDone: boolean;
+    finishedTicketIds: Array<number>;
 }
