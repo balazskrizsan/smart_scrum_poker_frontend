@@ -1,132 +1,57 @@
-<div class="ui-block" style="margin-top: 50px">
+<div *ngIf="state.initDone">
+  <div class="ui-block" style="margin-top: 50px">
     <div class="birthday-item inline-items badges table-dark">
-        <div class="birthday-author-name">
-            <div class="h6 author-name" style="color: #ff5e3a">{{ poker.name }}</div>
-            <div class="birthday-date">Share link: https://localhost:4200/poker/display/{{ pokerIdSecure }}</div>
+      <div class="birthday-author-name">
+        <div class="h6 author-name" style="color: #ff5e3a">{{ state.poker.name }}</div>
+        <div class="birthday-date">
+          Share link: https://localhost:4200/poker/display/{{ state.pokerIdSecureFromParams }}
         </div>
-        <div class="skills-item">
-            <div class="skills-item-meter">
-                <span class="skills-item-meter-active skills-animate" style="width: 76%; opacity: 1;"></span>
-            </div>
+      </div>
+      <div class="skills-item">
+        <div class="skills-item-meter">
+          <span class="skills-item-meter-active skills-animate" style="width: 76%; opacity: 1;"></span>
         </div>
-    </div>
-</div>
-
-
-<div class="container">
-    <div class="row">
-        <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-
-            <div class="ui-block">
-                <div class="ui-block-title bg-blue">
-                    <h6 class="title c-white">Online players</h6>
-                </div>
-                <div class="ui-block-content">
-
-                    <div class="row gx-1">
-                        <div
-                            *ngFor="let user of inGameInsecureUsers"
-                            class="col-lg-3 col-md-6"
-                        >
-                            <div class="ui-block">
-                                <div class="birthday-item inline-items" style="overflow: hidden">
-                                    <div class="birthday-author-name">
-                                        <span class="h6 author-name">{{ user.userName }}</span>
-                                        <div class="birthday-date"></div>
-                                    </div>
-                                    <span
-                                        *ngIf="inGameInsecureUsersWithSessions[user.idSecure]"
-                                        class="btn btn-sm bg-blue" style="position: absolute;right: 20px;top: 5px;"
-                                    >
-                                        Online
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div
-    *ngFor="let ticket of tickets"
-    class="row"
->
-  <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-    <div class="ui-block">
-      <div class="ui-block-title">
-        <h6 class="title">
-          <button
-              style="float: right"
-              class="btn btn-primary"
-              *ngIf="isAdmin() && activeTicketId == 0 && openedTicketId == 0"
-              (click)="startTicket(ticket.id)" type="button"
-          >Start
-          </button>
-          <button
-              style="float: right"
-              class="btn btn-primary"
-              *ngIf="isAdmin() && activeTicketId == ticket.id"
-              (click)="endTicket()"
-              type="button"
-          >End
-          </button>
-          <button
-              style="float: right"
-              class="btn btn-primary"
-              *ngIf="isAdmin() && activeTicketId == 0 && openedTicketId == ticket.id"
-              (click)="closeTicket()"
-              type="button"
-          >Close
-          </button>
-
-          {{ ticket.name }}
-          <br/>
-          <div class="font-weight-normal">
-            Votes: {{ getVoteCount(ticket.id) }} /
-            AVG: waiting /
-            Min: waiting /
-            Max: waiting
-          </div>
-        </h6>
       </div>
     </div>
   </div>
 
-    <div class="container" *ngIf="openedTicketId == ticket.id">
-        <div class="row gx-1">
-            <div
-                *ngFor="let user of inGameInsecureUsers"
-                class="col-lg-3 col-md-6"
-            >
-                <div class="ui-block">
-                    <div class="birthday-item inline-items" style="overflow: hidden">
-                        <div class="birthday-author-name">
-                            <span class="h6 author-name">{{ user.userName }}</span>
-                            <div class="birthday-date">{{ getVoteState(user.idSecure, ticket.id) }}</div>
-                        </div>
-                        <span class="btn btn-sm bg-blue" style="position: absolute;right: 20px;top: 5px;">
-                            {{ getCalculatedPoint(ticket.id, user.idSecure) }}
-                        </span>
-                    </div>
-                </div>
+  <app-online-voters [state]="state"></app-online-voters>
+
+  <div
+      *ngFor="let ticket of tickets"
+      class="row"
+  >
+    <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <app-ticket-header [ticket]="ticket" [state]="state"></app-ticket-header>
+    </div>
+
+    <div class="container" *ngIf="state.openedTicketId == ticket.id">
+      <div class="row gx-1">
+        <div
+            *ngFor="let user of state.inGameInsecureUsers"
+            class="col-lg-3 col-md-6"
+        >
+          <div class="ui-block">
+            <div class="birthday-item inline-items" style="overflow: hidden">
+              <div class="birthday-author-name">
+                <span class="h6 author-name">{{ user.userName }}</span>
+                <div class="birthday-date">{{ getVoteState(user.idSecure, ticket.id) }}</div>
+              </div>
+              <span class="btn btn-sm bg-blue" style="position: absolute;right: 20px;top: 5px;">
+                  {{ getCalculatedPoint(ticket.id, user.idSecure) }}
+              </span>
             </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <app-voter-table
-            *ngIf="activeTicketId == ticket.id"
-            [gameEvents]="gameEvents"
-            [pokerIdSecure]="pokerIdSecure"
-            [ticketId]="activeTicketId"
-        ></app-voter-table>
+      <app-voter-table
+          *ngIf="state.activeTicketId == ticket.id"
+          [ticket]="ticket"
+          [state]="state"
+      ></app-voter-table>
     </div>
+  </div>
 </div>
-<br><br>
-<button (click)="pokerRoomPush()">Push to room</button>
-<button (click)="init()">Init</button>

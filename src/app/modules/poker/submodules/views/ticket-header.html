@@ -1,0 +1,38 @@
+<div class="ui-block">
+  <div class="ui-block-title">
+    <h6 class="title">
+      <button
+          style="float: right"
+          class="btn btn-primary"
+          *ngIf="isAdmin() && state.activeTicketId == 0 && state.openedTicketId == 0"
+          (click)="startTicket(ticket.id)" type="button"
+      >Start
+      </button>
+      <button
+          style="float: right"
+          class="btn btn-primary"
+          *ngIf="isAdmin() && state.activeTicketId == ticket.id"
+          (click)="endTicket()"
+          type="button"
+      >End
+      </button>
+      <button
+          style="float: right"
+          class="btn btn-primary"
+          *ngIf="isAdmin() && state.activeTicketId == 0 && state.openedTicketId == ticket.id"
+          (click)="closeTicket()"
+          type="button"
+      >Close
+      </button>
+
+      {{ ticket.name }}
+      <br/>
+      <div class="font-weight-normal">
+        Votes: {{ getVoteCount(ticket.id) }} ///
+        AVG: {{ getVoteAvg(ticket.id) }} ///
+        Min: {{ getVoteMin(ticket.id) }}  ///
+        Max: {{ getVoteMax(ticket.id) }}
+      </div>
+    </h6>
+  </div>
+</div>

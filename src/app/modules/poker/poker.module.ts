@@ -7,6 +7,8 @@ import {LeftMenuModule}         from '../left-menu/left-menu.module';
 import {DisplayActionComponent} from './controllers/display-action.component';
 import {ModalsModule}           from '../modals/modals.module';
 import {VoterTableComponent}    from "./submodules/voter-table.component";
+import {OnlineVotersComponent} from "./submodules/online-voters.component";
+import {TicketHeaderComponent} from "./submodules/ticket-header.component";
 
 @NgModule(
   {
@@ -21,6 +23,8 @@ import {VoterTableComponent}    from "./submodules/voter-table.component";
           CreateActionComponent,
           DisplayActionComponent,
           VoterTableComponent,
+          OnlineVotersComponent,
+          TicketHeaderComponent,
       ],
   }
 )

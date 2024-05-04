@@ -1,12 +1,12 @@
 import {
     Component,
-    EventEmitter,
     Input,
 }                          from "@angular/core";
 import {SocketDestination} from "../../commons/enums/socket-destination";
 import {RxStompService}    from "../../commons/services/rx-stomp-service";
 import {AccountService}    from "../../account/service/account-service";
-import {EventEnum}         from "../enums/event-enum";
+import {IPokerState}       from "../interfaces/i-poker-state";
+import {ITicket}           from "../interfaces/i-ticket";
 
 @Component({
     selector:    'app-voter-table',
@@ -15,17 +15,13 @@ import {EventEnum}         from "../enums/event-enum";
 })
 export class VoterTableComponent
 {
-    @Input()
-    private pokerIdSecure: string;
-    @Input()
-    private ticketId: number;
-    @Input()
-    private gameEvents: EventEmitter<EventEnum>
+    @Input() state: IPokerState;
+    @Input() ticket: ITicket;
 
     protected voteUncertainty = 0;
-    protected voteComplexity  = 0;
-    protected voteEffort      = 0;
-    protected voteOptions     = ["SMALL", "MEDIUM", "LARGE"];
+    protected voteComplexity = 0;
+    protected voteEffort = 0;
+    protected voteOptions = ["SMALL", "MEDIUM", "LARGE"];
 
     constructor(
       private rxStompService: RxStompService,
@@ -91,12 +87,12 @@ export class VoterTableComponent
     {
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_VOTE
-            .replace("{pokerIdSecure}", this.pokerIdSecure)
-            .replace("{ticketId}", this.ticketId.toString(10)),
+            .replace("{pokerIdSecure}", this.state.pokerIdSecureFromParams)
+            .replace("{ticketId}", this.ticket.id.toString(10)),
           {
               userIdSecure:    this.accountService.getCurrentUser().idSecure,
-              pokerIdSecure:   this.pokerIdSecure,
-              ticketId:        this.ticketId,
+              pokerIdSecure:   this.state.pokerIdSecureFromParams,
+              ticketId:        this.ticket.id,
               voteUncertainty: this.voteUncertainty,
               voteComplexity:  this.voteComplexity,
               voteEffort:      this.voteEffort,

@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+
+      <div class="ui-block">
+        <div class="ui-block-title bg-blue">
+          <h6 class="title c-white">Online players</h6>
+        </div>
+        <div class="ui-block-content">
+
+          <div class="row gx-1">
+            <div
+                *ngFor="let user of state.inGameInsecureUsers"
+                class="col-lg-3 col-md-6"
+            >
+              <div class="ui-block">
+                <div class="birthday-item inline-items" style="overflow: hidden">
+                  <div class="birthday-author-name">
+                    <span class="h6 author-name">{{ user.userName }}</span>
+                    <div class="birthday-date"></div>
+                  </div>
+                  <span
+                      *ngIf="state.inGameInsecureUsersWithSessions[user.idSecure]"
+                      class="btn btn-sm bg-blue" style="position: absolute;right: 20px;top: 5px;"
+                  >Online</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
