@@ -33,7 +33,7 @@ export class TicketHeaderComponent
     protected startTicket(ticketId: number)
     {
         this.rxStompService.publish(
-          SocketDestination.SEND_POKER_ROUND_START
+          SocketDestination.SEND_POKER_VOTE_START
             .replace("{pokerIdSecure}", this.state.pokerIdSecureFromParams)
             .replace("{ticketId}", ticketId.toString(10)),
           ''
@@ -43,7 +43,7 @@ export class TicketHeaderComponent
     protected endTicket(): void
     {
         this.rxStompService.publish(
-          SocketDestination.SEND_POKER_ROUND_STOP
+          SocketDestination.SEND_POKER_VOTE_STOP
             .replace("{pokerIdSecure}", this.state.pokerIdSecureFromParams)
             .replace("{ticketId}", this.state.activeTicketId.toString(10)),
           ''

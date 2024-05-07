@@ -124,7 +124,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
 
         this.roundStartListener = this.rxStompService.getSubscription<IStartRound>(
           `/queue/reply-${this.state.pokerIdSecureFromParams}`,
-          SocketDestination.RECEIVE_POKER_ROUND_START
+          SocketDestination.RECEIVE_POKER_VOTE_START
         );
         this.roundStartListener.$subscription = this.roundStartListener.observable.subscribe(
           (body) =>
@@ -151,7 +151,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
 
         this.voteStopListener = this.rxStompService.getSubscription<IVoteStopResponse>(
           `/queue/reply-${this.state.pokerIdSecureFromParams}`,
-          SocketDestination.RECEIVE_POKER_ROUND_STOP
+          SocketDestination.RECEIVE_POKER_VOTE_STOP
         );
         this.voteStopListener.$subscription = this.voteStopListener.observable.subscribe(
           (body) =>
