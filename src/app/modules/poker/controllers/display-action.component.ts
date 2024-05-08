@@ -50,7 +50,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
     private readonly pokerStartListener: ISubscriptionListener<IStartResponse>;
     private readonly sessionCreatedOrUpdatedListener: ISubscriptionListener<ISessionResponse>;
     private readonly sessionClosedListener: ISubscriptionListener<ISessionResponse>;
-    private readonly roomStateListener: ISubscriptionListener<IStateResponse>;
+    private readonly gameStateListener: ISubscriptionListener<IStateResponse>;
     private readonly roundStartListener: ISubscriptionListener<IStartRound>;
     private readonly voteStopListener: ISubscriptionListener<IVoteStopResponse>;
     private readonly ticketCloseListener: ISubscriptionListener<IVoteStopResponse>;
@@ -91,11 +91,11 @@ export class DisplayActionComponent implements OnInit, OnDestroy
               this.state.inGameInsecureUsersWithSessions[body.data.insecureUser.idSecure] = undefined;
           });
 
-        this.roomStateListener = this.rxStompService.getSubscription<IStateResponse>(
+        this.gameStateListener = this.rxStompService.getSubscription<IStateResponse>(
           '/user/queue/reply',
           SocketDestination.RECEIVE_POKER_ROOM_STATE
         );
-        this.roomStateListener.$subscription = this.roomStateListener.observable.subscribe(
+        this.gameStateListener.$subscription = this.gameStateListener.observable.subscribe(
           (body) =>
           {
               this.state.poker = body.data.poker;
@@ -199,7 +199,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
     ngOnDestroy(): void
     {
         this.rxStompService.unsubscribe(this.pokerStartListener);
-        this.rxStompService.unsubscribe(this.roomStateListener);
+        this.rxStompService.unsubscribe(this.gameStateListener);
         this.rxStompService.unsubscribe(this.roundStartListener);
         this.rxStompService.unsubscribe(this.voteStopListener);
         this.rxStompService.unsubscribe(this.ticketCloseListener);

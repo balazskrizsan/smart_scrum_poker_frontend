@@ -5,8 +5,8 @@ export enum SocketDestination
 
     RECEIVE_POKER_START                = "/app/poker/start",
 
-    RECEIVE_POKER_ROOM_STATE           = "/app/poker/room.state",
-    SEND_POKER_ROOM_STATE              = '/app/poker/room.state/{pokerIdSecure}/{insecureUserId}',
+    RECEIVE_POKER_ROOM_STATE           = "/app/poker/game.state",
+    SEND_POKER_ROOM_STATE              = '/app/poker/game.state/{pokerIdSecure}/{insecureUserId}',
 
     SEND_POKER_VOTE_START             = '/app/poker/vote.start/{pokerIdSecure}/{ticketId}',
     RECEIVE_POKER_VOTE_START          = '/app/poker/vote.start',
