@@ -145,6 +145,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
               if (!_.find(this.state.inGameInsecureUsers, insecureUser))
               {
                   this.state.inGameInsecureUsers.push(insecureUser);
+                  this.state.inGameInsecureUsersWithSessions[insecureUser.idSecure] = true;
               }
           }
         );
