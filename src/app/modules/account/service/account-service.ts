@@ -36,6 +36,18 @@ export class AccountService
         }
     }
 
+    public getCurrentUserOrNull(): IInsecureUser
+    {
+        try
+        {
+            return this.getCurrentUser();
+        }
+        catch (e)
+        {
+            return null;
+        }
+    }
+
     public getCurrentUser(): IInsecureUser
     {
         const rawInsecureUser = this.localStorageService.get('current_user');

@@ -33,16 +33,22 @@ export class AppComponent implements OnInit
       private accountService: AccountService,
     )
     {
-        this.accountEvents = accountService.getAccountEvents();
+        this.rxStompService.get();
+        this.accountEvents = this.accountService.getAccountEvents();
         this.accountEvents.subscribe(event =>
         {
             switch (event)
             {
-                case EventEnum.USER_LOGIN: this.currentUser = accountService.getCurrentUser(); break;
-                case EventEnum.USER_LOGOUT: this.currentUser = null; break;
+                case EventEnum.USER_LOGIN:
+                    this.currentUser = this.accountService.getCurrentUser();
+                    break;
+                case EventEnum.USER_LOGOUT:
+                    this.currentUser = null;
+                    break;
             }
         });
-        rxStompService.get();
+
+        this.currentUser = this.accountService.getCurrentUserOrNull();
     }
 
     public login(): void
