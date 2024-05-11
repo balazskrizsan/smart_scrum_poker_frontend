@@ -14,14 +14,14 @@ export enum SocketDestination
     SEND_POKER_VOTE_STOP              = '/app/poker/vote.stop/{pokerIdSecure}/{ticketId}',
     RECEIVE_POKER_VOTE_STOP           = '/app/poker/vote.stop',
 
-    SEND_POKER_TICKET_CLOSE            = '/app/poker.ticket.close/{pokerIdSecure}/{ticketId}',
-    RECEIVE_POKER_TICKET_CLOSE         = '/app/poker.ticket.closed',
+    SEND_POKER_TICKET_CLOSE            = '/app/poker/ticket.close/{pokerIdSecure}/{ticketId}',
+    RECEIVE_POKER_TICKET_CLOSE         = '/app/poker/ticket.close',
 
     SEND_POKER_VOTE                    = '/app/poker/vote/{pokerIdSecure}/{ticketId}',
     RECEIVE_POKER_VOTE                 = '/app/poker/vote',
 
-    SEND_INSECURE_USER_CREATE          = '/app/account.insecure.user.create',
-    RECEIVE_INSECURE_USER_CREATE       = '/app/account.insecure.user.create',
+    SEND_INSECURE_USER_CREATE          = '/app/account/insecure.user.create',
+    RECEIVE_INSECURE_USER_CREATE       = '/app/account/insecure.user.create',
 
     RECEIVE_POKER_VOTE_NEW_JOINER      = '/app/poker/vote.new_joiner',
 }
