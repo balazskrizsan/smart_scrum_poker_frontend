@@ -1,6 +1,6 @@
 <div class="ui-block">
   <div class="ui-block-title">
-    <h6 class="title">
+    <div>
       <button
           style="float: right"
           class="btn btn-primary"
@@ -25,7 +25,10 @@
       >Close
       </button>
 
-      {{ ticket.name }}
+
+      <h6 class="title">
+        {{ ticket.name }}
+      </h6>
       <br/>
       <div class="font-weight-normal">
         Votes: {{ getVoteCount(ticket.id) }} ///
@@ -33,6 +36,6 @@
         Min: {{ getVoteMin(ticket.id) }}  ///
         Max: {{ getVoteMax(ticket.id) }}
       </div>
-    </h6>
+    </div>
   </div>
 </div>
