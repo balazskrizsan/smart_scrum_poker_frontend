@@ -45,7 +45,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         votes:                           {},
         userVotes:                       {},
         initDone:                        false,
-        finishedTicketIds:               [],
+        finishedTicketIds:               [], //@todo: load on start
     }
     protected tickets: Array<ITicket>;
     private readonly pokerStartListener: ISubscriptionListener<IStartResponse>;
@@ -227,5 +227,12 @@ export class DisplayActionComponent implements OnInit, OnDestroy
             .replace("{insecureUserId}", this.accountService.getCurrentUser().idSecure),
           ''
         );
+    }
+
+    protected getFillPercent(): string
+    {
+        const percentage = ( this.state.finishedTicketIds.length / this.tickets.length) * 100;
+
+        return `${percentage}%`;
     }
 }
