@@ -40,6 +40,16 @@ export class TicketHeaderComponent
         );
     }
 
+    protected deleteTicket(ticketId: number)
+    {
+        this.rxStompService.publish(
+          SocketDestination.SEND_POKER_TICKET_DELETE
+            .replace("{pokerIdSecure}", this.state.pokerIdSecureFromParams)
+            .replace("{ticketId}", ticketId.toString(10)),
+          ''
+        );
+    }
+
     protected endTicket(): void
     {
         this.rxStompService.publish(

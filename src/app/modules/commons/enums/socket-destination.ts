@@ -1,27 +1,30 @@
 export enum SocketDestination
 {
     RECEIVE_SESSION_CREATED_OR_UPDATED = "/app/session.created_or_updated",
-    RECEIVE_SESSION_CLOSED             = "/app/session.closed",
+    RECEIVE_SESSION_CLOSED = "/app/session.closed",
 
-    RECEIVE_POKER_START                = "/app/poker/start",
+    RECEIVE_POKER_START = "/app/poker/start",
 
-    RECEIVE_POKER_ROOM_STATE           = "/app/poker/game.state",
-    SEND_POKER_ROOM_STATE              = '/app/poker/game.state/{pokerIdSecure}/{insecureUserId}',
+    RECEIVE_POKER_ROOM_STATE = "/app/poker/game.state",
+    SEND_POKER_ROOM_STATE = '/app/poker/game.state/{pokerIdSecure}/{insecureUserId}',
 
-    SEND_POKER_VOTE_START             = '/app/poker/vote.start/{pokerIdSecure}/{ticketId}',
-    RECEIVE_POKER_VOTE_START          = '/app/poker/vote.start',
+    SEND_POKER_VOTE_START = '/app/poker/vote.start/{pokerIdSecure}/{ticketId}',
+    RECEIVE_POKER_VOTE_START = '/app/poker/vote.start',
 
-    SEND_POKER_VOTE_STOP              = '/app/poker/vote.stop/{pokerIdSecure}/{ticketId}',
-    RECEIVE_POKER_VOTE_STOP           = '/app/poker/vote.stop',
+    SEND_POKER_TICKET_DELETE = '/app/poker/ticket.delete/{pokerIdSecure}/{ticketId}',
+    RECEIVE_POKER_TICKET_DELETE = '/app/poker/ticket.delete',
 
-    SEND_POKER_TICKET_CLOSE            = '/app/poker/ticket.close/{pokerIdSecure}/{ticketId}',
-    RECEIVE_POKER_TICKET_CLOSE         = '/app/poker/ticket.close',
+    SEND_POKER_VOTE_STOP = '/app/poker/vote.stop/{pokerIdSecure}/{ticketId}',
+    RECEIVE_POKER_VOTE_STOP = '/app/poker/vote.stop',
 
-    SEND_POKER_VOTE                    = '/app/poker/vote/{pokerIdSecure}/{ticketId}',
-    RECEIVE_POKER_VOTE                 = '/app/poker/vote',
+    SEND_POKER_TICKET_CLOSE = '/app/poker/ticket.close/{pokerIdSecure}/{ticketId}',
+    RECEIVE_POKER_TICKET_CLOSE = '/app/poker/ticket.close',
 
-    SEND_INSECURE_USER_CREATE          = '/app/account/insecure.user.create',
-    RECEIVE_INSECURE_USER_CREATE       = '/app/account/insecure.user.create',
+    SEND_POKER_VOTE = '/app/poker/vote/{pokerIdSecure}/{ticketId}',
+    RECEIVE_POKER_VOTE = '/app/poker/vote',
 
-    RECEIVE_POKER_VOTE_NEW_JOINER      = '/app/poker/vote.new_joiner',
+    SEND_INSECURE_USER_CREATE = '/app/account/insecure.user.create',
+    RECEIVE_INSECURE_USER_CREATE = '/app/account/insecure.user.create',
+
+    RECEIVE_POKER_VOTE_NEW_JOINER = '/app/poker/vote.new_joiner',
 }

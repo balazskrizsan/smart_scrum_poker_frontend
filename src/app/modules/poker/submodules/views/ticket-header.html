@@ -9,6 +9,13 @@
       >Start
       </button>
       <button
+          style="float: right; margin-right: 5px;"
+          class="btn btn-primary"
+          *ngIf="isAdmin() && state.activeTicketId == 0 && state.openedTicketId == 0"
+          (click)="deleteTicket(ticket.id)" type="button"
+      >Delete
+      </button>
+      <button
           style="float: right"
           class="btn btn-primary"
           *ngIf="isAdmin() && state.activeTicketId == ticket.id"

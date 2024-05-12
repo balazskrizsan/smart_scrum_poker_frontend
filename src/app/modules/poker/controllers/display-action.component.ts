@@ -22,6 +22,7 @@ import {IVoteNewJoinerResponse} from "../interfaces/i-vote-new-joiner-response";
 import _                        from 'lodash';
 import {ISessionResponse}       from "../interfaces/i-session-response";
 import {IPokerState}            from "../interfaces/i-poker-state";
+import {ITicketDeleteResponse}  from "../interfaces/i-ticket-delete-response";
 
 @Component({
     templateUrl: './../views/display.html',
@@ -54,6 +55,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
     private readonly roundStartListener: ISubscriptionListener<IStartRound>;
     private readonly voteStopListener: ISubscriptionListener<IVoteStopResponse>;
     private readonly ticketCloseListener: ISubscriptionListener<IVoteStopResponse>;
+    private readonly ticketDeleteListener: ISubscriptionListener<ITicketDeleteResponse>;
     private readonly voteListener: ISubscriptionListener<IVoteResponse>;
     private readonly voteNewJoinerListener: ISubscriptionListener<IVoteNewJoinerResponse>;
 
@@ -173,6 +175,15 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         this.ticketCloseListener.$subscription = this.ticketCloseListener.observable.subscribe(() =>
         {
             this.state.openedTicketId = 0;
+        });
+
+        this.ticketDeleteListener = this.rxStompService.getSubscription<ITicketDeleteResponse>(
+          `/queue/reply-${this.state.pokerIdSecureFromParams}`,
+          SocketDestination.RECEIVE_POKER_TICKET_DELETE
+        );
+        this.ticketDeleteListener.$subscription = this.ticketDeleteListener.observable.subscribe((deletedTicket) =>
+        {
+            this.tickets = this.tickets.filter(t => t.id !== deletedTicket.data.deletedTicketId);
         });
 
         this.voteListener = this.rxStompService.getSubscription<IVoteResponse>(
