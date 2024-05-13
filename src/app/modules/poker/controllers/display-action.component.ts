@@ -104,6 +104,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
               this.tickets = body.data.tickets;
               this.state.inGameInsecureUsers = body.data.inGameInsecureUsers;
               this.state.votes = body.data.votes;
+              this.state.finishedTicketIds = Object.keys(body.data.votes).map(k => Number(k));
               this.state.owner = body.data.owner;
               body.data.inGameInsecureUsersWithSession.forEach(i =>
               {
