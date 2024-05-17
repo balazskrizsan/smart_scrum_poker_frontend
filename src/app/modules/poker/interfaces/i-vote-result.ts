@@ -1,9 +1,8 @@
 import {IVote} from "./i-vote";
+import {IVoteStat} from "./i-vote-stat";
 
 export interface IVoteResult
 {
-    avg: number;
-    min: number;
-    max: number;
+    voteStat: IVoteStat;
     votes: Record<string, IVote>;
 }

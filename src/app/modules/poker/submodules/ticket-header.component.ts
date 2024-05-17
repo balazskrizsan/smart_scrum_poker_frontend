@@ -78,16 +78,16 @@ export class TicketHeaderComponent
 
     protected getVoteAvg(ticketId: number)
     {
-        return this.state.userVoteAvgs[ticketId] ?? "waiting";
+        return this.state.userVoteStats[ticketId]?.avg ?? "waiting";
     }
 
     protected getVoteMin(ticketId: number)
     {
-        return this.state.userVoteMins[ticketId] ?? "waiting";
+        return this.state.userVoteStats[ticketId]?.min ?? "waiting";
     }
 
     protected getVoteMax(ticketId: number)
     {
-        return this.state.userVoteMaxs[ticketId] ?? "waiting";
+        return this.state.userVoteStats[ticketId]?.max ?? "waiting";
     }
 }

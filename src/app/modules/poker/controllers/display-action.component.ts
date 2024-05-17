@@ -35,9 +35,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         inGameInsecureUsers:             [],
         inGameInsecureUsersWithSessions: {},
         owner:                           null,
-        userVoteAvgs:                    {},
-        userVoteMins:                    {},
-        userVoteMaxs:                    {},
+        userVoteStats:                   {},
         pokerIdSecureFromParams:         null,
         poker:                           null,
         activeTicketId:                  0,
@@ -103,12 +101,15 @@ export class DisplayActionComponent implements OnInit, OnDestroy
               this.state.poker = body.data.poker;
               this.tickets = body.data.tickets;
               this.state.inGameInsecureUsers = body.data.inGameInsecureUsers;
-              this.state.votes = body.data.votes;
+              Object.keys(body.data.votesWithVoteStatList).forEach(key => {
+                  this.state.votes[Number(key)] = body.data.votesWithVoteStatList[key].votes;
+                  this.state.userVoteStats[Number(key)] = body.data.votesWithVoteStatList[key].voteStat;
+              });
               this.state.finishedTicketIds = Object.keys(body.data.votes).map(k => Number(k));
               this.state.owner = body.data.owner;
-              body.data.inGameInsecureUsersWithSession.forEach(i =>
+              body.data.inGameInsecureUsersWithSession.forEach(iu =>
               {
-                  this.state.inGameInsecureUsersWithSessions[i.idSecure] = true;
+                  this.state.inGameInsecureUsersWithSessions[iu.idSecure] = true;
               });
               // @todo: finishedVoteIds
               let possibleStartedTickets = this.tickets.filter(t => t.isActive);
@@ -162,9 +163,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
           {
               this.state.finishedTicketIds.push(Number(body.data.finishedTicketId));
               this.state.userVotes[body.data.finishedTicketId] = body.data.voteResult.votes;
-              this.state.userVoteAvgs[body.data.finishedTicketId] = body.data.voteResult.avg;
-              this.state.userVoteMins[body.data.finishedTicketId] = body.data.voteResult.min;
-              this.state.userVoteMaxs[body.data.finishedTicketId] = body.data.voteResult.max;
+              this.state.userVoteStats[body.data.finishedTicketId] = body.data.voteResult.voteStat;
               this.state.activeTicketId = 0;
           }
         );
@@ -232,7 +231,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
 
     protected getFillPercent(): string
     {
-        const percentage = ( this.state.finishedTicketIds.length / this.tickets.length) * 100;
+        const percentage = (this.state.finishedTicketIds.length / this.tickets.length) * 100;
 
         return `${percentage}%`;
     }
