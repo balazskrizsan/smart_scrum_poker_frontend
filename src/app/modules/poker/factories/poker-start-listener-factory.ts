@@ -1,20 +1,23 @@
 import {Injectable}        from "@angular/core";
 import {SocketDestination} from "../../commons/enums/socket-destination";
 import {RxStompService}    from "../../commons/services/rx-stomp-service";
-import {IPokerState}       from "../interfaces/i-poker-state";
 import {IStartResponse}    from "../interfaces/i-start-response";
+import {PokerStateStore}   from "../poker-state-store.service";
 
 @Injectable()
 export class PokerStartListenerFactory
 {
-    public constructor(private rxStompService: RxStompService)
+    public constructor(
+      private rxStompService: RxStompService,
+      private pokerStateStore: PokerStateStore,
+    )
     {
     }
 
-    public create(state: IPokerState)
+    public create()
     {
         const pokerStartListener = this.rxStompService.getSubscription<IStartResponse>(
-          `/queue/reply-${state.pokerIdSecureFromParams}`,
+          `/queue/reply-${this.pokerStateStore.state.pokerIdSecureFromParams}`,
           SocketDestination.RECEIVE_POKER_START
         );
 

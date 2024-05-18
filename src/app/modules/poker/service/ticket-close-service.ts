@@ -1,13 +1,17 @@
 import {Injectable}        from "@angular/core";
 import {IStdApiResponse}   from "../../../interfaces/i-std-api-response";
 import {IVoteStopResponse} from "../interfaces/i-vote-stop-response";
-import {IPokerState}       from "../interfaces/i-poker-state";
+import {PokerStateStore}   from "../poker-state-store.service";
 
 @Injectable()
 export class TicketCloseService
 {
-    public setTicketClose(body: IStdApiResponse<IVoteStopResponse>, state: IPokerState)
+    constructor(private pokerStateStore: PokerStateStore)
     {
-        state.openedTicketId = 0;
+    }
+
+    public setTicketClose(body: IStdApiResponse<IVoteStopResponse>)
+    {
+        this.pokerStateStore.state.openedTicketId = 0;
     }
 }

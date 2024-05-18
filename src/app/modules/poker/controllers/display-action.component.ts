@@ -27,6 +27,7 @@ import {VoteNewJoinerListenerFactory}     from "../factories/vote-new-joiner-lis
 import {VoteStopListenerFactory}          from "../factories/vote-stop-listener-factory";
 import {TicketCloseListenerFactory}       from "../factories/ticket-close-listener-factory";
 import {PokerTicketDeleteListenerFactory} from "../factories/poker-ticket-delete-listener-factory.service";
+import {PokerStateStore}                  from "../poker-state-store.service";
 
 @Component({
     templateUrl: './../views/display.html',
@@ -35,22 +36,7 @@ import {PokerTicketDeleteListenerFactory} from "../factories/poker-ticket-delete
 })
 export class DisplayActionComponent implements OnInit, OnDestroy
 {
-    protected state: IPokerState = {
-        tickets:                         [],
-        inGameInsecureUsers:             [],
-        inGameInsecureUsersWithSessions: {},
-        owner:                           null,
-        userVoteStats:                   {},
-        pokerIdSecureFromParams:         null,
-        poker:                           null,
-        activeTicketId:                  0,
-        openedTicketId:                  0,
-        votes:                           {},
-        userVotes:                       {},
-        initDone:                        false,
-        finishedTicketIds:               [],
-    }
-
+    protected state: IPokerState;
     private readonly gameStateListener: ISubscriptionListener<IStateResponse>;
     private readonly pokerStartListener: ISubscriptionListener<IStartResponse>;
     private readonly voteListener: ISubscriptionListener<IVoteResponse>;
@@ -63,6 +49,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
     private readonly ticketDeleteListener: ISubscriptionListener<ITicketDeleteResponse>;
 
     public constructor(
+      private pokerStateStore: PokerStateStore,
       private rxStompService: RxStompService,
       private activatedRoute: ActivatedRoute,
       private accountService: AccountService,
@@ -77,18 +64,20 @@ export class DisplayActionComponent implements OnInit, OnDestroy
       private ticketDeleteListenerFactory: PokerTicketDeleteListenerFactory,
     )
     {
-        this.state.pokerIdSecureFromParams = this.activatedRoute.snapshot.paramMap.get('secureId');
+        this.state = pokerStateStore.state;
 
-        this.gameStateListener = this.gameStateListenerFactory.create(this.state);
-        this.pokerStartListener = this.pokerStartListenerFactory.create(this.state);
-        this.voteListener = this.voteListenerFactory.create(this.state);
-        this.sessionClosedListener = this.sessionClosedListenerFactory.create(this.state);
-        this.sessionCreatedOrUpdatedListener = this.sessionClosedListenerFactory.create(this.state);
-        this.roundStartListener = this.roundStartListenerFactory.create(this.state);
-        this.voteNewJoinerListener = this.voteNewJoinerListenerFactory.create(this.state);
-        this.voteStopListener = this.voteStopListenerFactory.create(this.state);
-        this.ticketCloseListener = this.ticketCloseListenerFactory.create(this.state);
-        this.ticketDeleteListener = this.ticketDeleteListenerFactory.create(this.state);
+        this.pokerStateStore.state.pokerIdSecureFromParams = this.activatedRoute.snapshot.paramMap.get('secureId');
+
+        this.gameStateListener = this.gameStateListenerFactory.create();
+        this.pokerStartListener = this.pokerStartListenerFactory.create();
+        this.voteListener = this.voteListenerFactory.create();
+        this.sessionClosedListener = this.sessionClosedListenerFactory.create();
+        this.sessionCreatedOrUpdatedListener = this.sessionClosedListenerFactory.create();
+        this.roundStartListener = this.roundStartListenerFactory.create();
+        this.voteNewJoinerListener = this.voteNewJoinerListenerFactory.create();
+        this.voteStopListener = this.voteStopListenerFactory.create();
+        this.ticketCloseListener = this.ticketCloseListenerFactory.create();
+        this.ticketDeleteListener = this.ticketDeleteListenerFactory.create();
     }
 
     async ngOnInit(): Promise<void>
@@ -96,7 +85,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         this.accountService.getCurrentUserOrRedirect();
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_ROOM_STATE
-            .replace("{pokerIdSecure}", this.state.pokerIdSecureFromParams)
+            .replace("{pokerIdSecure}", this.pokerStateStore.state.pokerIdSecureFromParams)
             .replace("{insecureUserId}", this.accountService.getCurrentUser().idSecure),
           ''
         );
@@ -118,7 +107,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
 
     protected getFillPercent(): string
     {
-        const percentage = (this.state.finishedTicketIds.length / this.state.tickets.length) * 100;
+        const percentage = (this.pokerStateStore.state.finishedTicketIds.length / this.pokerStateStore.state.tickets.length) * 100;
 
         return `${percentage}%`;
     }

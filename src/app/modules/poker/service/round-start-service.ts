@@ -1,14 +1,18 @@
 import {Injectable}      from "@angular/core";
 import {IStdApiResponse} from "../../../interfaces/i-std-api-response";
 import {IStartRound}     from "../interfaces/i-start-round";
-import {IPokerState}     from "../interfaces/i-poker-state";
+import {PokerStateStore} from "../poker-state-store.service";
 
 @Injectable()
 export class RoundStartService
 {
-    public setRoundStart(body: IStdApiResponse<IStartRound>, state: IPokerState)
+    public constructor(private pokerStateStore: PokerStateStore)
     {
-        state.activeTicketId = body.data.startedTicketId;
-        state.openedTicketId = body.data.startedTicketId;
+    }
+
+    public setRoundStart(body: IStdApiResponse<IStartRound>)
+    {
+        this.pokerStateStore.state.activeTicketId = body.data.startedTicketId;
+        this.pokerStateStore.state.openedTicketId = body.data.startedTicketId;
     }
 }

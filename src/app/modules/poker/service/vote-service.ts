@@ -1,21 +1,25 @@
 import {IStdApiResponse}       from "../../../interfaces/i-std-api-response";
 import {IVoteResponse}         from "../interfaces/i-vote-response";
-import {IPokerState}           from "../interfaces/i-poker-state";
 import {Injectable}            from "@angular/core";
 import {IInsecureUser}         from "../../account/interfaces/i-insecure-user";
 import {FlashMessageLevelEnum} from "../../flash-message/enums/flash-message-level-enum";
 import {FlashMessageService}   from "../../flash-message/services/flash-message-service";
+import {PokerStateStore}       from "../poker-state-store.service";
 
 @Injectable()
 export class VoteService
 {
-    public constructor(private flashMessageService: FlashMessageService)
+    public constructor(
+      private flashMessageService: FlashMessageService,
+      private pokerStateStore: PokerStateStore,
+    )
     {
     }
 
-    public setVote(body: IStdApiResponse<IVoteResponse>, state: IPokerState)
+    public setVote(body: IStdApiResponse<IVoteResponse>)
     {
-        let insecureUser: IInsecureUser = body.data.voterInsecureUser;
+        const state = this.pokerStateStore.state;
+        const insecureUser: IInsecureUser = body.data.voterInsecureUser;
 
         if (!state.votes[state.activeTicketId])
         {

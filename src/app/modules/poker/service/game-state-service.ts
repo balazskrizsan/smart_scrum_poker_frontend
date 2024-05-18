@@ -1,13 +1,19 @@
 import {Injectable}      from "@angular/core";
 import {IStdApiResponse} from "../../../interfaces/i-std-api-response";
 import {IStateResponse}  from "../interfaces/i-state-response";
-import {IPokerState}     from "../interfaces/i-poker-state";
+import {PokerStateStore} from "../poker-state-store.service";
 
 @Injectable()
 export class GameStateService
 {
-    public setGametState(body: IStdApiResponse<IStateResponse>, state: IPokerState)
+    public constructor(private pokerStateStore: PokerStateStore)
     {
+    }
+
+    public setGametState(body: IStdApiResponse<IStateResponse>)
+    {
+        const state = this.pokerStateStore.state;
+
         state.poker = body.data.poker;
         state.tickets = body.data.tickets;
         state.inGameInsecureUsers = body.data.inGameInsecureUsers;

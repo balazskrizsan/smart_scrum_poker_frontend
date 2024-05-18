@@ -1,7 +1,6 @@
 import {Injectable}        from "@angular/core";
 import {IStateResponse}    from "../interfaces/i-state-response";
 import {SocketDestination} from "../../commons/enums/socket-destination";
-import {IPokerState}       from "../interfaces/i-poker-state";
 import {RxStompService}    from "../../commons/services/rx-stomp-service";
 import {GameStateService}  from "../service/game-state-service";
 
@@ -15,7 +14,7 @@ export class GameStateListenerFactory
     {
     }
 
-    public create(state: IPokerState)
+    public create()
     {
         const listener = this.rxStompService.getSubscription<IStateResponse>(
           '/user/queue/reply',
@@ -23,7 +22,7 @@ export class GameStateListenerFactory
         );
 
         listener.$subscription = listener.observable.subscribe(
-          (body) => this.gameStateService.setGametState(body, state)
+          (body) => this.gameStateService.setGametState(body)
         );
 
         return listener;

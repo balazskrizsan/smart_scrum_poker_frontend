@@ -29,6 +29,7 @@ import {RoundStartService}                      from "./service/round-start-serv
 import {SessionClosedService}                   from "./service/session-closed-service";
 import {TicketCloseService}                     from "./service/ticket-close-service";
 import {SessionCreatedOrUpdatedService}         from "./service/session-created-or-updated-service";
+import {PokerStateStore}                        from "./poker-state-store.service";
 
 @NgModule(
   {
@@ -48,6 +49,7 @@ import {SessionCreatedOrUpdatedService}         from "./service/session-created-
           VoterListComponent,
       ],
       providers:    [
+          PokerStateStore,
           GameStateListenerFactory,
           GameStateService,
           VoteListenerFactory,
