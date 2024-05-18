@@ -93,7 +93,6 @@ export class DisplayActionComponent implements OnInit, OnDestroy
 
     async ngOnInit(): Promise<void>
     {
-        console.log("qweqwe", this.state);
         this.accountService.getCurrentUserOrRedirect();
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_ROOM_STATE
