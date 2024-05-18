@@ -1,0 +1,31 @@
+import {Injectable}         from "@angular/core";
+import {IVoteStopResponse}  from "../interfaces/i-vote-stop-response";
+import {SocketDestination}  from "../../commons/enums/socket-destination";
+import {RxStompService}     from "../../commons/services/rx-stomp-service";
+import {IPokerState}        from "../interfaces/i-poker-state";
+import {TicketCloseService} from "../service/ticket-close-service";
+
+@Injectable()
+export class TicketCloseListenerFactory
+{
+    public constructor(
+      private rxStompService: RxStompService,
+      private ticketCloseService: TicketCloseService
+    )
+    {
+    }
+
+    public create(state: IPokerState)
+    {
+        const ticketCloseListener = this.rxStompService.getSubscription<IVoteStopResponse>(
+          `/queue/reply-${state.pokerIdSecureFromParams}`,
+          SocketDestination.RECEIVE_POKER_TICKET_CLOSE
+        );
+
+        ticketCloseListener.$subscription = ticketCloseListener.observable.subscribe(
+          (body) => this.ticketCloseService.setTicketClose(body, state)
+        );
+
+        return ticketCloseListener;
+    }
+}
