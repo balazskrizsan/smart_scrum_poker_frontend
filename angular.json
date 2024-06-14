@@ -68,39 +68,11 @@
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "k8smaster": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": true,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            },
-            "localvagrant": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.local-vagrant.ts"
+                  "with": "src/environments/environment.k8s-master.ts"
                 }
               ],
               "optimization": true,
@@ -135,10 +107,7 @@
             "sslCert": "ssl-dev/server.crt"
           },
           "configurations": {
-            "production": {
-              "browserTarget": "sj:build:production"
-            },
-            "localvagrant": {
+            "k8smaster": {
               "browserTarget": "sj:build:localvagrant"
             }
           }

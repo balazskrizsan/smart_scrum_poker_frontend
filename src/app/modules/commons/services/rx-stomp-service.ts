@@ -10,12 +10,13 @@ import {filter}                from "rxjs";
 import {ISubscriptionListener} from "../../poker/interfaces/i-subscription-listener";
 import {AccountService}        from "../../account/service/account-service";
 import {IInsecureUser}         from "../../account/interfaces/i-insecure-user";
+import {environment}           from '../../../../environments/environment';
 
 @Injectable()
 export class RxStompService
 {
     private rxStomp: RxStomp = null;
-    private static serverUrl = 'wss://localhost:9999/ws';
+    private static serverUrl = 'wss://localhost:1234/ws';
 
     constructor(private accountService: AccountService)
     {
@@ -30,7 +31,7 @@ export class RxStompService
 
         this.rxStomp = new RxStomp();
         this.rxStomp.configure({
-            brokerURL:      RxStompService.serverUrl,
+            brokerURL:      environment.backend.api.host,
             connectHeaders: this.getConnectHeaders()
         });
         this.rxStomp.activate();
@@ -42,7 +43,8 @@ export class RxStompService
         try
         {
             user = this.accountService.getCurrentUser()
-        } catch (e)
+        }
+        catch (e)
         {
             return {}
         }
@@ -67,7 +69,8 @@ export class RxStompService
               );
 
             return {observable, destination, socketDestinationFilter, $subscription: null}
-        } catch (e)
+        }
+        catch (e)
         {
             console.log(e);
 
