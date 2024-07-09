@@ -16,7 +16,6 @@ import {environment}           from '../../../../environments/environment';
 export class RxStompService
 {
     private rxStomp: RxStomp = null;
-    private static serverUrl = 'wss://localhost:1234/ws';
 
     constructor(private accountService: AccountService)
     {
@@ -31,7 +30,7 @@ export class RxStompService
 
         this.rxStomp = new RxStomp();
         this.rxStomp.configure({
-            brokerURL:      environment.backend.api.host,
+            brokerURL:      environment.backend.wss_api.host,
             connectHeaders: this.getConnectHeaders()
         });
         this.rxStomp.activate();
