@@ -108,7 +108,7 @@
           },
           "configurations": {
             "k8smaster": {
-              "browserTarget": "sj:build:localvagrant"
+              "browserTarget": "sj:build:k8smaster"
             }
           }
         },
