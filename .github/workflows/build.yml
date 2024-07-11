@@ -1,4 +1,4 @@
-name: Node.js CI
+name: "CI: Node.js/Master"
 
 on:
   push:
@@ -38,7 +38,7 @@ jobs:
 
       - run: npm install
 
-      - run: npm run build --if-present --configuration=k8smaster
+      - run: npm run build -- --configuration=latest
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
