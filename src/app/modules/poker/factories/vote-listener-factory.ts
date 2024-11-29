@@ -1,9 +1,10 @@
-import {IVoteResponse}     from "../interfaces/i-vote-response";
-import {SocketDestination} from "../../commons/enums/socket-destination";
-import {RxStompService}    from "../../commons/services/rx-stomp-service";
-import {Injectable}        from "@angular/core";
-import {VoteService}       from "../service/vote-service";
-import {PokerStateStore}   from "../poker-state-store.service";
+import {IVoteResponse}         from "../interfaces/i-vote-response";
+import {SocketDestination}     from "../../commons/enums/socket-destination";
+import {RxStompService}        from "../../commons/services/rx-stomp-service";
+import {Injectable}            from "@angular/core";
+import {VoteService}           from "../service/vote-service";
+import {PokerStateStore}       from "../poker-state-store.service";
+import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
 
 @Injectable()
 export class VoteListenerFactory
@@ -16,7 +17,7 @@ export class VoteListenerFactory
     {
     }
 
-    public create()
+    public create(): ISubscriptionListener<IVoteResponse>
     {
         const voteListener = this.rxStompService.getSubscription<IVoteResponse>(
           `/queue/reply-${this.pokerStateStore.state.pokerIdSecureFromParams}`,

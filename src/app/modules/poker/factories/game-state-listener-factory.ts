@@ -1,8 +1,9 @@
-import {Injectable}        from "@angular/core";
-import {IStateResponse}    from "../interfaces/i-state-response";
-import {SocketDestination} from "../../commons/enums/socket-destination";
-import {RxStompService}    from "../../commons/services/rx-stomp-service";
-import {GameStateService}  from "../service/game-state-service";
+import {Injectable}            from "@angular/core";
+import {IStateResponse}        from "../interfaces/i-state-response";
+import {SocketDestination}     from "../../commons/enums/socket-destination";
+import {RxStompService}        from "../../commons/services/rx-stomp-service";
+import {GameStateService}      from "../service/game-state-service";
+import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
 
 @Injectable()
 export class GameStateListenerFactory
@@ -14,7 +15,7 @@ export class GameStateListenerFactory
     {
     }
 
-    public create()
+    public create(): ISubscriptionListener<IStateResponse>
     {
         const listener = this.rxStompService.getSubscription<IStateResponse>(
           '/user/queue/reply',

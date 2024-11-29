@@ -1,9 +1,10 @@
-import {Injectable}        from "@angular/core";
-import {SocketDestination} from "../../commons/enums/socket-destination";
-import {RxStompService}    from "../../commons/services/rx-stomp-service";
-import {IStartRound}       from "../interfaces/i-start-round";
-import {RoundStartService} from "../service/round-start-service";
-import {PokerStateStore}   from "../poker-state-store.service";
+import {Injectable}            from "@angular/core";
+import {SocketDestination}     from "../../commons/enums/socket-destination";
+import {RxStompService}        from "../../commons/services/rx-stomp-service";
+import {IStartRound}           from "../interfaces/i-start-round";
+import {RoundStartService}     from "../service/round-start-service";
+import {PokerStateStore}       from "../poker-state-store.service";
+import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
 
 @Injectable()
 export class RoundStartListenerFactory
@@ -16,7 +17,7 @@ export class RoundStartListenerFactory
     {
     }
 
-    public create()
+    public create(): ISubscriptionListener<IStartRound>
     {
         const roundStartListener = this.rxStompService.getSubscription<IStartRound>(
           `/queue/reply-${this.pokerStateStore.state.pokerIdSecureFromParams}`,

@@ -4,6 +4,7 @@ import {RxStompService}         from "../../commons/services/rx-stomp-service";
 import {IVoteNewJoinerResponse} from "../interfaces/i-vote-new-joiner-response";
 import {VoteNewJoinerService}   from "../service/vote-new-joiner-service";
 import {PokerStateStore}        from "../poker-state-store.service";
+import {ISubscriptionListener}  from "../interfaces/i-subscription-listener";
 
 @Injectable()
 export class VoteNewJoinerListenerFactory
@@ -16,7 +17,7 @@ export class VoteNewJoinerListenerFactory
     {
     }
 
-    public create()
+    public create(): ISubscriptionListener<IVoteNewJoinerResponse>
     {
         const voteNewJoinerListener = this.rxStompService
           .getSubscription<IVoteNewJoinerResponse>(

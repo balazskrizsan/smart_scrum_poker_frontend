@@ -1,9 +1,10 @@
-import {SocketDestination}    from "../../commons/enums/socket-destination";
-import {RxStompService}       from "../../commons/services/rx-stomp-service";
-import {Injectable}           from "@angular/core";
-import {ISessionResponse}     from "../interfaces/i-session-response";
-import {SessionClosedService} from "../service/session-closed-service";
-import {PokerStateStore}      from "../poker-state-store.service";
+import {SocketDestination}     from "../../commons/enums/socket-destination";
+import {RxStompService}        from "../../commons/services/rx-stomp-service";
+import {Injectable}            from "@angular/core";
+import {ISessionResponse}      from "../interfaces/i-session-response";
+import {SessionClosedService}  from "../service/session-closed-service";
+import {PokerStateStore}       from "../poker-state-store.service";
+import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
 
 @Injectable()
 export class SessionClosedListenerFactory
@@ -16,7 +17,7 @@ export class SessionClosedListenerFactory
     {
     }
 
-    public create()
+    public create(): ISubscriptionListener<ISessionResponse>
     {
         const sessionClosedListener = this.rxStompService.getSubscription<ISessionResponse>(
           `/queue/reply-${this.pokerStateStore.state.pokerIdSecureFromParams}`,

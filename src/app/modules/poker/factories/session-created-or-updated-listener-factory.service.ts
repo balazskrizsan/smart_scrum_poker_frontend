@@ -4,6 +4,7 @@ import {IPokerState}                    from "../interfaces/i-poker-state";
 import {Injectable}                     from "@angular/core";
 import {ISessionResponse}               from "../interfaces/i-session-response";
 import {SessionCreatedOrUpdatedService} from "../service/session-created-or-updated-service";
+import {ISubscriptionListener}          from "../interfaces/i-subscription-listener";
 
 @Injectable()
 export class SessionCreatedOrUpdatedListenerFactory
@@ -15,7 +16,7 @@ export class SessionCreatedOrUpdatedListenerFactory
     {
     }
 
-    public create(state: IPokerState)
+    public create(state: IPokerState): ISubscriptionListener<ISessionResponse>
     {
         const sessionCreatedOrUpdatedListener = this.rxStompService
           .getSubscription<ISessionResponse>(

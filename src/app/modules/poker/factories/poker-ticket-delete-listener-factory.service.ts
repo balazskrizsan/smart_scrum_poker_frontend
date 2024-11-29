@@ -4,6 +4,7 @@ import {RxStompService}           from "../../commons/services/rx-stomp-service"
 import {ITicketDeleteResponse}    from "../interfaces/i-ticket-delete-response";
 import {PokerTicketDeleteService} from "../service/poker-ticket-delete-service";
 import {PokerStateStore}          from "../poker-state-store.service";
+import {ISubscriptionListener}    from "../interfaces/i-subscription-listener";
 
 @Injectable()
 export class PokerTicketDeleteListenerFactory
@@ -16,7 +17,7 @@ export class PokerTicketDeleteListenerFactory
     {
     }
 
-    public create()
+    public create(): ISubscriptionListener<ITicketDeleteResponse>
     {
         const ticketDeleteListener = this.rxStompService
           .getSubscription<ITicketDeleteResponse>(
