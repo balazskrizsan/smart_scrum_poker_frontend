@@ -30,6 +30,7 @@ import {SessionClosedService}                   from "./service/session-closed-s
 import {TicketCloseService}                     from "./service/ticket-close-service";
 import {SessionCreatedOrUpdatedService}         from "./service/session-created-or-updated-service";
 import {PokerStateStore}                        from "./poker-state-store.service";
+import {SubscriptionService}                    from "./service/subscription-service";
 
 @NgModule(
   {
@@ -49,6 +50,7 @@ import {PokerStateStore}                        from "./poker-state-store.servic
           VoterListComponent,
       ],
       providers:    [
+          SubscriptionService,
           PokerStateStore,
           GameStateListenerFactory,
           GameStateService,
