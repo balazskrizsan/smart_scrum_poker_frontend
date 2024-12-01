@@ -33,6 +33,8 @@ import {PokerStateStore}                        from "./poker-state-store.servic
 import {AddTicketComponent}                     from "./submodules/add-ticket.component";
 import {NewTicketForm}                          from "./submodules/forms";
 import {SubscriptionService}                    from "./service/subscription-service";
+import {AddTicketListenerFactory}               from "./factories/add-ticket-listener-factory";
+import {AddTicketService}                       from "./service/add-ticket-service";
 
 @NgModule(
   {
@@ -75,7 +77,9 @@ import {SubscriptionService}                    from "./service/subscription-ser
           TicketCloseListenerFactory,
           TicketCloseService,
           PokerTicketDeleteListenerFactory,
-          PokerTicketDeleteService
+          PokerTicketDeleteService,
+          AddTicketListenerFactory,
+          AddTicketService,
       ]
   }
 )

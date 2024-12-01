@@ -10,6 +10,7 @@ import {TicketCloseListenerFactory}       from "../factories/ticket-close-listen
 import {PokerTicketDeleteListenerFactory} from "../factories/poker-ticket-delete-listener-factory.service";
 import {ISubscriptionListener}            from "../interfaces/i-subscription-listener";
 import {RxStompService}                   from "../../commons/services/rx-stomp-service";
+import {AddTicketListenerFactory}         from "../factories/add-ticket-listener-factory";
 
 @Injectable()
 export class SubscriptionService
@@ -27,6 +28,7 @@ export class SubscriptionService
       private voteStopListenerFactory: VoteStopListenerFactory,
       private ticketCloseListenerFactory: TicketCloseListenerFactory,
       private ticketDeleteListenerFactory: PokerTicketDeleteListenerFactory,
+      private addTicketListenerFactory: AddTicketListenerFactory
     )
     {
     }
@@ -43,6 +45,7 @@ export class SubscriptionService
         this.listeners.push(this.voteStopListenerFactory.create());
         this.listeners.push(this.ticketCloseListenerFactory.create());
         this.listeners.push(this.ticketDeleteListenerFactory.create());
+        this.listeners.push(this.addTicketListenerFactory.create());
     }
 
     public unsubscribe()
