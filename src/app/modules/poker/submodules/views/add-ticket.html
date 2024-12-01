@@ -1,0 +1,48 @@
+<div class="container">
+  <button
+      (click)="toggleOpenState()"
+      style="position: absolute; right: 0; margin-right: 5px;"
+      class="btn btn-primary"
+  >+1 ticket
+  </button>
+  <div class="row" *ngIf="isOpen">
+    <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+
+      <div class="ui-block">
+        <div class="ui-block-title btn-primary">
+          <h6 class="title c-white">New ticket</h6>
+        </div>
+        <div class="ui-block-content">
+
+          <form
+              [formGroup]="form"
+              (ngSubmit)="onSubmit()"
+          >
+            <div class="row">
+              <div class="col col-lg-12 col-md-12 col-sm-12 col-12">
+                <div
+                    class="form-group"
+                >
+                  <label for="ticketName" class="control-label">Enter a new ticket name</label>
+                  <input
+                      formControlName="ticketName"
+                      type="text"
+                      class="form-control"
+                      id="ticketName"
+                      placeholder="ticketName"
+                  >
+                  <div class="row">
+                    <div class="col col-lg-12 col-md-12 col-sm-12 col-12">
+                      <button type="submit" class="btn btn-primary btn-lg full-width">Create</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

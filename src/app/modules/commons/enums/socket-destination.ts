@@ -11,6 +11,9 @@ export enum SocketDestination
     SEND_POKER_VOTE_START = '/app/poker/vote.start/{pokerIdSecure}/{ticketId}',
     RECEIVE_POKER_VOTE_START = '/app/poker/vote.start',
 
+    SEND__POKER__NEW_TICKET_CREATE = '/app/poker/new.ticket.create',
+    RECEIVE__POKER__NEW_TICKET_CREATE = '/app/poker/new.ticket.create',
+
     SEND_POKER_TICKET_DELETE = '/app/poker/ticket.delete/{pokerIdSecure}/{ticketId}',
     RECEIVE_POKER_TICKET_DELETE = '/app/poker/ticket.delete',
 

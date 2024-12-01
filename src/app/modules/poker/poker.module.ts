@@ -30,6 +30,8 @@ import {SessionClosedService}                   from "./service/session-closed-s
 import {TicketCloseService}                     from "./service/ticket-close-service";
 import {SessionCreatedOrUpdatedService}         from "./service/session-created-or-updated-service";
 import {PokerStateStore}                        from "./poker-state-store.service";
+import {AddTicketComponent}                     from "./submodules/add-ticket.component";
+import {NewTicketForm}                          from "./submodules/forms";
 import {SubscriptionService}                    from "./service/subscription-service";
 
 @NgModule(
@@ -46,11 +48,13 @@ import {SubscriptionService}                    from "./service/subscription-ser
           DisplayActionComponent,
           VoterTableComponent,
           OnlineVotersComponent,
+          AddTicketComponent,
           TicketHeaderComponent,
           VoterListComponent,
       ],
       providers:    [
           SubscriptionService,
+          NewTicketForm,
           PokerStateStore,
           GameStateListenerFactory,
           GameStateService,
