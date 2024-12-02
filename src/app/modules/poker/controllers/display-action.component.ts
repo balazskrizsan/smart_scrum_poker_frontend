@@ -58,4 +58,9 @@ export class DisplayActionComponent implements OnInit, OnDestroy
 
         return `${percentage}%`;
     }
+
+    protected isAdmin(): boolean
+    {
+        return null != this.state.owner && this.accountService.getCurrentUser().idSecure == this.state.owner.idSecure;
+    }
 }

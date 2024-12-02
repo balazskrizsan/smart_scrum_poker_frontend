@@ -19,8 +19,7 @@
     </div>
   </div>
 
-  <!-- todo: isAdmin cindition -->
-  <add-ticket [state]="state"></add-ticket>
+  <add-ticket [state]="state" *ngIf="isAdmin()"></add-ticket>
 
   <app-online-voters [state]="state"></app-online-voters>
 
