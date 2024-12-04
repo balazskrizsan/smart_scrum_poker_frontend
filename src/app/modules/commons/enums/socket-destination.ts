@@ -29,5 +29,7 @@ export enum SocketDestination
     SEND_INSECURE_USER_CREATE = '/app/account/insecure.user.create',
     RECEIVE_INSECURE_USER_CREATE = '/app/account/insecure.user.create',
 
+    POKER__MY_TICKETS = '/app/poker/my.tickets',
+
     RECEIVE_POKER_VOTE_NEW_JOINER = '/app/poker/vote.new_joiner',
 }

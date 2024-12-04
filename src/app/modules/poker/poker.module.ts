@@ -35,6 +35,7 @@ import {NewTicketForm}                          from "./submodules/forms";
 import {SubscriptionService}                    from "./service/subscription-service";
 import {AddTicketListenerFactory}               from "./factories/add-ticket-listener-factory";
 import {AddTicketService}                       from "./service/add-ticket-service";
+import {MyPokersActionComponent}                from "./controllers/my-pokers-action.component";
 
 @NgModule(
   {
@@ -47,6 +48,7 @@ import {AddTicketService}                       from "./service/add-ticket-servi
       ],
       declarations: [
           CreateActionComponent,
+          MyPokersActionComponent,
           DisplayActionComponent,
           VoterTableComponent,
           OnlineVotersComponent,

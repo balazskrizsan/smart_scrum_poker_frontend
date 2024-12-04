@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+
+    <div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12">
+      <div class="ui-block">
+        <div class="ui-block-title">
+          <h3 class="title">My pokers</h3>
+        </div>
+        <div class="ui-block-content">
+          <table class="forums-table">
+
+            <thead>
+              <tr>
+                <th class="forum">Poker</th>
+                <th class="topics">Created date</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let poker of myPokers">
+                <td class="forum">
+                  <div class="forum-item">
+                    <div class="content">
+                      <a routerLink="{{urlService.getPokerDisplay(poker.idSecure)}}" class="h6 title">{{poker.name}}</a>
+                    </div>
+                  </div>
+                </td>
+                <td class="freshness">
+                  <div class="author-freshness">
+                    <p class="text">{{poker.createdAt}}</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
