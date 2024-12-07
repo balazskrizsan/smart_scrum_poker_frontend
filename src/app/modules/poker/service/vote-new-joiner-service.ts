@@ -18,7 +18,7 @@ export class VoteNewJoinerService
         if (!_.find(state.inGameInsecureUsers, insecureUser))
         {
             state.inGameInsecureUsers.push(insecureUser);
-            state.inGameInsecureUsersWithSessions[insecureUser.idSecure] = true;
         }
+        state.inGameInsecureUsersWithSessions[insecureUser.idSecure] = true;
     }
 }
