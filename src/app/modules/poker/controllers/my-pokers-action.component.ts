@@ -46,7 +46,7 @@ export class MyPokersActionComponent implements OnDestroy
         );
 
         this.rxStompService.publish(SocketDestination.POKER__MY_TICKETS, {userIdInsecure: user.idSecure});
-        this.subscriptionService.subscribeForMyPokers();
+        this.subscriptionService.unsubscribe();
     }
 
     ngOnDestroy(): void
