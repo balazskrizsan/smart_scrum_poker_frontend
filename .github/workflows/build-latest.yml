@@ -1,4 +1,4 @@
-name: "CI: Node.js/Master"
+name: "master/latest"
 
 on:
   push:
