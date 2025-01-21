@@ -1,5 +1,5 @@
 export const environment = {
-  latestuction: false,
+  production: false,
   backend: {
     api: {
       host: 'https://ssp-latest.balazskrizsan.com/'
