@@ -1,11 +1,11 @@
 export const environment = {
-  production: false,
+  latestuction: false,
   backend: {
     api: {
-      host: 'https://localhost.balazskrizsan.com:46031/'
+      host: 'https://ssp-latest.balazskrizsan.com/'
     },
     wss_api: {
-      host: 'wss://localhost.balazskrizsan.com:46031/ws'
+      host: 'wss://ssp-latest.balazskrizsan.com/ws'
     }
   }
 };

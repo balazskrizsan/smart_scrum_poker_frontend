@@ -2,10 +2,10 @@ export const environment = {
   production: false,
   backend: {
     api: {
-      host: 'prod:todo'
+      host: 'https://ssp-prod.balazskrizsan.com/'
     },
     wss_api: {
-      host: 'prod:todo'
+      host: 'wss://ssp-prod.balazskrizsan.com/ws'
     }
   }
 };

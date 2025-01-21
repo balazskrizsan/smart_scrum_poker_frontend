@@ -42,11 +42,11 @@ jobs:
 
       - run: npm install
 
-      - run: npm run build -- --configuration=latest
+      - run: npm run build -- --configuration=prod
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
           push: true
-          tags: kbalazsworks/smart_scrum_poker_frontend:latest, kbalazsworks/smart_scrum_poker_frontend:commit_sha_short_${{ env.COMMIT_SHA_SHORT }}
+          tags: kbalazsworks/smart_scrum_poker_frontend:latest_prod, kbalazsworks/smart_scrum_poker_frontend:prod_commit_sha_short_${{ env.COMMIT_SHA_SHORT }}
