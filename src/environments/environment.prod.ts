@@ -2,10 +2,10 @@ export const environment = {
   production: false,
   backend: {
     api: {
-      host: 'https://api-ssp-prod.balazskrizsan.com/'
+      host: 'https://api.smart-scrum-poker.balazskrizsan.com/'
     },
     wss_api: {
-      host: 'wss://api-ssp-prod.balazskrizsan.com/ws'
+      host: 'wss://api.smart-scrum-poker.balazskrizsan.com/ws'
     }
   }
 };
