@@ -103,6 +103,9 @@
           },
           "defaultConfiguration": "default",
           "configurations": {
+            "default": {
+              "browserTarget": "sj:build"
+            },
             "prod": {
               "browserTarget": "sj:build:prod"
             },
