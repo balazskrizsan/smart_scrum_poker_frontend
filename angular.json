@@ -98,10 +98,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "ssl": true,
-            "sslKey": "/etc/ssl-dev/server.key",
-            "sslCert": "/etc/ssl-dev/server.crt"
+            "sslKey": "ssl-dev/private.key",
+            "sslCert": "ssl-dev/certificate.crt"
           },
-          "defaultConfiguration": "latest",
+          "defaultConfiguration": "default",
           "configurations": {
             "prod": {
               "browserTarget": "sj:build:prod"
