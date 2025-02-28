@@ -38,6 +38,14 @@ export class LocalStorageService {
     }
   }
 
+  public pop(key: string): string | null
+  {
+    let val = this.get(key);
+    this.delete(key);
+
+    return val;
+  }
+
   public delete(key: string): void {
     localStorage.removeItem(this.deriveKey(key));
   }

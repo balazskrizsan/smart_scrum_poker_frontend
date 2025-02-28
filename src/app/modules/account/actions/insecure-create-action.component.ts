@@ -9,6 +9,7 @@ import {SocketDestination}     from "../../commons/enums/socket-destination";
 import {ISubscriptionListener} from "../../poker/interfaces/i-subscription-listener";
 import {RxStompService}        from "../../commons/services/rx-stomp-service";
 import {AccountService}        from "../service/account-service";
+import {LocalStorageService}   from "../../../services/local-storage-service";
 
 @Component(
   {
@@ -25,7 +26,8 @@ export class InsecureCreateActionComponent implements OnDestroy
     constructor(
       private forms: Forms,
       private rxStompService: RxStompService,
-      private accountService: AccountService
+      private accountService: AccountService,
+      private localStorageService: LocalStorageService
     )
     {
         this.form = this.forms.createCruForm();
@@ -37,8 +39,11 @@ export class InsecureCreateActionComponent implements OnDestroy
         this.userCreationListener.$subscription = this.userCreationListener.observable.subscribe(
           (body) =>
           {
-              this.accountService.login(body.data)
+              let redirectUri = this.localStorageService.pop("login_redirect_from");
+
+              this.accountService.login(body.data, redirectUri);
           });
+
     }
 
     ngOnDestroy(): void

@@ -32,6 +32,7 @@ export class AccountService
         }
         catch (e)
         {
+            this.localStorageService.set("login_redirect_from", this.router.url);
             this.router.navigate(['/account']);
         }
     }
@@ -66,10 +67,11 @@ export class AccountService
         this.router.navigate(['/']);
     }
 
-    login(data: IStateResponse)
+    login(data: IStateResponse, redirectUri: string | null = null)
     {
         this.localStorageService.set('current_user', data);
         this.accountEvents.emit(EventEnum.USER_LOGIN);
-        this.router.navigate(['/poker/create']);
+
+        this.router.navigate([redirectUri ?? '/poker/create']);
     }
 }
