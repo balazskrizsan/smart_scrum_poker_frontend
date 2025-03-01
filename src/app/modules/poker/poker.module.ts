@@ -36,6 +36,8 @@ import {SubscriptionService}                    from "./service/subscription-ser
 import {AddTicketListenerFactory}               from "./factories/add-ticket-listener-factory";
 import {AddTicketService}                       from "./service/add-ticket-service";
 import {MyPokersActionComponent}                from "./controllers/my-pokers-action.component";
+import {VoterLeavingFactory}                    from "./factories/voter-leaving-factory";
+import {VoterLeavingService}                    from "./service/voter-leaving-service";
 
 @NgModule(
   {
@@ -82,6 +84,8 @@ import {MyPokersActionComponent}                from "./controllers/my-pokers-ac
           PokerTicketDeleteService,
           AddTicketListenerFactory,
           AddTicketService,
+          VoterLeavingFactory,
+          VoterLeavingService,
       ]
   }
 )

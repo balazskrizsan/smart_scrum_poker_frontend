@@ -32,4 +32,7 @@ export enum SocketDestination
     POKER__MY_TICKETS = '/app/poker/my.tickets',
 
     RECEIVE_POKER_VOTE_NEW_JOINER = '/app/poker/vote.new_joiner',
+
+    SEND__POKER__VOTER_LEAVING = '/app/poker/voter_leaving',
+    RECEIVE__POKER__VOTER_LEAVING = '/app/poker/voter_leaving',
 }
