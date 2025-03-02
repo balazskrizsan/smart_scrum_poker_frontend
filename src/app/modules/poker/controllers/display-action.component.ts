@@ -11,6 +11,7 @@ import {AccountService}      from "../../account/service/account-service";
 import {IPokerState}         from "../interfaces/i-poker-state";
 import {PokerStateStore}     from "../poker-state-store.service";
 import {SubscriptionService} from "../service/subscription-service";
+import {environment}           from '../../../../environments/environment';
 
 @Component({
     templateUrl: './../views/display.html',
@@ -20,6 +21,7 @@ import {SubscriptionService} from "../service/subscription-service";
 export class DisplayActionComponent implements OnInit, OnDestroy
 {
     protected state: IPokerState;
+    protected appHost = environment.backend.api.host;
 
     public constructor(
       private pokerStateStore: PokerStateStore,
