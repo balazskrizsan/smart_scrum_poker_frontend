@@ -833,9 +833,10 @@ if the page has a “right panel”, add a class for BODY -- ".page-has-right-pa
 
 .header--standard {
   background-color: $white-color;
-  width: calc(100% - 140px);
+  //width: calc(100% - 140px);
+  width: 100%;
   position: fixed;
-  left: 70px;
+  //left: 70px;
   padding: 35px 55px;
   box-shadow: 0 0 34px 0 rgba(63, 66, 87, 0.1);
   z-index: 19;
@@ -2205,8 +2206,9 @@ if the page has a “right panel”, add a class for BODY -- ".page-has-right-pa
 	z-index: 31;
 	height: 50px;
 	animation: none;
-	width: calc(100% - 100px);
-	left: 50px;
+	//width: calc(100% - 100px);
+    width: 100%;
+	//left: 50px;
 
 	.ps {
 	  -ms-touch-action: auto;
