@@ -46,6 +46,10 @@ import {AccountService}            from "./modules/account/service/account-servi
                 {
                     path:         'account',
                     loadChildren: () => import('./modules/account/account.module').then(m => m.AccountModule)
+                },
+                {
+                    path:         '',
+                    loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
                 }
             ],
             {preloadingStrategy: PreloadAllModules}
