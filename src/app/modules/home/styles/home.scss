@@ -1,3 +1,18 @@
+.title {
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+
+    span {
+        display: inline-block;
+    }
+    svg {
+        color: #FF763AFF;
+        width: 22px;
+        height: 22px;
+        margin-bottom: 4px;
+    }
+}
 .card-type-list {
     li {
         display: flex;
@@ -17,6 +32,11 @@
 }
 section {
     padding: 50px 0 30px 0;
+}
+img.first-img1,
+img.second-img1,
+img.third-img1 {
+    filter: drop-shadow(5px 5px 15px rgba(0, 0, 0, 0.4));
 }
 .animated-text {
     display: inline-block;
