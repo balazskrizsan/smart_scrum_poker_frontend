@@ -6,11 +6,12 @@
     span {
         display: inline-block;
     }
-    svg {
+    .fas {
+        margin: 20px 10px 0 5px;
+        display: inline-block;
         color: #FF763AFF;
         width: 22px;
         height: 22px;
-        margin-bottom: 4px;
     }
 }
 .card-type-list {
