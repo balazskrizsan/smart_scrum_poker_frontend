@@ -15,13 +15,13 @@
         </div>
       </a>
 
-      <a href="#" class="open-responsive-menu js-open-responsive-menu">
-        <svg class="olymp-menu-icon">
+      <a class="open-responsive-menu js-open-responsive-menu">
+        <svg class="olymp-menu-icon" (click)="openMobileMenu()">
           <use xlink:href="#olymp-menu-icon"></use>
         </svg>
       </a>
 
-      <div class="nav nav-pills nav1 header-menu">
+      <div class="nav nav-pills nav1 header-menu" [ngClass]="{'open': isMenuOpen}">
         <div class="mCustomScrollbar">
           <ul>
             <li class="nav-item">

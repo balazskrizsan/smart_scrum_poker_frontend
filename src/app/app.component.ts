@@ -1,6 +1,8 @@
 import {
     Component,
+    ElementRef,
     EventEmitter,
+    HostListener,
     OnInit
 }                       from '@angular/core';
 import {UrlService}     from './modules/commons/services/url-service';
@@ -27,10 +29,13 @@ export class AppComponent implements OnInit
     public urlService = UrlService;
     public currentUser: IInsecureUser | null = null;
     public accountEvents: EventEmitter<EventEnum>;
+    protected isMenuOpen = false;
+    private excludedElement = null;
 
     public constructor(
       private rxStompService: RxStompService,
       private accountService: AccountService,
+      private el: ElementRef
     )
     {
         this.rxStompService.get();
@@ -51,11 +56,33 @@ export class AppComponent implements OnInit
         this.currentUser = this.accountService.getCurrentUserOrNull();
     }
 
-    public login(): void
+    public ngOnInit(): void
     {
+        this.excludedElement = this.el.nativeElement.querySelector('.header-menu');
     }
 
-    public ngOnInit(): void
+    openMobileMenu()
+    {
+        setTimeout(() => this.isMenuOpen = true, 50);
+    }
+
+    @HostListener('window:click', ['$event'])
+    closeMobileMenu(event: Event)
+    {
+        if (!this.isMenuOpen)
+        {
+            return;
+        }
+
+        if (this.excludedElement && this.excludedElement.contains(event.target as Node))
+        {
+            return;
+        }
+
+        this.isMenuOpen = false;
+    }
+
+    public login(): void
     {
     }
 }
