@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   backend: {
     api: {
       host: 'https://api.smart-scrum-poker.balazskrizsan.com/'
