@@ -26,6 +26,7 @@
   <div
       *ngFor="let ticket of state.tickets"
       class="row"
+      style="margin: 0;"
   >
     <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
       <app-ticket-header [ticket]="ticket" [state]="state"></app-ticket-header>
