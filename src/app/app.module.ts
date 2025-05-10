@@ -56,7 +56,12 @@ import {AccountService}            from "./modules/account/service/account-servi
                     loadChildren: () => import('./modules/pages/pages.module').then(m => m.PagesModule)
                 },
             ],
-            {preloadingStrategy: PreloadAllModules}
+            {
+                preloadingStrategy:        PreloadAllModules,
+                anchorScrolling:           'enabled',
+                scrollPositionRestoration: 'enabled',
+                scrollOffset:              [0, 90],
+            }
           ),
           LeftMenuModule,
           ModalsModule,
