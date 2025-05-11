@@ -115,4 +115,9 @@ export class UrlService
     {
         return "";
     }
+
+    public static getPagesFaqNewScoringFragment():String
+    {
+        return "new-scoring";
+    }
 }
