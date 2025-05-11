@@ -1,7 +1,7 @@
 <div class="header--standard header--standard-dark" id="header--standard">
   <div class="container">
     <div class="header--standard-wrap">
-      <a routerLink="{{urlService.getHome()}}" class="logo">
+      <a [routerLink]="urlService.getHome()" class="logo">
         <div class="img-wrap">
           <img
               loading="lazy"
@@ -25,23 +25,24 @@
         <div class="mCustomScrollbar">
           <ul>
             <li class="nav-item">
-              <a routerLink="{{urlService.getHome()}}" class="nav-link">Home</a>
+              <a [routerLink]="urlService.getHome()" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
-              <a routerLink="{{urlService.getPokerCreate()}}" class="nav-link">Create poker</a>
+              <a [routerLink]="urlService.getPokerCreate()" class="nav-link">Create poker</a>
             </li>
             <li class="nav-item">
-              <a routerLink="{{urlService.getPokerMyPokers()}}" class="nav-link">My pokers</a>
+              <a [routerLink]="urlService.getPokerMyPokers()" class="nav-link">My pokers</a>
             </li>
             <li
                 *ngIf="currentUser == null"
                 class="nav-item"
             >
-              <a routerLink="{{urlService.getAccountCreate()}}" class="nav-link">Create user</a>
+              <a [routerLink]="urlService.getAccountCreate()" class="nav-link">Create user</a>
             </li>
             <li
                 *ngIf="currentUser != null"
-                class="nav-item dropdown">
+                class="nav-item dropdown"
+            >
               <a
                   class="nav-link dropdown-toggle"
                   data-hover="dropdown"
@@ -51,9 +52,9 @@
                   aria-haspopup="false"
                   aria-expanded="false"
                   tabindex='1'
-              >Profile ({{currentUser.userName}})</a>
+              >Profile ({{ currentUser.userName }})</a>
               <div class="dropdown-menu">
-                <a routerLink="{{urlService.getAccountLogout()}}" class="nav-link">Logout</a>-->
+                <a [routerLink]="urlService.getAccountLogout()" class="nav-link">Logout</a>-->
               </div>
             </li>
           </ul>
@@ -66,3 +67,105 @@
 <div class="header-spacer--standard"></div>
 
 <router-outlet></router-outlet>
+
+<div class="footer footer-full-width" id="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col col-lg-4 col-md-4 col-sm-12 col-12">
+
+        <div class="widget w-about">
+          <a href="{{urlService.getHome()}}" class="logo">
+            <div class="img-wrap">
+              <img
+                  loading="lazy"
+                  src="https://smart-scrum-poker-static.s3.us-east-1.amazonaws.com/logos/logo-orange.png"
+                  alt="Smart Scrum Poker"
+              >
+            </div>
+            <div class="title-block">
+              <h6 class="logo-title">Smart Scrum Poker</h6>
+              <div class="sub-title">Smarter Estimations for Agile Teams</div>
+            </div>
+          </a>
+          <p>Smarter estimation. Zero fluff. 100% team velocity. No waste. Just clarity.</p>
+          <ul class="socials">
+            <li><a href="{{urlService.getFacebook()}}"><i class="fab fa-facebook-square" aria-hidden="true"></i></a>
+            </li>
+            <li><a href="{{urlService.getTwitter()}}"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+            <li><a href="{{urlService.getInstagram()}}"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col col-lg-2 col-md-4 col-sm-12 col-12">
+        <div class="widget w-list">
+          <h6 class="title">About</h6>
+          <ul>
+            <li><a [routerLink]="urlService.getHome()">Home</a></li>
+            <li><a [routerLink]="urlService.getPagesRoadmap()">Roadmap</a></li>
+            <li><a [routerLink]="urlService.getPagesContact()">Contact</a></li>
+            <li><a [routerLink]="urlService.getPagesFaq()">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col col-lg-2 col-md-4 col-sm-12 col-12">
+        <div class="widget w-list">
+          <h6 class="title">Poker</h6>
+          <ul>
+            <li><a
+                [routerLink]="urlService.getPagesPoker()"
+                [fragment]="urlService.getPagesPokerLogicFragment()"
+            >Logic</a></li>
+            <li><a
+                [routerLink]="urlService.getPagesPoker()"
+                [fragment]="urlService.getPagesPokerWhyFragment()"
+            >Why?</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col col-lg-2 col-md-4 col-sm-12 col-12">
+        <div class="widget w-list">
+          <h6 class="title">FAQ</h6>
+          <ul>
+            <li><a
+                [routerLink]="urlService.getPagesFaq()"
+                [fragment]="urlService.getPagesFaqHowFragment()"
+            >How?</a></li>
+            <li><a
+                [routerLink]="urlService.getPagesFaq()"
+                [fragment]="urlService.getPagesFaqWhyFragment()"
+            >Why?</a></li>
+            <li><a
+                [routerLink]="urlService.getPagesFaq()"
+                [fragment]="urlService.getPagesFaqWhoFragment()"
+            >Who?</a></li>
+            <li><a
+                [routerLink]="urlService.getPagesFaq()"
+                [fragment]="urlService.getPagesFaqWhenFragment()"
+            >When?</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col col-lg-2 col-md-4 col-sm-12 col-12">
+        <div class="widget w-list">
+          <h6 class="title">Future</h6>
+          <ul>
+            <li><a
+                [routerLink]="urlService.getPagesFuture()"
+                [fragment]="urlService.getPagesFutureAiPokerFragment()"
+            >AI Poker</a></li>
+            <li><a
+                [routerLink]="urlService.getPagesFuture()"
+                [fragment]="urlService.getPagesFutureJiraIntegrationFragment()"
+            >Jira integration</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="sub-footer-copyright">
+          <span>Copyright <a [routerLink]="['/']">Smart Scrum Poker 2024</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

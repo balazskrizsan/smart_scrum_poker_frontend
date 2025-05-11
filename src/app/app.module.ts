@@ -50,7 +50,11 @@ import {AccountService}            from "./modules/account/service/account-servi
                 {
                     path:         '',
                     loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
-                }
+                },
+                {
+                    path:         'pages',
+                    loadChildren: () => import('./modules/pages/pages.module').then(m => m.PagesModule)
+                },
             ],
             {preloadingStrategy: PreloadAllModules}
           ),
