@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /poker/my-pokers
+Disallow: /account
+Allow: /
+
+Sitemap: https://smartscrumpoker.com/sitemap.xml
