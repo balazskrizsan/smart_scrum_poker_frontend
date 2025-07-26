@@ -1,0 +1,60 @@
+.title {
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+
+    span {
+        display: inline-block;
+    }
+    .fas {
+        margin: 20px 10px 0 5px;
+        display: inline-block;
+        color: #FF763AFF;
+        width: 22px;
+        height: 22px;
+    }
+}
+.card-type-list {
+    li {
+        display: flex;
+        margin-top: 15px;
+        margin-bottom: 30px;
+        svg {
+            width: 32px;
+            height: 32px;
+            fill: #FF763AFF;
+            display: block;
+            margin-right: 15px;
+        }
+        h3 {
+            display: inline-block;
+        }
+    }
+}
+section {
+    padding: 50px 0 30px 0;
+}
+img.first-img1,
+img.second-img1,
+img.third-img1 {
+    filter: drop-shadow(5px 5px 15px rgba(0, 0, 0, 0.4));
+}
+.animated-text {
+    display: inline-block;
+}
+.animated-text span {
+    animation: colorChange 1s linear forwards;
+}
+@keyframes colorChange {
+    0% { color: #515365FF; }
+    50% { color: #FF763AFF; }
+    100% { color: #515365FF; }
+}
+.animated-text span:nth-child(1) { animation-delay: 0s; }
+.animated-text span:nth-child(2) { animation-delay: 0.2s; }
+.animated-text span:nth-child(3) { animation-delay: 0.4s; }
+.animated-text span:nth-child(4) { animation-delay: 0.6s; }
+.animated-text span:nth-child(5) { animation-delay: 0.8s; }
+.animated-text span:nth-child(6) { animation-delay: 0.10s; }
+.animated-text span:nth-child(7) { animation-delay: 0.12s; }
+.animated-text span:nth-child(8) { animation-delay: 0.14s; }
