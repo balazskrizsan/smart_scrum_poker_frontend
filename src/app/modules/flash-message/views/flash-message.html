@@ -9,12 +9,11 @@
                     *ngFor="let message of messages"
                     [ngClass]="uiService.getClassByLevel(message.message.messageLevel)"
                 >
-                    <div class="author-thumb">
-                        <app-png-view
-                            [class]="uiService.getIconClassByLevel(message.message.messageLevel)"
-                            [squareSize]="25"
-                        ></app-png-view>
-                    </div>
+<!--                    <div class="author-thumb">-->
+<!--                        <app-png-view-->
+<!--                            [class]="uiService.getIconClassByLevel(message.message.messageLevel)"-->
+<!--                        ></app-png-view>-->
+<!--                    </div>-->
                     <div class="notification-event">
                         <div>{{message.message.message}}</div>
                         <span
@@ -27,9 +26,6 @@
                         </span>
                     </div>
                     <div class="more">
-                        <svg class="olymp-three-dots-icon">
-                            <use xlink:href="#olymp-three-dots-icon"></use>
-                        </svg>
                         <svg
                             (click)="hide(message.id)"
                             class="olymp-little-delete"

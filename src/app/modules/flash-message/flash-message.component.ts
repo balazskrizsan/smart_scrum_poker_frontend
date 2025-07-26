@@ -1,4 +1,7 @@
-import {Component, OnInit}      from '@angular/core';
+import {
+    Component,
+    OnInit
+}                               from '@angular/core';
 import {FlashMessageState}      from './states/flash-message-state';
 import {interval}               from 'rxjs';
 import {IFlashMessageDisplayed} from './interfaces/i-flash-message-displayed';
@@ -6,15 +9,16 @@ import {UiService}              from './services/ui-service';
 
 @Component({
     selector:    'app-flash-message',
+    styleUrls: [ './styles/flash-message.component.scss' ],
     templateUrl: './views/flash-message.html',
 })
 export class FlashMessageComponent implements OnInit
 {
-    private static tickTime            = 1000;
+    private static tickTime = 1000;
     private static messageDisplayTicks = 20;
 
     public messages: Array<IFlashMessageDisplayed> = [];
-    public uiService                               = new UiService();
+    public uiService = new UiService();
 
     public constructor(private flashMessageState: FlashMessageState)
     {
@@ -23,7 +27,7 @@ export class FlashMessageComponent implements OnInit
     public ngOnInit(): void
     {
         let currentTick = 0;
-        let currentId   = 0;
+        let currentId = 0;
         interval(FlashMessageComponent.tickTime).subscribe((tick) =>
         {
             currentTick = tick;
