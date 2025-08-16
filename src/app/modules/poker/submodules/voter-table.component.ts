@@ -31,10 +31,10 @@ export class VoterTableComponent
         risk:        0,
     };
     protected voteConfig: Array<Record<number, Record<string, number>>> = [
-        {0: {"SMALL0": 1, "MEDIUM": 2, "LARGE": 3, "XXL": 4}},
-        {1: {"SMALL1": 1, "MEDIUM": 2, "LARGE": 3, "XXL": 4}},
-        {2: {"SMALL2": 1, "MEDIUM": 2, "LARGE": 3, "XXL": 4}},
-        {3: {"SMALL3": 1, "MEDIUM": 2, "LARGE": 3, "XXL": 4}},
+        {0: {"SMALL": 1, "MEDIUM": 2, "LARGE": 3, "XXL": 4}},
+        {1: {"SMALL": 1, "MEDIUM": 2, "LARGE": 3, "XXL": 4}},
+        {2: {"SMALL": 1, "MEDIUM": 2, "LARGE": 3, "XXL": 4}},
+        {3: {"SMALL": 1, "MEDIUM": 2, "LARGE": 3, "XXL": 4}},
     ];
 
     constructor(
