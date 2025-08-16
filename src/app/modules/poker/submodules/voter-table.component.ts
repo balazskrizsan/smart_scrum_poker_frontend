@@ -7,6 +7,7 @@ import {RxStompService}    from "../../commons/services/rx-stomp-service";
 import {AccountService}    from "../../account/service/account-service";
 import {IPokerState}       from "../interfaces/i-poker-state";
 import {ITicket}           from "../interfaces/i-ticket";
+import {KeyValue}          from "@angular/common";
 
 @Component({
     selector:    'app-voter-table',
@@ -17,11 +18,24 @@ export class VoterTableComponent
 {
     @Input() state: IPokerState;
     @Input() ticket: ITicket;
-
-    protected voteUncertainty = 0;
-    protected voteComplexity = 0;
-    protected voteEffort = 0;
-    protected voteOptions = ["SMALL", "MEDIUM", "LARGE"];
+    protected voteTypeIdMap = {
+        0: "uncertainty",
+        1: "complexity",
+        2: "effort",
+        3: "risk",
+    };
+    protected votes = {
+        uncertainty: 0,
+        complexity:  0,
+        effort:      0,
+        risk:        0,
+    };
+    protected voteConfig: Array<Record<number, Record<string, number>>> = [
+        {0: {"SMALL0": 1, "MEDIUM": 2, "LARGE": 3, "XXL": 4}},
+        {1: {"SMALL1": 1, "MEDIUM": 2, "LARGE": 3, "XXL": 4}},
+        {2: {"SMALL2": 1, "MEDIUM": 2, "LARGE": 3, "XXL": 4}},
+        {3: {"SMALL3": 1, "MEDIUM": 2, "LARGE": 3, "XXL": 4}},
+    ];
 
     constructor(
       private rxStompService: RxStompService,
@@ -30,60 +44,30 @@ export class VoterTableComponent
     {
     }
 
-    setVoteUncertainty(vote: number): void
+    protected asStringNumberRecord(obj: object): Record<string, number>
     {
-        if (this.voteUncertainty == vote)
-        {
-            this.voteUncertainty = 0;
-
-            return;
-        }
-        this.voteUncertainty = vote;
+        return obj as Record<string, number>;
     }
 
-    setVoteComplexity(vote: number): void
-    {
-        if (this.voteComplexity == vote)
-        {
-            this.voteComplexity = 0;
+    protected compareKeys: (a: KeyValue<string, number>, b: KeyValue<string, number>) =>
+      number = (a: KeyValue<string, number>, b: KeyValue<string, number>) => parseInt(a.key) - parseInt(b.key);
 
-            return;
-        }
-        this.voteComplexity = vote;
+    protected getButtonClass(voteTypeId: number, vote: number): string
+    {
+        return vote == this.votes[this.voteTypeIdMap[voteTypeId]] ? 'btn-blue' : 'btn-primary';
     }
 
-    setVoteEffort(vote: number): void
+    protected setVote(voteTypeId: number, vote: number): void
     {
-        if (this.voteEffort == vote)
-        {
-            this.voteEffort = 0;
-
-            return;
-        }
-        this.voteEffort = vote;
+        this.votes[this.voteTypeIdMap[voteTypeId]] = vote;
     }
 
-    isVoteSendable(): boolean
+    protected isVoteSendable(): boolean
     {
-        return this.voteUncertainty > 0 && this.voteComplexity > 0 && this.voteEffort > 0;
+        return this.votes.uncertainty > 0 && this.votes.complexity > 0 && this.votes.effort > 0 && this.votes.risk > 0;
     }
 
-    getComplexityClass(vote: number): string
-    {
-        return vote == this.voteComplexity ? 'btn-blue' : 'btn-primary';
-    }
-
-    getUncertaintyClass(vote: number): string
-    {
-        return vote == this.voteUncertainty ? 'btn-blue' : 'btn-primary';
-    }
-
-    getEffortClass(vote: number): string
-    {
-        return vote == this.voteEffort ? 'btn-blue' : 'btn-primary';
-    }
-
-    send()
+    protected send()
     {
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_VOTE
@@ -93,9 +77,10 @@ export class VoterTableComponent
               userIdSecure:    this.accountService.getCurrentUser().idSecure,
               pokerIdSecure:   this.state.pokerIdSecureFromParams,
               ticketId:        this.ticket.id,
-              voteUncertainty: this.voteUncertainty,
-              voteComplexity:  this.voteComplexity,
-              voteEffort:      this.voteEffort,
+              voteUncertainty: this.votes.uncertainty,
+              voteComplexity:  this.votes.complexity,
+              voteEffort:      this.votes.effort,
+              voteRisk:        this.votes.risk,
           }
         );
     }

@@ -1,39 +1,21 @@
 <div class="row justify-content-center">
-    <div class="col col-lg-3 col-md-6 col-sm-12 col-12">
-        <h3 style="text-align: center">Uncertainty</h3>
-        <button
-            *ngFor="let option of voteOptions; index as i"
-            (click)="setVoteUncertainty(i + 1)"
-            [ngClass]="getUncertaintyClass(i + 1)"
-            style="width: 100%"
-            class="btn btn-lg"
-        >
-            {{ option }}
-        </button>
-    </div>
-    <div class="col col-lg-3 col-md-6 col-sm-12 col-12">
-        <h3 style="text-align: center">Complexity</h3>
-        <button
-            *ngFor="let option of voteOptions; index as i"
-            (click)="setVoteComplexity(i + 1)"
-            [ngClass]="getComplexityClass(i + 1)"
-            style="width: 100%"
-            class="btn btn-lg"
-        >
-            {{ option }}
-        </button>
-    </div>
-    <div class="col col-lg-3 col-md-6 col-sm-12 col-12">
-        <h3 style="text-align: center">Effort</h3>
-        <button
-            *ngFor="let option of voteOptions; index as i"
-            (click)="setVoteEffort(i + 1)"
-            [ngClass]="getEffortClass(i + 1)"
-            style="width: 100%"
-            class="btn btn-lg"
-        >
-            {{ option }}
-        </button>
-    </div>
+  <div
+      *ngFor="let category of voteConfig"
+      class="col col-lg-3 col-md-4 col-sm-6 col-12"
+  >
+    <ng-container *ngFor="let buttonConfig of (category | keyvalue)">
+      <h3 class="text-center">{{ voteTypeIdMap[buttonConfig.key] }}</h3>
+      <button
+          *ngFor="let option of (asStringNumberRecord(buttonConfig.value) | keyvalue:compareKeys)"
+          (click)="setVote(buttonConfig.key, option.value)"
+          [ngClass]="getButtonClass(buttonConfig.key, option.value)"
+          class="btn btn-lg w-100 mb-2"
+      >
+        {{ option.key }}
+      </button>
+    </ng-container>
+  </div>
 </div>
-<button class="btn btn-primary btn-lg" style="width: 100%" *ngIf="isVoteSendable()" (click)="send()">VOTE</button>
+<button class="btn btn-primary btn-lg" style="width: 100%" *ngIf="isVoteSendable()" (click)="send()">
+  VOTE
+</button>
