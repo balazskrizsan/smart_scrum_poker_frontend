@@ -1,9 +1,9 @@
-import {Injectable}            from "@angular/core";
-import {SocketDestination}     from "../../commons/enums/socket-destination";
-import {RxStompService}        from "../../commons/services/rx-stomp-service";
-import {IStartRound}           from "../interfaces/i-start-round";
-import {RoundStartService}     from "../service/round-start-service";
-import {PokerStateStore}       from "../poker-state-store.service";
+import {Injectable, NgZone} from "@angular/core";
+import {SocketDestination}  from "../../commons/enums/socket-destination";
+import {RxStompService}     from "../../commons/services/rx-stomp-service";
+import {IStartRound}        from "../interfaces/i-start-round";
+import {RoundStartService}  from "../service/round-start-service";
+import {PokerStateStore}    from "../poker-state-store.service";
 import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
 
 @Injectable()
@@ -13,6 +13,7 @@ export class RoundStartListenerFactory
       private rxStompService: RxStompService,
       private roundStartService: RoundStartService,
       private pokerStateStore: PokerStateStore,
+      private ngZone: NgZone
     )
     {
     }

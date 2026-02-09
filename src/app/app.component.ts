@@ -4,12 +4,15 @@ import {
     EventEmitter,
     HostListener,
     OnInit
-}                       from '@angular/core';
-import {UrlService}     from './modules/commons/services/url-service';
-import {RxStompService} from "./modules/commons/services/rx-stomp-service";
-import {AccountService} from "./modules/account/service/account-service";
-import {IInsecureUser}  from "./modules/account/interfaces/i-insecure-user";
-import {EventEnum}      from "./modules/account/enums/event-enum";
+}                              from '@angular/core';
+import {UrlService}            from './modules/commons/services/url-service';
+import {RxStompService}        from "./modules/commons/services/rx-stomp-service";
+import {AccountService}        from "./modules/account/service/account-service";
+import {IInsecureUser}         from "./modules/account/interfaces/i-insecure-user";
+import {EventEnum}             from "./modules/account/enums/event-enum";
+import {RouterModule}          from '@angular/router';
+import {CommonModule}          from "@angular/common";
+import {FlashMessageComponent} from "./modules/flash-message/flash-message.component";
 
 export interface IIdentityServerUser
 {
@@ -21,6 +24,8 @@ export interface IIdentityServerUser
 
 @Component({
     selector:    'app-root',
+    standalone:  true,
+    imports:     [RouterModule, CommonModule, FlashMessageComponent],
     templateUrl: './app.component.html',
     styleUrls:   ['./app.component.scss'],
 })

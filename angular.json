@@ -6,31 +6,14 @@
     "sj": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss",
-          "skipTests": true
-        },
-        "@schematics/angular:class": {
-          "skipTests": true
-        },
-        "@schematics/angular:directive": {
-          "skipTests": true
-        },
-        "@schematics/angular:guard": {
-          "skipTests": true
-        },
-        "@schematics/angular:interceptor": {
-          "skipTests": true
-        },
-        "@schematics/angular:module": {
-          "skipTests": true
-        },
-        "@schematics/angular:pipe": {
-          "skipTests": true
-        },
-        "@schematics/angular:service": {
-          "skipTests": true
-        }
+        "@schematics/angular:component": { "style": "scss", "skipTests": true },
+        "@schematics/angular:class": { "skipTests": true },
+        "@schematics/angular:directive": { "skipTests": true },
+        "@schematics/angular:guard": { "skipTests": true },
+        "@schematics/angular:interceptor": { "skipTests": true },
+        "@schematics/angular:module": { "skipTests": true },
+        "@schematics/angular:pipe": { "skipTests": true },
+        "@schematics/angular:service": { "skipTests": true }
       },
       "root": "",
       "sourceRoot": "src",
@@ -62,42 +45,29 @@
               "src/assets/fonts/webfonts",
               "src/assets/css"
             ],
-            "styles": [
-              "src/sass/main.scss"
-            ],
-            "scripts": []
+            "styles": ["src/sass/main.scss"],
+            "scripts": [],
+            "allowedCommonJsDependencies": ["jquery", "bootstrap"]
           },
           "configurations": {
             "prod": {
               "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
+                { "replace": "src/environments/environment.ts", "with": "src/environments/environment.prod.ts" }
               ]
             },
             "local_prod": {
               "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.local_prod.ts"
-                }
+                { "replace": "src/environments/environment.ts", "with": "src/environments/environment.local_prod.ts" }
               ]
             },
             "latest": {
               "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.latest.ts"
-                }
+                { "replace": "src/environments/environment.ts", "with": "src/environments/environment.latest.ts" }
               ]
             },
             "uat": {
               "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.uat.ts"
-                }
+                { "replace": "src/environments/environment.ts", "with": "src/environments/environment.uat.ts" }
               ]
             }
           }
@@ -107,28 +77,19 @@
           "options": {
             "ssl": true,
             "sslKey": "ssl-dev/privkey.pem",
-            "sslCert": "ssl-dev/cert.pem"
+            "sslCert": "ssl-dev/cert.pem",
+            "buildTarget": "sj:build"
           },
-          "defaultConfiguration": "default",
           "configurations": {
-            "default": {
-              "browserTarget": "sj:build"
-            },
-            "prod": {
-              "browserTarget": "sj:build:prod"
-            },
-            "local_prod": {
-              "browserTarget": "sj:build:local_prod"
-            },
-            "latest": {
-              "browserTarget": "sj:build:latest"
-            }
+            "default": { "buildTarget": "sj:build" },
+            "prod": { "buildTarget": "sj:build:prod" },
+            "local_prod": { "buildTarget": "sj:build:local_prod" },
+            "latest": { "buildTarget": "sj:build:latest" }
           }
         }
       }
     }
   },
-  "defaultProject": "sj",
   "cli": {
     "analytics": false
   }

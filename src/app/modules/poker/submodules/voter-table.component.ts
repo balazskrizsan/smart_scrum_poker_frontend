@@ -7,10 +7,15 @@ import {RxStompService}    from "../../commons/services/rx-stomp-service";
 import {AccountService}    from "../../account/service/account-service";
 import {IPokerState}       from "../interfaces/i-poker-state";
 import {ITicket}           from "../interfaces/i-ticket";
-import {KeyValue}          from "@angular/common";
+import {
+    CommonModule,
+    KeyValue
+} from "@angular/common";
 
 @Component({
     selector:    'app-voter-table',
+    standalone:   true,
+    imports: [CommonModule],
     templateUrl: './views/voter-table.html',
     providers:   [],
 })

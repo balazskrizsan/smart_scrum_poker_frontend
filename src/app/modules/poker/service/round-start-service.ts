@@ -12,6 +12,7 @@ export class RoundStartService
 
     public setRoundStart(body: IStdApiResponse<IStartRound>)
     {
+        console.log(this.pokerStateStore.state);
         this.pokerStateStore.state.activeTicketId = body.data.startedTicketId;
         this.pokerStateStore.state.openedTicketId = body.data.startedTicketId;
     }

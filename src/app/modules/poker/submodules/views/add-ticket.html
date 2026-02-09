@@ -8,7 +8,8 @@
       </button>
     </div>
   </div>
-  <div class="row" *ngIf="isOpen">
+  @if (isOpen) {
+  <div class="row">
     <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 
       <div class="ui-block">
@@ -48,4 +49,5 @@
       </div>
     </div>
   </div>
+}
 </div>

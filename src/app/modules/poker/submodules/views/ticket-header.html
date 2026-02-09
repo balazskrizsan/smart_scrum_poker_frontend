@@ -1,36 +1,40 @@
 <div class="ui-block">
   <div class="ui-block-title">
     <div>
-      <button
-          style="float: right"
-          class="btn btn-primary"
-          *ngIf="isAdmin() && state.activeTicketId == 0 && state.openedTicketId == 0"
-          (click)="startTicket(ticket.id)" type="button"
-      >Start
-      </button>
-      <button
-          style="float: right; margin-right: 5px;"
-          class="btn btn-primary"
-          *ngIf="isAdmin() && state.activeTicketId == 0 && state.openedTicketId == 0"
-          (click)="deleteTicket(ticket.id)" type="button"
-      >Delete
-      </button>
-      <button
-          style="float: right"
-          class="btn btn-primary"
-          *ngIf="isAdmin() && state.activeTicketId == ticket.id"
-          (click)="endTicket()"
-          type="button"
-      >End
-      </button>
-      <button
-          style="float: right"
-          class="btn btn-primary"
-          *ngIf="isAdmin() && state.activeTicketId == 0 && state.openedTicketId == ticket.id"
-          (click)="closeTicket()"
-          type="button"
-      >Close
-      </button>
+      @if (isAdmin() && state.activeTicketId==0 && state.openedTicketId==0) {
+        <button
+            style="float: right"
+            class="btn btn-primary"
+            (click)="startTicket(ticket.id)" type="button"
+        >Start
+        </button>
+      }
+      @if (isAdmin() && state.activeTicketId==0 && state.openedTicketId==0) {
+        <button
+            style="float: right; margin-right: 5px;"
+            class="btn btn-primary"
+            (click)="deleteTicket(ticket.id)" type="button"
+        >Delete
+        </button>
+      }
+      @if (isAdmin() && state.activeTicketId==ticket.id) {
+        <button
+            style="float: right"
+            class="btn btn-primary"
+            (click)="endTicket()"
+            type="button"
+        >End
+        </button>
+      }
+      @if (isAdmin() && state.activeTicketId==0 && state.openedTicketId==ticket.id) {
+        <button
+            style="float: right"
+            class="btn btn-primary"
+            (click)="closeTicket()"
+            type="button"
+        >Close
+        </button>
+      }
 
 
       <h6 class="title">

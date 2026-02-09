@@ -1,7 +1,8 @@
-<div class="container" *ngIf="state.openedTicketId == ticket.id">
+@if (state.openedTicketId == ticket.id) {
+<div class="container">
   <div class="row gx-1">
+    @for (user of state.inGameInsecureUsers; track user.idSecure) {
     <div
-        *ngFor="let user of state.inGameInsecureUsers"
         class="col-lg-3 col-md-6"
     >
       <div class="ui-block">
@@ -16,5 +17,7 @@
         </div>
       </div>
     </div>
+    }
   </div>
 </div>
+}

@@ -7,9 +7,10 @@ import {AccountService} from "../service/account-service";
 
 @Component(
   {
-      template:  '',
-      styleUrls: [],
-      providers: [Forms],
+      template:   '',
+      standalone: true,
+      styleUrls:  [],
+      providers:  [Forms],
   }
 )
 export class LogoutComponent implements OnInit

@@ -27,8 +27,8 @@
     <!-- /LEFT MENU -->
 
     <!-- COMPANY LIST -->
+    @for (company of companies; track company.id) {
     <div
-      *ngFor="let company of companies"
       class="col col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3"
       style="min-height: 500px"
     ><!-- @todo: fix later -->
@@ -125,6 +125,7 @@
       </div>
     </div>
     <!-- /COMPANY LIST -->
+    }
 
   </div>
 

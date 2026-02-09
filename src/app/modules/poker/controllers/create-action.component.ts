@@ -6,18 +6,25 @@ import {
 import {Forms}                 from '../forms';
 import {
     FormArray,
-    FormGroup
-}                              from "@angular/forms";
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule
+} from "@angular/forms";
 import {RxStompService}        from "../../commons/services/rx-stomp-service";
 import {SocketDestination}     from "../../commons/enums/socket-destination";
 import {IStartResponse}        from "../interfaces/i-start-response";
 import {Router}                from "@angular/router";
 import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
 import {AccountService}        from "../../account/service/account-service";
+import {CommonModule}          from "@angular/common";
+import {GameStateService} from "../service/game-state-service";
+import {PokerStateStore} from "../poker-state-store.service";
 
 @Component(
   {
       templateUrl: '../views/create-edit.html',
+      standalone: true,
+      imports: [CommonModule, ReactiveFormsModule],
       styleUrls:   [],
       providers:   [Forms],
   }
@@ -33,6 +40,7 @@ export class CreateActionComponent implements OnDestroy, OnInit
       private rxStompService: RxStompService,
       private router: Router,
       private accountService: AccountService,
+      private pokerStateStore: PokerStateStore,
     )
     {
         this.form = this.forms.createCruForm();
@@ -41,7 +49,12 @@ export class CreateActionComponent implements OnDestroy, OnInit
           .getSubscription<IStartResponse>('/user/queue/reply', SocketDestination.RECEIVE_POKER_START);
         this.createPokerListener.$subscription = this.createPokerListener.observable.subscribe(
           (body) =>
-            this.router.navigate(['/poker/display/' + body.data.poker.idSecure])
+          {
+              console.log("*******************************");
+              console.log(this.pokerStateStore.state);
+              console.log(body);
+              setTimeout(() => this.router.navigate(['/poker/display/' + body.data.poker.idSecure]), 1)
+          }
         );
     }
 

@@ -7,6 +7,7 @@ import {ITicket}        from "../interfaces/i-ticket";
 
 @Component({
     selector:    'app-voter-list',
+    standalone:   true,
     templateUrl: './views/voter-list.html',
     providers:   [],
 })

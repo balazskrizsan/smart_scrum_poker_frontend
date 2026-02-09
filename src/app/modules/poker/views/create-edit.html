@@ -1,78 +1,78 @@
 <div class="container">
-    <div class="row">
+  <div class="row">
 
-        <div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12">
-            <div class="ui-block">
-                <div class="ui-block-title">
-                    <h3 class="title">Create a poker</h3>
-                </div>
-                <div class="ui-block-content">
-
-                    <form
-                        [formGroup]="form"
-                        (ngSubmit)="onSubmit()"
-                    >
-                        <div class="row">
-                            <div class="col col-lg-12 col-md-12 col-sm-12 col-12">
-                                <!--                                *ngIf="formType === formTypeEnum.EDIT || formType === formTypeEnum.VIEW"-->
-                                <!--                                [ngClass]="{'has-error': hasValidationError('name')}"-->
-                                <div
-                                    class="form-group"
-                                    [ngClass]="{'has-error': hasValidationError('name')}"
-                                >
-                                    <label for="name" class="control-label">Sprint name</label>
-                                    <input
-                                        formControlName="name"
-                                        type="text"
-                                        class="form-control"
-                                        id="name"
-                                        placeholder="Sprint name"
-                                    >
-                                </div>
-
-                                <div class="row">
-                                    <div class="col col-lg-8 col-md-8 col-sm-8 col-8"></div>
-                                    <div class="col col-lg-4 col-md-4 col-sm-4 col-4">
-                                        <button
-                                            (click)="addTicketNameField()"
-                                            class="btn btn-blue btn-secondary full-width"
-                                        >
-                                            Add more tickets
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div formArrayName="ticketNames">
-                                    <div
-                                        class="form-group"
-                                        *ngFor="let skill of ticketNames.controls; let i=index"
-                                        [ngClass]="{'has-error': hasArrayValidationError('ticketNames', i)}"
-                                    >
-                                        <div [formGroupName]="i">
-                                            Ticket name
-                                            <input
-                                                placeholder="Ticket name"
-                                                type="text"
-                                                name="name"
-                                                formControlName="name"
-                                            >
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <button type="submit" class="btn btn-primary btn-lg full-width">
-                                            Start the poker
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12">
+      <div class="ui-block">
+        <div class="ui-block-title">
+          <h3 class="title">Create a poker</h3>
         </div>
+        <div class="ui-block-content">
+
+          <form
+              [formGroup]="form"
+              (ngSubmit)="onSubmit()"
+          >
+            <div class="row">
+              <div class="col col-lg-12 col-md-12 col-sm-12 col-12">
+                <!--                                *ngIf="formType === formTypeEnum.EDIT || formType === formTypeEnum.VIEW"-->
+                <!--                                [ngClass]="{'has-error': hasValidationError('name')}"-->
+                <div
+                    class="form-group"
+                    [ngClass]="{'has-error': hasValidationError('name')}"
+                >
+                  <label for="name" class="control-label">Sprint name</label>
+                  <input
+                      formControlName="name"
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      placeholder="Sprint name"
+                  >
+                </div>
+
+                <div class="row">
+                  <div class="col col-lg-8 col-md-8 col-sm-8 col-8"></div>
+                  <div class="col col-lg-4 col-md-4 col-sm-4 col-4">
+                    <button
+                        (click)="addTicketNameField()"
+                        class="btn btn-blue btn-secondary full-width"
+                    >
+                      Add more tickets
+                    </button>
+                  </div>
+                </div>
+
+                <div formArrayName="ticketNames">
+                  @for (skill of ticketNames.controls; track skill; let i = $index) {
+                    <div
+                        class="form-group"
+                        [ngClass]="{'has-error': hasArrayValidationError('ticketNames', i)}"
+                    >
+                      <div [formGroupName]="i">
+                        Ticket name
+                        <input
+                            placeholder="Ticket name"
+                            type="text"
+                            name="name"
+                            formControlName="name"
+                        >
+                      </div>
+                    </div>
+                  }
+                </div>
+
+                <div class="row">
+                  <div class="col col-lg-12 col-md-12 col-sm-12 col-12">
+                    <button type="submit" class="btn btn-primary btn-lg full-width">
+                      Start the poker
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

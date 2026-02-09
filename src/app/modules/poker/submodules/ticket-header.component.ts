@@ -10,6 +10,7 @@ import {ITicket}           from "../interfaces/i-ticket";
 
 @Component({
     selector:    'app-ticket-header',
+    standalone: true,
     templateUrl: './views/ticket-header.html',
     providers:   [],
 })

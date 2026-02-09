@@ -5,7 +5,7 @@ export const environment = {
       host: 'https://localhost.balazskrizsan.com:3000/'
     },
     wss_api: {
-      host: 'wss:///localhost.balazskrizsan.com:3000/ws'
+      host: 'wss://localhost.balazskrizsan.com:3000/ws'
     }
   }
 };

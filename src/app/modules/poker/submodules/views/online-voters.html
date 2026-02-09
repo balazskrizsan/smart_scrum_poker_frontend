@@ -8,9 +8,8 @@
         </div>
         <div class="ui-block-content">
 
-          <div class="row gx-1">
+          @for (user of state.inGameInsecureUsers; track user.idSecure) {
             <div
-                *ngFor="let user of state.inGameInsecureUsers"
                 class="col-lg-3 col-md-6"
             >
               <div class="ui-block">
@@ -19,14 +18,15 @@
                     <span class="h6 author-name">{{ user.userName }}</span>
                     <div class="birthday-date"></div>
                   </div>
-                  <span
-                      *ngIf="state.inGameInsecureUsersWithSessions[user.idSecure]"
-                      class="btn btn-sm bg-blue" style="position: absolute;right: 20px;top: 5px;"
-                  >Online</span>
+                  @if (state.inGameInsecureUsersWithSessions[user.idSecure]) {
+                    <span
+                        class="btn btn-sm bg-blue" style="position: absolute;right: 20px;top: 5px;"
+                    >Online</span>
+                  }
                 </div>
               </div>
             </div>
-          </div>
+          }
 
         </div>
       </div>

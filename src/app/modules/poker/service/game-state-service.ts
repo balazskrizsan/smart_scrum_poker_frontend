@@ -12,33 +12,52 @@ export class GameStateService
 
     public setGametState(body: IStdApiResponse<IStateResponse>)
     {
-        const state = this.pokerStateStore.state;
+        const currentState = this.pokerStateStore.state;
 
-        state.poker = body.data.poker;
-        state.tickets = body.data.tickets;
-        state.inGameInsecureUsers = body.data.inGameInsecureUsers;
+        console.log("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+        console.log(body);
+
+        const votes: { [key: string]: any } = {};
+        const userVoteStats: { [key: string]: any } = {};
+        const inGameInsecureUsersWithSessions: { [key: string]: boolean } = {};
+
         Object.entries(body.data.votesWithVoteStatList).forEach(([key, value]) =>
         {
-            state.votes[key] = value.votes;
-            state.userVoteStats[key] = value.voteStat;
+            votes[key] = value.votes;
+            userVoteStats[key] = value.voteStat;
         });
-        state.finishedTicketIds = Object.keys(body.data.votes).map(k => Number(k));
-        state.owner = body.data.owner;
+
         body.data.inGameInsecureUsersWithSession.forEach(iu =>
         {
-            state.inGameInsecureUsersWithSessions[iu.idSecure] = true;
+            inGameInsecureUsersWithSessions[iu.idSecure] = true;
         });
-        // @todo: finishedVoteIds
-        let possibleStartedTickets = state.tickets.filter(t => t.isActive);
+
+        let possibleStartedTickets = body.data.tickets.filter(t => t.isActive);
+        let activeTicketId = 0;
+        let openedTicketId = 0;
+
         if (possibleStartedTickets.length > 1)
         {
             throw new Error('More than 1 voting started');
         }
         if (possibleStartedTickets.length == 1)
         {
-            state.activeTicketId = possibleStartedTickets.pop().id;
-            state.openedTicketId = state.activeTicketId;
+            activeTicketId = possibleStartedTickets.pop().id;
+            openedTicketId = activeTicketId;
         }
-        state.initDone = true;
+
+        this.pokerStateStore.updateState({
+            poker: body.data.poker,
+            tickets: body.data.tickets,
+            inGameInsecureUsers: body.data.inGameInsecureUsers,
+            votes: votes,
+            userVoteStats: userVoteStats,
+            finishedTicketIds: Object.keys(body.data.votes).map(k => Number(k)),
+            owner: body.data.owner,
+            inGameInsecureUsersWithSessions: inGameInsecureUsersWithSessions,
+            activeTicketId: activeTicketId,
+            openedTicketId: openedTicketId,
+            initDone: true
+        });
     }
 }

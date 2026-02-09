@@ -6,6 +6,7 @@ import {IPokerState} from "../interfaces/i-poker-state";
 
 @Component({
     selector:    'app-online-voters',
+    standalone:   true,
     templateUrl: './views/online-voters.html',
     providers:   [],
 })

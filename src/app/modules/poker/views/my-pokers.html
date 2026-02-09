@@ -17,7 +17,8 @@
             </thead>
 
             <tbody>
-              <tr *ngFor="let poker of myPokers">
+              @for (poker of myPokers; track poker.id) {
+              <tr>
                 <td class="forum">
                   <div class="forum-item">
                     <div class="content">
@@ -31,6 +32,7 @@
                   </div>
                 </td>
               </tr>
+              }
             </tbody>
 
           </table>

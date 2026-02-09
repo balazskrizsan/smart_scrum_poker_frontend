@@ -2,9 +2,12 @@ import {
     Component,
     OnDestroy
 }                              from "@angular/core";
-import {Forms}                 from "../forms";
-import {FormGroup}             from "@angular/forms";
-import {IStateResponse}        from "../../poker/interfaces/i-state-response";
+import {Forms}          from "../forms";
+import {
+    FormGroup,
+    ReactiveFormsModule
+}                       from "@angular/forms";
+import {IStateResponse} from "../../poker/interfaces/i-state-response";
 import {SocketDestination}     from "../../commons/enums/socket-destination";
 import {ISubscriptionListener} from "../../poker/interfaces/i-subscription-listener";
 import {RxStompService}        from "../../commons/services/rx-stomp-service";
@@ -14,6 +17,8 @@ import {LocalStorageService}   from "../../../services/local-storage-service";
 @Component(
   {
       templateUrl: '../views/insecure-create.html',
+      standalone: true,
+      imports: [ReactiveFormsModule],
       styleUrls:   [],
       providers:   [Forms],
   }
@@ -39,6 +44,8 @@ export class InsecureCreateActionComponent implements OnDestroy
         this.userCreationListener.$subscription = this.userCreationListener.observable.subscribe(
           (body) =>
           {
+              console.log("=======================")
+              console.log("body")
               let redirectUri = this.localStorageService.pop("login_redirect_from");
 
               this.accountService.login(body.data, redirectUri);

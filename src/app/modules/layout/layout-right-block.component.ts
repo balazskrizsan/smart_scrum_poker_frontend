@@ -5,6 +5,7 @@ import {
 
 @Component({
     selector:    'app-layout-right-block',
+    standalone: true,
     templateUrl: './views/layout-right-block.html',
 })
 export class LayoutRightBlockComponent implements OnInit

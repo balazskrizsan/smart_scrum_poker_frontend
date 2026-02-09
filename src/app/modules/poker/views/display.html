@@ -1,45 +1,51 @@
-<div *ngIf="state.initDone">
-  <div class="ui-block" style="margin-top: 50px">
-    <div class="birthday-item inline-items badges table-dark">
-      <div class="birthday-author-name">
-        <div class="h6 author-name" style="color: #ff5e3a">{{ state.poker.name }}</div>
-        <div class="birthday-date">
-          Share link: {{appHost}}poker/display/{{ state.pokerIdSecureFromParams }}
+@if (state$ | async; as state) {
+  @if (state.initDone) {
+    <div class="ui-block" style="margin-top: 50px">
+      <div class="birthday-item inline-items badges table-dark">
+        <div class="birthday-author-name">
+          <div class="h6 author-name" style="color: #ff5e3a">{{ state.poker.name }}</div>
+          <div class="birthday-date">
+            Share link: {{ appHost }}poker/display/{{ state.pokerIdSecureFromParams }}
+          </div>
+        </div>
+        <div class="skills-item">
+          <div class="skills-item-meter">
+            <span
+                style="opacity: 1;"
+                [ngStyle]="{'width': ((state.finishedTicketIds.length / state.tickets.length) * 100) + '%'}"
+                class="skills-item-meter-active skills-animate"
+            ></span>
+          </div>
         </div>
       </div>
-      <div class="skills-item">
-        <div class="skills-item-meter">
-          <span
-              style="opacity: 1;"
-              [ngStyle]="{'width': getFillPercent()}"
-              class="skills-item-meter-active skills-animate"
-          ></span>
+    </div>
+
+    @if (state.owner && accountService.getCurrentUser().idSecure==state.owner.idSecure) {
+      <add-ticket [state]="state"></add-ticket>
+    }
+
+    <app-online-voters [state]="state"></app-online-voters>
+
+    @for (ticket of state.tickets; track ticket.id) {
+      <div
+          class="row"
+          style="margin: 0;"
+      >
+        <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          <app-ticket-header [ticket]="ticket" [state]="state"></app-ticket-header>
+        </div>
+
+        <app-voter-list [ticket]="ticket" [state]="state" style="width: 100%"></app-voter-list>
+
+        <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          @if (state.activeTicketId==ticket.id) {
+            <app-voter-table
+                [ticket]="ticket"
+                [state]="state"
+            ></app-voter-table>
+          }
         </div>
       </div>
-    </div>
-  </div>
-
-  <add-ticket [state]="state" *ngIf="isAdmin()"></add-ticket>
-
-  <app-online-voters [state]="state"></app-online-voters>
-
-  <div
-      *ngFor="let ticket of state.tickets"
-      class="row"
-      style="margin: 0;"
-  >
-    <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-      <app-ticket-header [ticket]="ticket" [state]="state"></app-ticket-header>
-    </div>
-
-    <app-voter-list [ticket]="ticket" [state]="state" style="width: 100%"></app-voter-list>
-
-    <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-      <app-voter-table
-          *ngIf="state.activeTicketId == ticket.id"
-          [ticket]="ticket"
-          [state]="state"
-      ></app-voter-table>
-    </div>
-  </div>
-</div>
+    }
+  }
+}

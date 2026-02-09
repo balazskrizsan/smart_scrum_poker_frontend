@@ -6,9 +6,12 @@ import {FlashMessageState}      from './states/flash-message-state';
 import {interval}               from 'rxjs';
 import {IFlashMessageDisplayed} from './interfaces/i-flash-message-displayed';
 import {UiService}              from './services/ui-service';
+import {CommonModule}           from "@angular/common";
 
 @Component({
     selector:    'app-flash-message',
+    standalone: true,
+    imports: [CommonModule],
     styleUrls: [ './styles/flash-message.component.scss' ],
     templateUrl: './views/flash-message.html',
 })

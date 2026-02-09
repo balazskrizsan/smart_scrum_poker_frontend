@@ -41,7 +41,6 @@ export class SubscriptionService
         this.listeners.push(this.pokerStartListenerFactory.create());
         this.listeners.push(this.voteListenerFactory.create());
         this.listeners.push(this.sessionClosedListenerFactory.create());
-        this.listeners.push(this.sessionClosedListenerFactory.create());
         this.listeners.push(this.roundStartListenerFactory.create());
         this.listeners.push(this.voteNewJoinerListenerFactory.create());
         this.listeners.push(this.voteStopListenerFactory.create());
