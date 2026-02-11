@@ -13,12 +13,8 @@ export class VoteNewJoinerService
 
     public setVoteNewJoiner(body: IStdApiResponse<IVoteNewJoinerResponse>)
     {
-        const state = this.pokerStateStore.state;
         const insecureUser = body.data.insecureUser;
-        if (!_.find(state.inGameInsecureUsers, insecureUser))
-        {
-            state.inGameInsecureUsers.push(insecureUser);
-        }
-        state.inGameInsecureUsersWithSessions[insecureUser.idSecure] = true;
+        this.pokerStateStore.addInGameUser(insecureUser);
+        this.pokerStateStore.setInGameUserSession(insecureUser.idSecure, true);
     }
 }

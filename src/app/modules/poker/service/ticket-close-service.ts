@@ -12,6 +12,6 @@ export class TicketCloseService
 
     public setTicketClose(body: IStdApiResponse<IVoteStopResponse>)
     {
-        this.pokerStateStore.state.openedTicketId = 0;
+        this.pokerStateStore.setOpenedTicketId(0);
     }
 }

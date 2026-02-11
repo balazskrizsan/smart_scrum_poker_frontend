@@ -12,8 +12,6 @@ export class PokerTicketDeleteService
 
     public setTicketDeleted(body: IStdApiResponse<ITicketDeleteResponse>)
     {
-        const state = this.pokerStateStore.state;
-
-        state.tickets = state.tickets.filter(t => t.id !== body.data.deletedTicketId);
+        this.pokerStateStore.removeTicket(body.data.deletedTicketId);
     }
 }

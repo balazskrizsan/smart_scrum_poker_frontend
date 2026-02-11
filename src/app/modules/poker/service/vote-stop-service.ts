@@ -12,11 +12,9 @@ export class VoteStopService
 
     public setVoteStop(body: IStdApiResponse<IVoteStopResponse>)
     {
-        const state = this.pokerStateStore.state;
-
-        state.finishedTicketIds.push(Number(body.data.finishedTicketId));
-        state.userVotes[body.data.finishedTicketId] = body.data.voteResult.votes;
-        state.userVoteStats[body.data.finishedTicketId] = body.data.voteResult.voteStat;
-        state.activeTicketId = 0;
+        this.pokerStateStore.addFinishedTicketId(Number(body.data.finishedTicketId));
+        this.pokerStateStore.setUserVotes(body.data.finishedTicketId, body.data.voteResult.votes);
+        this.pokerStateStore.setUserVoteStats(body.data.finishedTicketId, body.data.voteResult.voteStat);
+        this.pokerStateStore.updateState({activeTicketId: 0});
     }
 }

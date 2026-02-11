@@ -21,11 +21,7 @@ export class VoteService
         const state = this.pokerStateStore.state;
         const insecureUser: IInsecureUser = body.data.voterInsecureUser;
 
-        if (!state.votes[state.activeTicketId])
-        {
-            state.votes[state.activeTicketId] = {};
-        }
-        state.votes[state.activeTicketId][insecureUser.idSecure] = insecureUser;
+        this.pokerStateStore.addVote(state.activeTicketId, insecureUser.idSecure, insecureUser);
 
         this.flashMessageService.push({
             messageLevel: FlashMessageLevelEnum.OK,

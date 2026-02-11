@@ -12,8 +12,6 @@ export class VoterLeavingService
 
     public leave(body: IStdApiResponse<IVoterLeavingResponse>)
     {
-        const state = this.pokerStateStore.state;
-
-        state.inGameInsecureUsersWithSessions[body.data.userIdSecure] = undefined;
+        this.pokerStateStore.removeInGameUser(body.data.userIdSecure);
     }
 }

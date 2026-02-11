@@ -23,7 +23,7 @@ export class GameStateListenerFactory
         );
 
         listener.$subscription = listener.observable.subscribe(
-          (body) => this.gameStateService.setGametState(body)
+          (body) => this.gameStateService.setGameState(body)
         );
 
         return listener;

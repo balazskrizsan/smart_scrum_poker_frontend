@@ -7,6 +7,7 @@ import {AccountService}    from "../../account/service/account-service";
 import {SocketDestination} from "../../commons/enums/socket-destination";
 import {RxStompService}    from "../../commons/services/rx-stomp-service";
 import {ITicket}           from "../interfaces/i-ticket";
+import {PokerStateStore}   from "../poker-state-store.service";
 
 @Component({
     selector:    'app-ticket-header',
@@ -21,7 +22,8 @@ export class TicketHeaderComponent
 
     constructor(
       private rxStompService: RxStompService,
-      private accountService: AccountService
+      private accountService: AccountService,
+      private pokerStateStore: PokerStateStore
     )
     {
     }
@@ -59,7 +61,7 @@ export class TicketHeaderComponent
             .replace("{ticketId}", this.state.activeTicketId.toString(10)),
           ''
         );
-        this.state.activeTicketId = 0;
+        this.pokerStateStore.setActiveTicketId(0);
     }
 
     protected closeTicket()

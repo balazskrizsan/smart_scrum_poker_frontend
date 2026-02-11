@@ -10,13 +10,8 @@ export class GameStateService
     {
     }
 
-    public setGametState(body: IStdApiResponse<IStateResponse>)
+    public setGameState(body: IStdApiResponse<IStateResponse>)
     {
-        const currentState = this.pokerStateStore.state;
-
-        console.log("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
-        console.log(body);
-
         const votes: { [key: string]: any } = {};
         const userVoteStats: { [key: string]: any } = {};
         const inGameInsecureUsersWithSessions: { [key: string]: boolean } = {};

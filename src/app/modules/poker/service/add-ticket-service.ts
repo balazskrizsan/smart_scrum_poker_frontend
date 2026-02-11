@@ -12,8 +12,6 @@ export class AddTicketService
 
     public add(body: IStdApiResponse<IAddTicketResponse>)
     {
-        const state = this.pokerStateStore.state;
-
-        state.tickets.push(body.data.ticket);
+        this.pokerStateStore.addTicket(body.data.ticket);
     }
 }

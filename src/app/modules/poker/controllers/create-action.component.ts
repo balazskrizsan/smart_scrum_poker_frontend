@@ -7,9 +7,8 @@ import {Forms}                 from '../forms';
 import {
     FormArray,
     FormGroup,
-    FormsModule,
     ReactiveFormsModule
-} from "@angular/forms";
+}                              from "@angular/forms";
 import {RxStompService}        from "../../commons/services/rx-stomp-service";
 import {SocketDestination}     from "../../commons/enums/socket-destination";
 import {IStartResponse}        from "../interfaces/i-start-response";
@@ -17,14 +16,13 @@ import {Router}                from "@angular/router";
 import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
 import {AccountService}        from "../../account/service/account-service";
 import {CommonModule}          from "@angular/common";
-import {GameStateService} from "../service/game-state-service";
-import {PokerStateStore} from "../poker-state-store.service";
+import {PokerStateStore}       from "../poker-state-store.service";
 
 @Component(
   {
       templateUrl: '../views/create-edit.html',
-      standalone: true,
-      imports: [CommonModule, ReactiveFormsModule],
+      standalone:  true,
+      imports:     [CommonModule, ReactiveFormsModule],
       styleUrls:   [],
       providers:   [Forms],
   }
@@ -45,16 +43,11 @@ export class CreateActionComponent implements OnDestroy, OnInit
     {
         this.form = this.forms.createCruForm();
 
-        this.createPokerListener               = this.rxStompService
+        this.createPokerListener = this.rxStompService
           .getSubscription<IStartResponse>('/user/queue/reply', SocketDestination.RECEIVE_POKER_START);
         this.createPokerListener.$subscription = this.createPokerListener.observable.subscribe(
           (body) =>
-          {
-              console.log("*******************************");
-              console.log(this.pokerStateStore.state);
-              console.log(body);
-              setTimeout(() => this.router.navigate(['/poker/display/' + body.data.poker.idSecure]), 1)
-          }
+            this.router.navigate(['/poker/display/' + body.data.poker.idSecure])
         );
     }
 

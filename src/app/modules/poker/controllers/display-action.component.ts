@@ -17,7 +17,6 @@ import {AddTicketComponent}    from "../submodules/add-ticket.component";
 import {OnlineVotersComponent} from "../submodules/online-voters.component";
 import {VoterListComponent}    from "../submodules/voter-list.component";
 import {VoterTableComponent}   from "../submodules/voter-table.component";
-import {Subscription}          from "rxjs";
 
 @Component({
     templateUrl: './../views/display.html',
@@ -37,7 +36,6 @@ export class DisplayActionComponent implements OnInit, OnDestroy
 {
     protected state$ = this.pokerStateStore.state$;
     protected appHost = environment.backend.api.host;
-    private stateSubscription: Subscription;
 
     public constructor(
       private pokerStateStore: PokerStateStore,
@@ -51,8 +49,6 @@ export class DisplayActionComponent implements OnInit, OnDestroy
             pokerIdSecureFromParams: this.activatedRoute.snapshot.paramMap.get('secureId')
         });
 
-        console.log("//////////////////////////////////");
-        console.log(this.pokerStateStore.state);
         subscriptionService.subscribe();
     }
 
@@ -60,15 +56,13 @@ export class DisplayActionComponent implements OnInit, OnDestroy
     {
         this.accountService.getCurrentUserOrRedirect();
 
-        this.stateSubscription = this.state$.subscribe(state =>
-        {
-            this.rxStompService.publish(
-              SocketDestination.SEND_POKER_ROOM_STATE
-                .replace("{pokerIdSecure}", state.pokerIdSecureFromParams)
-                .replace("{insecureUserId}", this.accountService.getCurrentUser().idSecure),
-              ''
-            );
-        });
+        const currentState = this.pokerStateStore.state;
+        this.rxStompService.publish(
+          SocketDestination.SEND_POKER_ROOM_STATE
+            .replace("{pokerIdSecure}", currentState.pokerIdSecureFromParams)
+            .replace("{insecureUserId}", this.accountService.getCurrentUser().idSecure),
+          ''
+        );
     }
 
     async ngOnDestroy(): Promise<void>
@@ -81,11 +75,6 @@ export class DisplayActionComponent implements OnInit, OnDestroy
               pokerIdSecure: currentState.pokerIdSecureFromParams
           }
         );
-
-        if (this.stateSubscription)
-        {
-            this.stateSubscription.unsubscribe();
-        }
 
         this.subscriptionService.unsubscribe();
     }
