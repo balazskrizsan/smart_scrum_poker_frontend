@@ -78,7 +78,8 @@
             "ssl": true,
             "sslKey": "ssl-dev/privkey.pem",
             "sslCert": "ssl-dev/cert.pem",
-            "buildTarget": "sj:build"
+            "buildTarget": "sj:build",
+            "port": 3010
           },
           "configurations": {
             "default": { "buildTarget": "sj:build" },
