@@ -12,6 +12,11 @@ import {ISubscriptionListener}            from "../interfaces/i-subscription-lis
 import {RxStompService}                   from "../../commons/services/rx-stomp-service";
 import {AddTicketListenerFactory}         from "../factories/add-ticket-listener-factory";
 import {VoterLeavingFactory}              from "../factories/voter-leaving-factory";
+import {SocketDestination}                from "../../commons/enums/socket-destination";
+import {AccountService}                   from "../../account/service/account-service";
+import {IInsecureUser}                    from "../../account/interfaces/i-insecure-user";
+import {PokerStateStore}                  from "../poker-state-store.service";
+import {IPokerState}                      from "../interfaces/i-poker-state";
 
 @Injectable()
 export class SubscriptionService
@@ -19,6 +24,8 @@ export class SubscriptionService
     private readonly listeners: ISubscriptionListener<any>[] = [];
 
     public constructor(
+      private accountService: AccountService,
+      private pokerStateStore: PokerStateStore,
       private rxStompService: RxStompService,
       private gameStateListenerFactory: GameStateListenerFactory,
       private voteListenerFactory: VoteListenerFactory,
@@ -52,6 +59,19 @@ export class SubscriptionService
 
     public unsubscribe()
     {
+        let user: IInsecureUser = this.accountService.getCurrentUserOrNull();
+        let state: IPokerState = this.pokerStateStore.state;
+
+        if (user && state?.pokerIdSecureFromParams)
+        {
+            this.rxStompService.publish(
+              SocketDestination.SEND__POKER__VOTER_LEAVING,
+              {
+                  userIdSecure:  user.idSecure,
+                  pokerIdSecure: state.pokerIdSecureFromParams
+              }
+            );
+        }
         this.listeners.map(l => this.rxStompService.unsubscribe(l));
     }
 }

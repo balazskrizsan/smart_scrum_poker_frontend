@@ -67,15 +67,6 @@ export class DisplayActionComponent implements OnInit, OnDestroy
 
     async ngOnDestroy(): Promise<void>
     {
-        const currentState = this.pokerStateStore.state;
-        this.rxStompService.publish(
-          SocketDestination.SEND__POKER__VOTER_LEAVING,
-          {
-              userIdSecure:  this.accountService.getCurrentUser().idSecure,
-              pokerIdSecure: currentState.pokerIdSecureFromParams
-          }
-        );
-
         this.subscriptionService.unsubscribe();
     }
 }

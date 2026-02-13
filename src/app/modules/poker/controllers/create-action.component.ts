@@ -12,11 +12,10 @@ import {
 import {RxStompService}        from "../../commons/services/rx-stomp-service";
 import {SocketDestination}     from "../../commons/enums/socket-destination";
 import {IStartResponse}        from "../interfaces/i-start-response";
-import {Router}                from "@angular/router";
+import {RouterNavigateService} from "../service/router-navigate-service";
 import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
 import {AccountService}        from "../../account/service/account-service";
 import {CommonModule}          from "@angular/common";
-import {PokerStateStore}       from "../poker-state-store.service";
 
 @Component(
   {
@@ -24,7 +23,7 @@ import {PokerStateStore}       from "../poker-state-store.service";
       standalone:  true,
       imports:     [CommonModule, ReactiveFormsModule],
       styleUrls:   [],
-      providers:   [Forms],
+      providers:   [Forms, RouterNavigateService],
   }
 )
 export class CreateActionComponent implements OnDestroy, OnInit
@@ -36,9 +35,8 @@ export class CreateActionComponent implements OnDestroy, OnInit
     public constructor(
       protected forms: Forms,
       private rxStompService: RxStompService,
-      private router: Router,
+      private routerNavigateService: RouterNavigateService,
       private accountService: AccountService,
-      private pokerStateStore: PokerStateStore,
     )
     {
         this.form = this.forms.createCruForm();
@@ -47,7 +45,7 @@ export class CreateActionComponent implements OnDestroy, OnInit
           .getSubscription<IStartResponse>('/user/queue/reply', SocketDestination.RECEIVE_POKER_START);
         this.createPokerListener.$subscription = this.createPokerListener.observable.subscribe(
           (body) =>
-            this.router.navigate(['/poker/display/' + body.data.poker.idSecure])
+            this.routerNavigateService.navigateToPoker(body.data.poker.idSecure)
         );
     }
 
