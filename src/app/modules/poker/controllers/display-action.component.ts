@@ -35,7 +35,7 @@ import {VoterTableComponent}   from "../submodules/voter-table.component";
 export class DisplayActionComponent implements OnInit, OnDestroy
 {
     protected state$ = this.pokerStateStore.state$;
-    protected appHost = environment.backend.api.host;
+    protected appHost = environment.frontend.host;
 
     public constructor(
       private pokerStateStore: PokerStateStore,
@@ -50,6 +50,16 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         });
 
         subscriptionService.subscribe();
+    }
+
+    protected copyShareLink(): void {
+        const currentState = this.pokerStateStore.state;
+        const shareUrl = `${this.appHost}poker/display/${currentState.pokerIdSecureFromParams}`;
+        navigator.clipboard.writeText(shareUrl).then(() => {
+            console.log('Share link copied to clipboard');
+        }).catch(err => {
+            console.error('Failed to copy share link: ', err);
+        });
     }
 
     async ngOnInit(): Promise<void>
