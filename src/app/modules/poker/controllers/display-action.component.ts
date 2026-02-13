@@ -17,6 +17,8 @@ import {AddTicketComponent}    from "../submodules/add-ticket.component";
 import {OnlineVotersComponent} from "../submodules/online-voters.component";
 import {VoterListComponent}    from "../submodules/voter-list.component";
 import {VoterTableComponent}   from "../submodules/voter-table.component";
+import {FlashMessageService}   from "../../flash-message/services/flash-message-service";
+import {FlashMessageLevelEnum} from "../../flash-message/enums/flash-message-level-enum";
 
 @Component({
     templateUrl: './../views/display.html',
@@ -43,6 +45,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
       private activatedRoute: ActivatedRoute,
       public accountService: AccountService,
       private subscriptionService: SubscriptionService,
+      private flashMessageService: FlashMessageService,
     )
     {
         this.pokerStateStore.updateState({
@@ -52,13 +55,22 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         subscriptionService.subscribe();
     }
 
-    protected copyShareLink(): void {
+    protected copyShareLink(): void
+    {
         const currentState = this.pokerStateStore.state;
         const shareUrl = `${this.appHost}poker/display/${currentState.pokerIdSecureFromParams}`;
-        navigator.clipboard.writeText(shareUrl).then(() => {
-            console.log('Share link copied to clipboard');
-        }).catch(err => {
-            console.error('Failed to copy share link: ', err);
+        navigator.clipboard.writeText(shareUrl).then(() =>
+        {
+            this.flashMessageService.push({
+                messageLevel: FlashMessageLevelEnum.OK,
+                message:      'Share link copied to clipboard'
+            });
+        }).catch(err =>
+        {
+            this.flashMessageService.push({
+                messageLevel: FlashMessageLevelEnum.OK,
+                message:      'Share link copy failed'
+            });
         });
     }
 
