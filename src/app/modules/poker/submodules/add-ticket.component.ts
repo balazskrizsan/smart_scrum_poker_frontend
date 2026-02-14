@@ -42,6 +42,7 @@ export class AddTicketComponent
 
     protected onSubmit()
     {
+        this.isOpen = false;
         this.rxStompService.publish(
           SocketDestination.SEND__POKER__NEW_TICKET_CREATE,
           {
