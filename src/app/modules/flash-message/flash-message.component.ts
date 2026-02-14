@@ -1,6 +1,7 @@
 import {
     Component,
-    OnInit
+    OnInit,
+    ChangeDetectorRef
 }                               from '@angular/core';
 import {FlashMessageState}      from './states/flash-message-state';
 import {interval}               from 'rxjs';
@@ -18,27 +19,28 @@ import {CommonModule}           from "@angular/common";
 export class FlashMessageComponent implements OnInit
 {
     private static tickTime = 1000;
-    private static messageDisplayTicks = 20;
+    private static messageDisplayTicks = 10;
 
     public messages: Array<IFlashMessageDisplayed> = [];
     public uiService = new UiService();
+    private currentTick = 0;
+    private currentId = 0;
 
-    public constructor(private flashMessageState: FlashMessageState)
+    public constructor(private flashMessageState: FlashMessageState, private cdr: ChangeDetectorRef)
     {
     }
 
     public ngOnInit(): void
     {
-        let currentTick = 0;
-        let currentId = 0;
         interval(FlashMessageComponent.tickTime).subscribe((tick) =>
         {
-            currentTick = tick;
+            this.currentTick = tick;
 
             this.messages = this.messages.filter(m =>
             {
                 return m.createdTick + FlashMessageComponent.messageDisplayTicks > tick;
             });
+            this.cdr.detectChanges();
         });
 
         this.flashMessageState.getAsObservable$().subscribe((newMessage) =>
@@ -48,11 +50,14 @@ export class FlashMessageComponent implements OnInit
                 return;
             }
 
-            this.messages.push({
-                id:          currentId++,
-                createdTick: currentTick,
+            const flashMessage = {
+                id:          this.currentId++,
+                createdTick: this.currentTick,
                 message:     newMessage
-            });
+            };
+
+            this.messages.push(flashMessage);
+            this.cdr.detectChanges();
         });
     }
 

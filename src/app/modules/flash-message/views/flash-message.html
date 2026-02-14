@@ -6,14 +6,7 @@
       <div class="mCustomScrollbar" data-mcs-theme="dark">
         <ul class="notification-list">
           @for (message of messages; track message.id) {
-            <li
-                [ngClass]="uiService.getClassByLevel(message.message.messageLevel)"
-            >
-              <!--                    <div class="author-thumb">-->
-              <!--                        <app-png-view-->
-              <!--                            [class]="uiService.getIconClassByLevel(message.message.messageLevel)"-->
-              <!--                        ></app-png-view>-->
-              <!--                    </div>-->
+            <li [ngClass]="uiService.getClassByLevel(message.message.messageLevel)">
               <div class="notification-event">
                 <div>{{ message.message.message }}</div>
                 @if (message.message.errorCode) {
