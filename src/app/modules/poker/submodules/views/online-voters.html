@@ -7,27 +7,25 @@
           <h6 class="title c-white">Online players</h6>
         </div>
         <div class="ui-block-content">
-
-          @for (user of state.inGameInsecureUsers; track user.idSecure) {
-            <div
-                class="col-lg-3 col-md-6"
-            >
-              <div class="ui-block">
-                <div class="birthday-item inline-items" style="overflow: hidden">
-                  <div class="birthday-author-name">
-                    <span class="h6 author-name">{{ user.userName }}</span>
-                    <div class="birthday-date"></div>
+          <div class="row">
+            @for (user of state.inGameInsecureUsers; track user.idSecure) {
+              <div class="col-lg-3 col-md-6">
+                <div class="ui-block">
+                  <div class="birthday-item inline-items" style="overflow: hidden">
+                    <div class="birthday-author-name">
+                      <span class="h6 author-name">{{ user.userName }}</span>
+                      <div class="birthday-date"></div>
+                    </div>
+                    @if (state.inGameInsecureUsersWithSessions[user.idSecure]) {
+                      <span
+                          class="btn btn-sm bg-blue" style="position: absolute;right: 20px;top: 5px;"
+                      >Online</span>
+                    }
                   </div>
-                  @if (state.inGameInsecureUsersWithSessions[user.idSecure]) {
-                    <span
-                        class="btn btn-sm bg-blue" style="position: absolute;right: 20px;top: 5px;"
-                    >Online</span>
-                  }
                 </div>
               </div>
-            </div>
-          }
-
+            }
+          </div>
         </div>
       </div>
     </div>
