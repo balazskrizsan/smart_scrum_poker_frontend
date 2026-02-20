@@ -35,13 +35,9 @@
         >Close
         </button>
       }
-
-
-      <h6 class="title">
-        {{ ticket.name }}
-      </h6>
+      <h2 class="title">{{ ticket.name }}</h2>
       <br/>
-      <div class="font-weight-bolder">
+      <div class="font-weight-bolder" style="font-size: 22px">
         Votes: {{ getVoteCount(ticket.id) }} &nbsp; | &nbsp;
         AVG: {{ getVoteAvg(ticket.id) }} &nbsp; | &nbsp;
         Min: {{ getVoteMin(ticket.id) }} &nbsp; | &nbsp;
