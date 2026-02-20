@@ -125,8 +125,35 @@ export class PokerStateStore
         this.updateState({tickets: updatedTickets});
     }
 
+    public removeTicketState(ticketId: number): void
+    {
+        const updatedVotes = {...this._state.votes};
+        delete updatedVotes[ticketId];
+
+        const updatedUserVotes = {...this._state.userVotes};
+        delete updatedUserVotes[ticketId];
+
+        const updatedUserVoteStats = {...this._state.userVoteStats};
+        delete updatedUserVoteStats[ticketId];
+
+        this.updateState({
+            votes:         updatedVotes,
+            userVotes:     updatedUserVotes,
+            userVoteStats: updatedUserVoteStats
+        });
+    }
+
     public updateState(updates: Partial<IPokerState>): void
     {
+        const currentValues = Object.keys(updates).reduce((acc, key) =>
+        {
+            acc[key] = this._state[key];
+            return acc;
+        }, {} as Partial<IPokerState>);
+
+        console.log('Current state values before update:', currentValues);
+        console.log('Updated state values after update:', updates);
+
         this._state = {...this._state, ...updates};
         this.stateSubject.next(this._state);
     }

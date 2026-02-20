@@ -18,7 +18,7 @@ export class VoterListComponent
 
     protected getVoteState(userIdSecure: string, ticketId: number): "done" | "waiting"
     {
-        return this.state.votes[ticketId] && this.state.votes[ticketId][userIdSecure] ? "done" : "waiting";
+        return this.state.votes[ticketId]?.[userIdSecure] ? "done" : "waiting";
     }
 
     protected getCalculatedPoint(ticketId: number, userIdSecure: string)

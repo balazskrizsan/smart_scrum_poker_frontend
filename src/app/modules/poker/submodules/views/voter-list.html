@@ -1,23 +1,23 @@
-@if (state.openedTicketId == ticket.id) {
-<div class="container">
-  <div class="row gx-1">
-    @for (user of state.inGameInsecureUsers; track user.idSecure) {
-    <div
-        class="col-lg-3 col-md-6"
-    >
-      <div class="ui-block">
-        <div class="birthday-item inline-items" style="overflow: hidden">
-          <div class="birthday-author-name">
-            <span class="h6 author-name">{{ user.userName }}</span>
-            <div class="birthday-date">{{ getVoteState(user.idSecure, ticket.id) }}</div>
+@if (state.openedTicketId==ticket.id) {
+  <div class="container">
+    <div class="row gx-1">
+      @for (user of state.inGameInsecureUsers; track user.idSecure) {
+        <div
+            class="col-lg-3 col-md-6"
+        >
+          <div class="ui-block">
+            <div class="birthday-item inline-items" style="overflow: hidden">
+              <div class="birthday-author-name">
+                <span class="h6 author-name">{{ user.userName }}</span>
+                <div class="birthday-date">{{ getVoteState(user.idSecure, ticket.id) }}</div>
+              </div>
+              <h2 class="btn btn-sm bg-blue" style="position: absolute;right: 20px;top: 5px;font-size: 20px">
+                  {{ getCalculatedPoint(ticket.id, user.idSecure) }}
+              </h2>
+            </div>
           </div>
-          <span class="btn btn-sm bg-blue" style="position: absolute;right: 20px;top: 5px;">
-              {{ getCalculatedPoint(ticket.id, user.idSecure) }}
-          </span>
         </div>
-      </div>
+      }
     </div>
-    }
   </div>
-</div>
 }
