@@ -47,6 +47,8 @@ import {CompanyRepository} from "./app/modules/poker/repositories/company-reposi
 
 // Poker forms
 import {NewTicketForm} from "./app/modules/poker/submodules/forms";
+import {TicketOpenListenerFactory} from "./app/modules/poker/factories/ticket-open-listener-factory";
+import {TicketOpenService} from "./app/modules/poker/service/ticket-open-service";
 
 bootstrapApplication(AppComponent, {
     providers: [
@@ -71,6 +73,7 @@ bootstrapApplication(AppComponent, {
         SessionClosedService,
         SessionCreatedOrUpdatedService,
         SubscriptionService,
+        TicketOpenService,
         TicketCloseService,
         VoteNewJoinerService,
         VoteService,
@@ -85,6 +88,7 @@ bootstrapApplication(AppComponent, {
         RoundStartListenerFactory,
         SessionClosedListenerFactory,
         SessionCreatedOrUpdatedListenerFactory,
+        TicketOpenListenerFactory,
         TicketCloseListenerFactory,
         VoteListenerFactory,
         VoteNewJoinerListenerFactory,

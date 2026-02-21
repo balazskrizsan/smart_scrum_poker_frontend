@@ -7,6 +7,7 @@ import {RoundStartListenerFactory}        from "../factories/round-start-listene
 import {VoteNewJoinerListenerFactory}     from "../factories/vote-new-joiner-listener-factory";
 import {VoteStopListenerFactory}          from "../factories/vote-stop-listener-factory";
 import {TicketCloseListenerFactory}       from "../factories/ticket-close-listener-factory";
+import {TicketOpenListenerFactory}        from "../factories/ticket-open-listener-factory";
 import {PokerTicketDeleteListenerFactory} from "../factories/poker-ticket-delete-listener-factory.service";
 import {ISubscriptionListener}            from "../interfaces/i-subscription-listener";
 import {RxStompService}                   from "../../commons/services/rx-stomp-service";
@@ -35,6 +36,7 @@ export class SubscriptionService
       private voteNewJoinerListenerFactory: VoteNewJoinerListenerFactory,
       private voteStopListenerFactory: VoteStopListenerFactory,
       private ticketCloseListenerFactory: TicketCloseListenerFactory,
+      private ticketOpenListenerFactory: TicketOpenListenerFactory,
       private ticketDeleteListenerFactory: PokerTicketDeleteListenerFactory,
       private addTicketListenerFactory: AddTicketListenerFactory,
       private voterLeavingFactory: VoterLeavingFactory
@@ -52,6 +54,7 @@ export class SubscriptionService
         this.listeners.push(this.voteNewJoinerListenerFactory.create());
         this.listeners.push(this.voteStopListenerFactory.create());
         this.listeners.push(this.ticketCloseListenerFactory.create());
+        this.listeners.push(this.ticketOpenListenerFactory.create());
         this.listeners.push(this.ticketDeleteListenerFactory.create());
         this.listeners.push(this.addTicketListenerFactory.create());
         this.listeners.push(this.voterLeavingFactory.create());

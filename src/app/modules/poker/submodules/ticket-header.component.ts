@@ -74,6 +74,16 @@ export class TicketHeaderComponent
         );
     }
 
+    protected openTicket(ticketId: number)
+    {
+        this.rxStompService.publish(
+          SocketDestination.SEND__POKER__TICKET_OPEN
+            .replace("{pokerIdSecure}", this.state.pokerIdSecureFromParams)
+            .replace("{ticketId}", ticketId.toString(10)),
+          ''
+        );
+    }
+
     protected getVoteCount(ticketId: number)
     {
         return this.state.votes[ticketId] ? Object.keys(this.state.votes[ticketId]).length : "waiting";

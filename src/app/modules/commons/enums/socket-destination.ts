@@ -23,6 +23,9 @@ export enum SocketDestination
     SEND_POKER_TICKET_CLOSE = '/app/poker/ticket.close/{pokerIdSecure}/{ticketId}',
     RECEIVE_POKER_TICKET_CLOSE = '/app/poker/ticket.close',
 
+    SEND__POKER__TICKET_OPEN = '/app/poker/ticket.open/{pokerIdSecure}/{ticketId}',
+    RECEIVE__POKER__TICKET_OPEN = '/app/poker/ticket.open',
+
     SEND_POKER_VOTE = '/app/poker/vote/{pokerIdSecure}/{ticketId}',
     RECEIVE_POKER_VOTE = '/app/poker/vote',
 
