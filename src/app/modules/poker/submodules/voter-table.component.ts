@@ -59,7 +59,7 @@ export class VoterTableComponent
 
     protected getButtonClass(voteTypeId: number, vote: number): string
     {
-        return vote == this.votes[this.voteTypeIdMap[voteTypeId]] ? 'btn-blue' : 'btn-primary';
+        return vote == this.votes[this.voteTypeIdMap[voteTypeId]] ? 'btn-primary' : 'btn-smoke btn-light-bg';
     }
 
     protected setVote(voteTypeId: number, vote: number): void
