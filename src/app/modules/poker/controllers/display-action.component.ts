@@ -22,6 +22,7 @@ import {FlashMessageLevelEnum} from "../../flash-message/enums/flash-message-lev
 
 @Component({
     templateUrl: './../views/display.html',
+    styleUrls:   ['./../views/display.scss'],
     standalone:  true,
     imports:     [
         CommonModule,
@@ -31,7 +32,6 @@ import {FlashMessageLevelEnum} from "../../flash-message/enums/flash-message-lev
         VoterListComponent,
         VoterTableComponent,
     ],
-    styleUrls:   [],
     providers:   [Forms],
 })
 export class DisplayActionComponent implements OnInit, OnDestroy

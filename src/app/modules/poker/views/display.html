@@ -1,6 +1,6 @@
 @if (state$ | async; as state) {
   @if (state.initDone) {
-    <div class="ui-block" style="margin-top: 50px">
+    <div class="ui-block" style="margin-top: 50px;">
       <div class="birthday-item inline-items badges table-dark">
         <div class="birthday-author-name">
           <div class="h2 author-name" style="color: #ff5e3a">{{ state.poker.name }}</div>
@@ -29,7 +29,7 @@
             </div>
             <div class="birthday-author-name" style="padding-top: 15px">
               <div class="birthday-date"><strong>Share poker link</strong></div>
-              <div class="birthday-date">{{ appHost }}poker/display/{{ state.pokerIdSecureFromParams }}</div>
+              <div class="birthday-date share-link">{{ appHost }}poker/display/{{ state.pokerIdSecureFromParams }}</div>
             </div>
           </div>
         </div>
