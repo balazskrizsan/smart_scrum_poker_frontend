@@ -1,5 +1,8 @@
 export const environment = {
   production: false,
+  frontend: {
+    host: 'https://uat.smartscrumpoker.balazskrizsan.com/'
+  },
   backend: {
     api: {
       host: 'https://api.uat.smartscrumpoker.balazskrizsan.com/'
