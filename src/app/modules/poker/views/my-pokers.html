@@ -17,7 +17,7 @@
             </thead>
 
             <tbody>
-              @for (poker of myPokers; track poker.id) {
+              @for (poker of myPokers$ | async; track poker.id) {
               <tr>
                 <td class="forum">
                   <div class="forum-item">
