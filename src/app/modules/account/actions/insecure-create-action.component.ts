@@ -2,12 +2,12 @@ import {
     Component,
     OnDestroy
 }                              from "@angular/core";
-import {Forms}          from "../forms";
+import {Forms}                 from "../forms";
 import {
     FormGroup,
     ReactiveFormsModule
-}                       from "@angular/forms";
-import {IStateResponse} from "../../poker/interfaces/i-state-response";
+}                              from "@angular/forms";
+import {IStateResponse}        from "../../poker/interfaces/i-state-response";
 import {SocketDestination}     from "../../commons/enums/socket-destination";
 import {ISubscriptionListener} from "../../poker/interfaces/i-subscription-listener";
 import {RxStompService}        from "../../commons/services/rx-stomp-service";
@@ -17,8 +17,8 @@ import {LocalStorageService}   from "../../../services/local-storage-service";
 @Component(
   {
       templateUrl: '../views/insecure-create.html',
-      standalone: true,
-      imports: [ReactiveFormsModule],
+      standalone:  true,
+      imports:     [ReactiveFormsModule],
       styleUrls:   [],
       providers:   [Forms],
   }
@@ -26,7 +26,7 @@ import {LocalStorageService}   from "../../../services/local-storage-service";
 export class InsecureCreateActionComponent implements OnDestroy
 {
     protected form: FormGroup;
-    private userCreationListener: ISubscriptionListener<IStateResponse>;
+    private readonly userCreationListener: ISubscriptionListener<IStateResponse>;
 
     constructor(
       private forms: Forms,
@@ -42,15 +42,8 @@ export class InsecureCreateActionComponent implements OnDestroy
           SocketDestination.RECEIVE_INSECURE_USER_CREATE
         );
         this.userCreationListener.$subscription = this.userCreationListener.observable.subscribe(
-          (body) =>
-          {
-              console.log("=======================")
-              console.log("body")
-              let redirectUri = this.localStorageService.pop("login_redirect_from");
-
-              this.accountService.login(body.data, redirectUri);
-          });
-
+          (body) => this.accountService.login(body.data, this.localStorageService.pop("login_redirect_from"))
+        );
     }
 
     ngOnDestroy(): void
